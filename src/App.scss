@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "RichardMurray";
+  src: url("./assets/fonts/webfonts_RichardMurray/RichardMurray.ttf.woff")
+      format("woff"),
+    url("./assets/fonts/webfonts_RichardMurray/RichardMurray.ttf.svg#RichardMurray")
+      format("svg"),
+    url("./assets/fonts/webfonts_RichardMurray/RichardMurray.ttf.eot"),
+    url("./assets/fonts/webfonts_RichardMurray/RichardMurray.ttf.eot?#iefix")
+      format("embedded-opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.logo {
+  font-family: "RichardMurray";
+}
