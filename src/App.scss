@@ -15,6 +15,23 @@
   padding: 0;
   box-sizing: border-box;
 }
+main{
+  min-height: 100vh;
+}
 .logo {
   font-family: "RichardMurray";
 }
+footer
+{
+display: flex;
+flex-direction: row;
+align-content: center;
+justify-content: center;
+height: 10vh;
+font-size: 30px;
+background-color: black;
+color: white;
+line-height: 10vh;
+font-family: 'RichardMurray'
+}
+

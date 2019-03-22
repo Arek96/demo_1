@@ -15,6 +15,9 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 // import MailIcon from "@material-ui/icons/Mail";
 // import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+// import { Switch } from "@material-ui/core";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+
 
 const styles = theme => ({
   root: {
@@ -109,6 +112,16 @@ class PrimarySearchAppBar extends React.Component {
     this.setState({ mobileMoreAnchorEl: null });
   };
 
+  handleClickMenu = () => {
+    return (
+      <>
+
+        {console.log("chuj")}
+
+      </>
+    )
+  }
+
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
@@ -123,6 +136,8 @@ class PrimarySearchAppBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
+
+
         <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
         <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
       </Menu>
@@ -157,6 +172,7 @@ class PrimarySearchAppBar extends React.Component {
             <AccountCircle />
           </IconButton>
           <p>Profile</p>
+
         </MenuItem>
       </Menu>
     );
@@ -169,8 +185,10 @@ class PrimarySearchAppBar extends React.Component {
               className={classes.menuButton}
               color="inherit"
               aria-label="Open drawer"
+              onClick={this.handleClickMenu}
             >
-              <MenuIcon />
+              <MenuIcon></MenuIcon>
+
             </IconButton>
             <h1 className="logo">Delfinagram</h1>
             <div className={classes.search}>
@@ -178,7 +196,7 @@ class PrimarySearchAppBar extends React.Component {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder="Search a..."
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput

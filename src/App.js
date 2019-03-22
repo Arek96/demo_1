@@ -7,14 +7,21 @@ import PrimarySearchAppBar from "./components/Header/Header";
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header>
-          <PrimarySearchAppBar />
-        </header>
-        <section>Posty</section>
+      <Router>
+        <div className="App">
+          <header>
+            <PrimarySearchAppBar />
+          </header>
+          <main className="">
 
-        <footer />
-      </div>
+            <section>Posty</section>
+          </main>
+
+          <footer>
+            Copyright &copy; 2019   Delfinagram
+        </footer>
+        </div>
+      </Router>
     );
   }
 }
