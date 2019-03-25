@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import LoginPage from "./components/LoginPage/LoginPage";
-import { Router, Route } from "react-router";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
@@ -19,14 +18,14 @@ class App extends Component {
   }
   render() {
     return (
-      <Router>
+      <section>
         <Route
           path="/login"
           render={props => (
             <LoginPage {...props} passAuthToken={this.getAuthToken} />
           )}
         />
-      </Router>
+      </section>
     );
   }
 }
