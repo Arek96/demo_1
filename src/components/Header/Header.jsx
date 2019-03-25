@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
 // import Badge from "@material-ui/core/Badge";
-import { MenuItem, MenuList } from "@material-ui/core";
+import { MenuItem, MenuList, Typography } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
@@ -17,7 +17,9 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 // import { Switch } from "@material-ui/core";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-
+import HamburgerMenu from "./HamburgerMenu/HamburgerMenu";
+import Drawer from "@material-ui/core/Drawer";
+import classNames from "classnames";
 
 const styles = theme => ({
   root: {
@@ -113,19 +115,16 @@ class PrimarySearchAppBar extends React.Component {
   };
 
   handleClickMenu = () => {
-    return (
-
-      console.log("chuj")
-
-    )
-  }
+    this.setState(prevState => ({
+      open: !prevState.open
+    }));
+  };
 
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
 
     const renderMenu = (
       <Menu
@@ -135,8 +134,6 @@ class PrimarySearchAppBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-
-
         <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
         <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
       </Menu>
@@ -155,14 +152,13 @@ class PrimarySearchAppBar extends React.Component {
             <AccountCircle />
           </IconButton>
           <p>Profile</p>
-
         </MenuItem>
       </Menu>
     );
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="fixed">
           <Toolbar>
             <IconButton
               className={classes.menuButton}
@@ -170,11 +166,11 @@ class PrimarySearchAppBar extends React.Component {
               aria-label="Open drawer"
               onClick={this.handleClickMenu}
             >
-
-              <MenuIcon></MenuIcon>
-
+              <MenuIcon />
             </IconButton>
-            <Link to="/" style={{ textDecoration: 'none' }}><h1 className="logo">Delfinagram</h1></Link>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <h1 className="logo">Delfinagram</h1>
+            </Link>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -189,8 +185,16 @@ class PrimarySearchAppBar extends React.Component {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <MenuItem><Link className="itemMenu" to="/newPost">Add a post</Link></MenuItem>
-              <MenuItem ><Link className="itemMenu" to="/myPosts">My posts</Link></MenuItem>
+              <MenuItem>
+                <Link className="itemMenu" to="/newPost">
+                  Add a post
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link className="itemMenu" to="/myPosts">
+                  <Typography>My posts </Typography>
+                </Link>
+              </MenuItem>
 
               <IconButton
                 aria-owns={isMenuOpen ? "material-appbar" : undefined}
@@ -212,7 +216,20 @@ class PrimarySearchAppBar extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
-
+        <Drawer
+          variant="permanent"
+          className={classNames(classes.drawer, {
+            [classes.drawerOpen]: this.state.open,
+            [classes.drawerClose]: !this.state.open
+          })}
+          classes={{
+            paper: classNames({
+              [classes.drawerOpen]: this.state.open,
+              [classes.drawerClose]: !this.state.open
+            })
+          }}
+          open={this.state.open}
+        />
         {renderMenu}
         {renderMobileMenu}
       </div>

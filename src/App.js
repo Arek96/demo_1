@@ -4,19 +4,16 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import PrimarySearchAppBar from "./components/Header/Header";
 
-import NewPost from './components/NewPost/NewPost';
-import PostLists from './components/PostLists/PostLists';
-
+import NewPost from "./components/NewPost/NewPost";
+import PostLists from "./components/PostLists/PostLists";
 
 class App extends Component {
   render() {
     return (
       <Router>
-
         <div className="App">
           <header>
             <PrimarySearchAppBar />
-
           </header>
           <main className="dataContainer">
             <section>
@@ -25,9 +22,7 @@ class App extends Component {
             </section>
           </main>
 
-          <footer>
-            Copyright &copy; 2019   Delfinagram
-        </footer>
+          <footer>Copyright &copy; 2019 Delfinagram</footer>
         </div>
       </Router>
     );
