@@ -10,36 +10,46 @@ import style from "./LoginPage.module.scss";
 class LoginPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
     this.handleGoogleResp = this.handleGoogleResp.bind(this);
   }
+  //this function gets the response from google authentication retrieved in child component GoogleLoginButton
   handleGoogleResp(response) {
-    console.log(response);
+    //this function passes the authentication token to a parent component of LoginPage
+    this.props.passAuthToken(response.authenticationToken);
   }
   render() {
     return (
       <div className={style.LoginPage}>
         <Grid
           container
-          className={style.LoginPage}
+          className={style.LoginPageGrid}
           justify="center"
           alignContent="center"
         >
-          <Grid item xs={8} sm={6} md={3} xl={2}>
-            <Card>
+          <Grid item xs={8} sm={6} md={4} lg={3} xl={2}>
+            <Card className={style.Card}>
               <Grid
                 container
-                justify="center"
+                className={style.CardInnerGrid}
                 direction="column"
+                justify="space-around"
                 alignItems="center"
               >
                 <CardContent>
                   <Typography
-                    className="loginPageWelcome"
-                    color="textSecondary"
-                    variant="p"
+                    className={style.WelcomeSign}
+                    color="textPrimary"
+                    variant="h5"
+                    align="center"
                   >
                     Welcome
+                  </Typography>
+                  <Typography
+                    color="textPrimary"
+                    variant="subtitle1"
+                    align="center"
+                  >
+                    Log in using socialmedia buttons below
                   </Typography>
                 </CardContent>
                 <CardActions>
