@@ -1,0 +1,15 @@
+.Logo {
+  font-family: "RichardMurray";
+  transition: 0.5s;
+  color: white;
+  font-size: 40px;
+  line-height: 90px;
+}
+.Logo:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+button.hamburgerItem span {
+  background-color: red;
+  color: black;
+}
