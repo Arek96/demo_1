@@ -4,22 +4,17 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
-// import Badge from "@material-ui/core/Badge";
-import { MenuItem, MenuList, Typography } from "@material-ui/core";
+import { MenuItem, MenuList, Button } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-// import MailIcon from "@material-ui/icons/Mail";
-// import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
-// import { Switch } from "@material-ui/core";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import HamburgerMenu from "./HamburgerMenu/HamburgerMenu";
 import Drawer from "@material-ui/core/Drawer";
-import classNames from "classnames";
+import style from "../Header/Header.module.scss";
 
 const styles = theme => ({
   root: {
@@ -169,7 +164,7 @@ class PrimarySearchAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Link to="/" style={{ textDecoration: "none" }}>
-              <h1 className="logo">Delfinagram</h1>
+              <h1 className={style.Logo}>Delfinagram</h1>
             </Link>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -192,7 +187,7 @@ class PrimarySearchAppBar extends React.Component {
               </MenuItem>
               <MenuItem>
                 <Link className="itemMenu" to="/myPosts">
-                  <Typography>My posts </Typography>
+                  My posts
                 </Link>
               </MenuItem>
 
@@ -216,20 +211,29 @@ class PrimarySearchAppBar extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
-        <Drawer
-          variant="permanent"
-          className={classNames(classes.drawer, {
-            [classes.drawerOpen]: this.state.open,
-            [classes.drawerClose]: !this.state.open
-          })}
-          classes={{
-            paper: classNames({
-              [classes.drawerOpen]: this.state.open,
-              [classes.drawerClose]: !this.state.open
-            })
-          }}
-          open={this.state.open}
-        />
+        <Drawer open={this.state.open} onClose={this.handleClickMenu}>
+          <div
+            className={style.DrawerDiv}
+            tabIndex={0}
+            role="button"
+            onClick={this.handleClickMenu}
+            onKeyDown={this.handleClickMenu}
+          >
+            <MenuList>
+              <MenuItem>
+                <Link className="itemMenu" to="/newPost">
+                  Add a post
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link className="itemMenu" to="/myPosts">
+                  My posts
+                </Link>
+              </MenuItem>
+            </MenuList>
+
+          </div>
+        </Drawer>
         {renderMenu}
         {renderMobileMenu}
       </div>
