@@ -1,14 +1,4 @@
-.Logo {
-  font-family: "RichardMurray";
-  transition: 0.5s;
-  color: white;
-  font-size: 40px;
-  line-height: 90px;
-}
-.Logo:hover {
-  cursor: pointer;
-  opacity: 0.7;
-}
+
 .DrawerDiv {
   display: flex;
   width: 200px;
@@ -42,5 +32,27 @@
 .DrawerDiv ul li a:hover {
  color: rgba(255, 255, 255, 0.7);
  font-weight: bold;
+}
+.Logo {
+  font-family: "RichardMurray";
+  transition: 0.5s;
+  color: white;
+  font-size: 40px;
+  line-height: 90px;
+}
+.Logo:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.ItemMenu {
+  text-decoration: none;
+  color: white;
+  font-family: "lato";
+  font-size: 20px;
+}
+
+li:last-of-type .ItemMenu {
+  margin-right: 80px;
 }
 

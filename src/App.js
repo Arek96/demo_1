@@ -1,21 +1,20 @@
 import React, { Component } from "react";
-import "./App.scss";
+// import "./App.module.scss";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-
-import PrimarySearchAppBar from "./components/Header/Header";
-
 import NewPost from "./components/NewPost/NewPost";
 import PostLists from "./components/PostLists/PostLists";
+import Header from "./components/Header/Header";
+import style from "./App.module.scss";
 
 class App extends Component {
   render() {
     return (
       <Router>
-        <div className="App">
+        <div className={style.App}>
           <header>
-            <PrimarySearchAppBar />
+            <Header />
           </header>
-          <main className="dataContainer">
+          <main className={style.DataContainer}>
             <section>
               <Route path="/newPost/" component={NewPost} />
               <Route path="/myPosts/" component={PostLists} />

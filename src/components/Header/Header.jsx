@@ -86,7 +86,7 @@ const styles = theme => ({
   }
 });
 
-class PrimarySearchAppBar extends React.Component {
+class Header extends React.Component {
   state = {
     anchorEl: null,
     mobileMoreAnchorEl: null
@@ -181,12 +181,12 @@ class PrimarySearchAppBar extends React.Component {
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <MenuItem>
-                <Link className="itemMenu" to="/newPost">
+                <Link className={style.ItemMenu} to="/newPost">
                   Add a post
                 </Link>
               </MenuItem>
               <MenuItem>
-                <Link className="itemMenu" to="/myPosts">
+                <Link className={style.ItemMenu} to="/myPosts">
                   My posts
                 </Link>
               </MenuItem>
@@ -241,8 +241,8 @@ class PrimarySearchAppBar extends React.Component {
   }
 }
 
-PrimarySearchAppBar.propTypes = {
+Header.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(PrimarySearchAppBar);
+export default withStyles(styles)(Header);

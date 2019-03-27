@@ -1,4 +1,24 @@
 import React, { Component } from 'react';
+import style from "../NewPost/NewPost.module.scss";
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+const styles = theme => ({
+    FormControl: {
+        width: 500
+    },
+    UploadButton: {
+        marginTop: 20,
+        backgroundColor: '#3F51B5',
+        color: 'white',
+        padding: '10px 10px'
+
+    },
+    // UploadButton: hover {
+
+    //     color:
+    // }
+})
 
 class NewPost extends Component {
     constructor(props) {
@@ -48,31 +68,49 @@ class NewPost extends Component {
         });
     }
     render() {
+        const { post: { title, text } } = this.state, { classes } = this.props;
         return (
             <>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Title:
-                    <input
-                            type="text" value={this.state.post.title}
-                            onChange={this.handleTitleChange}
-                        />
-                    </label>
-                    <label> Text:
-                        <textarea
-                            value={this.state.post.text}
-                            onChange={this.handleTextChange}
-                        />
+                <form className={style.Form} onSubmit={this.handleSubmit}>
+                    <TextField
+                        label="Title"
+                        className={classes.FormControl}
+                        value={title}
+                        onChange={this.handleTitleChange}
+                        margin="normal"
+                        variant="outlined"
+                    />
 
+                    <TextField
+                        label="Text"
+                        className={classes.FormControl}
+                        value={text}
+                        multiline
+                        rows='8'
+                        onChange={this.handleTextChange}
+                        margin="normal"
+                        variant="outlined"
+                    />
+
+                    <input
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        id="raised-button-file"
+                        multiple
+                        type="file"
+                        onChange={this.handlePhotoChange}
+                    />
+
+                    <label htmlFor="raised-button-file">
+                        <Button variant="raised" component="span" className={classes.UploadButton} >
+                            Upload a photo
+                        </Button>
                     </label>
-                    <label>
-                        Photo:
-                        <input type="file" onChange={this.handlePhotoChange} />
-                    </label>
+
                     <input type="submit" value="Submit" />
                 </form>
             </>
         )
     }
 }
-export default NewPost;
+export default withStyles(styles)(NewPost)
