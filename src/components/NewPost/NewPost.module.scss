@@ -1,10 +1,28 @@
+.FormContainer{
+    min-height: 70vh;
+    // background-color: blue;
+}
 .Form{
+    position: relative;
+    width: 600px;
+    height: 70vh;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.7);
+    border: 3px solid rgba(0,0,0,0.2);
 }
-// .ButtonControl{
-//     margin-top: 150px;
-// }
+.FormHeader{
+    font-size: 3.5rem;
+    font-family: 'RichardMurray';
+    font-weight: 300;
+
+}
+.FormResult{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;    
+}

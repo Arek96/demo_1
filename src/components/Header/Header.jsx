@@ -75,7 +75,7 @@ const styles = theme => ({
   sectionDesktop: {
     display: "none",
     [theme.breakpoints.up("md")]: {
-      display: "flex"
+      display: "flex",
     }
   },
   sectionMobile: {
@@ -129,8 +129,8 @@ class Header extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+        <MenuItem onClick={this.handleMenuClose}>Log In</MenuItem>
+        <MenuItem onClick={this.handleMenuClose}>Sign In</MenuItem>
       </Menu>
     );
 
@@ -146,7 +146,13 @@ class Header extends React.Component {
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
-          <p>Profile</p>
+          <p>Log In</p>
+        </MenuItem>
+        <MenuItem onClick={this.handleProfileMenuOpen}>
+          <IconButton color="inherit">
+            <AccountCircle />
+          </IconButton>
+          <p>Sign In</p>
         </MenuItem>
       </Menu>
     );
@@ -221,12 +227,12 @@ class Header extends React.Component {
           >
             <MenuList>
               <MenuItem>
-                <Link className="itemMenu" to="/newPost">
+                <Link to="/newPost">
                   Add a post
                 </Link>
               </MenuItem>
               <MenuItem>
-                <Link className="itemMenu" to="/myPosts">
+                <Link to="/myPosts">
                   My posts
                 </Link>
               </MenuItem>

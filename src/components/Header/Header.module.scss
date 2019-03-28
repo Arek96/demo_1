@@ -47,12 +47,14 @@
 
 .ItemMenu {
   text-decoration: none;
+  margin: 0 auto;
   color: white;
   font-family: "lato";
   font-size: 20px;
 }
 
 li:last-of-type .ItemMenu {
+  
   margin-right: 80px;
 }
 
