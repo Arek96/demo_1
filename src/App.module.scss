@@ -16,7 +16,7 @@
   box-sizing: border-box;
 }
 
-.DataContainer{
+.DataContainer {
   min-height: 100vh;
   display: flex;
   flex-direction: row;
@@ -24,18 +24,16 @@
   justify-content: center;
   width: 70%;
   margin: 0 auto;
-  
 }
-footer{
-display: flex;
-flex-direction: row;
-align-content: center;
-justify-content: center;
-height: 10vh;
-font-size: 30px;
-background-color: black;
-color: white;
-line-height: 10vh;
-font-family: 'RichardMurray'
+footer {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  height: 10vh;
+  font-size: 30px;
+  background-color: black;
+  color: white;
+  line-height: 10vh;
+  font-family: "RichardMurray";
 }
-
