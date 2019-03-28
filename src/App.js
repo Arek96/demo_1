@@ -6,6 +6,7 @@ import PostLists from "./components/PostLists/PostLists";
 import LoginPage from "./components/LoginPage/LoginPage";
 import Grid from "@material-ui/core/Grid/Grid";
 import style from "./App.module.scss";
+import NotLogged from "./components/NotLogged/NotLogged";
 
 class App extends Component {
   constructor(props) {
@@ -24,11 +25,11 @@ class App extends Component {
   render() {
     const authRoutes =
       this.state.authToken == null ? (
-        <Route path="/" component={LoginPage} />
+        <Route path="/" component={NotLogged} />
       ) : (
         <React.Fragment>
-          <Route path="/newPost/" component={NewPost} />
-          <Route path="/myPosts/" component={PostLists} />
+          <Route path="/newPost" component={NewPost} />
+          <Route path="/myPosts" component={PostLists} />
         </React.Fragment>
       );
     return (
@@ -41,13 +42,15 @@ class App extends Component {
           <main className={style.Main}>
             <Grid xs={12} sm={10} lg={8} justify="center">
               <section>
-                {authRoutes}
-                <Route
-                  path="/login"
-                  render={props => (
-                    <LoginPage {...props} passAuthToken={this.getAuthToken} />
-                  )}
-                />
+                <Switch>
+                  <Route
+                    path="/login"
+                    render={props => (
+                      <LoginPage {...props} passAuthToken={this.getAuthToken} />
+                    )}
+                  />
+                  {authRoutes}
+                </Switch>
               </section>
             </Grid>
           </main>
