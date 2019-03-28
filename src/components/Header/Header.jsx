@@ -75,7 +75,7 @@ const styles = theme => ({
   sectionDesktop: {
     display: "none",
     [theme.breakpoints.up("md")]: {
-      display: "flex",
+      display: "flex"
     }
   },
   sectionMobile: {
@@ -130,7 +130,7 @@ class Header extends React.Component {
         onClose={this.handleMenuClose}
       >
         <MenuItem onClick={this.handleMenuClose}>Log In</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>Sign In</MenuItem>
+        <MenuItem onClick={this.handleMenuClose}>Sign Up</MenuItem>
       </Menu>
     );
 
@@ -227,17 +227,12 @@ class Header extends React.Component {
           >
             <MenuList>
               <MenuItem>
-                <Link to="/newPost">
-                  Add a post
-                </Link>
+                <Link to="/newPost">Add a post</Link>
               </MenuItem>
               <MenuItem>
-                <Link to="/myPosts">
-                  My posts
-                </Link>
+                <Link to="/myPosts">My posts</Link>
               </MenuItem>
             </MenuList>
-
           </div>
         </Drawer>
         {renderMenu}
