@@ -1,0 +1,22 @@
+.Logo {
+  font-family: "RichardMurray";
+  transition: 0.5s;
+  color: white;
+  font-size: 40px;
+  line-height: 90px;
+}
+.Logo:hover {
+  cursor: pointer;
+  opacity: 0.7;
+  // text-decoration: none;
+}
+.PrimarySearchAppBar-sectionDesktop-9 .itemMenu {
+  text-decoration: none;
+  color: white;
+  font-family: "lato";
+  font-size: 20px;
+}
+
+.PrimarySearchAppBar-sectionDesktop-9 li:last-of-type {
+  margin-right: 80px;
+}

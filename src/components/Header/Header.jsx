@@ -4,7 +4,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
-// import Badge from "@material-ui/core/Badge";
 import { MenuItem, MenuList } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
 import { fade } from "@material-ui/core/styles/colorManipulator";
@@ -12,14 +11,11 @@ import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-// import MailIcon from "@material-ui/icons/Mail";
-// import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
-// import { Switch } from "@material-ui/core";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import styles from "./Header.module.scss";
 
-
-const styles = theme => ({
+const stylesMUI = theme => ({
   root: {
     width: "100%"
   },
@@ -113,19 +109,14 @@ class PrimarySearchAppBar extends React.Component {
   };
 
   handleClickMenu = () => {
-    return (
-
-      console.log("chuj")
-
-    )
-  }
+    return console.log("chuj");
+  };
 
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
 
     const renderMenu = (
       <Menu
@@ -135,8 +126,6 @@ class PrimarySearchAppBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-
-
         <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
         <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
       </Menu>
@@ -155,7 +144,6 @@ class PrimarySearchAppBar extends React.Component {
             <AccountCircle />
           </IconButton>
           <p>Profile</p>
-
         </MenuItem>
       </Menu>
     );
@@ -170,11 +158,11 @@ class PrimarySearchAppBar extends React.Component {
               aria-label="Open drawer"
               onClick={this.handleClickMenu}
             >
-
-              <MenuIcon></MenuIcon>
-
+              <MenuIcon />
             </IconButton>
-            <Link to="/" style={{ textDecoration: 'none' }}><h1 className="logo">Delfinagram</h1></Link>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <h1 className={styles.Logo}>Delfinagram</h1>
+            </Link>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -189,8 +177,16 @@ class PrimarySearchAppBar extends React.Component {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <MenuItem><Link className="itemMenu" to="/newPost">Add a post</Link></MenuItem>
-              <MenuItem ><Link className="itemMenu" to="/myPosts">My posts</Link></MenuItem>
+              <MenuItem>
+                <Link className="itemMenu" to="/newPost">
+                  Add a post
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link className="itemMenu" to="/myPosts">
+                  My posts
+                </Link>
+              </MenuItem>
 
               <IconButton
                 aria-owns={isMenuOpen ? "material-appbar" : undefined}
@@ -224,4 +220,4 @@ PrimarySearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(PrimarySearchAppBar);
+export default withStyles(stylesMUI)(PrimarySearchAppBar);
