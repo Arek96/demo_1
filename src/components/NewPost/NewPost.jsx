@@ -11,6 +11,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import styles from "./NewPost.styles.js";
+import ResetDialog from '../ResetDialog/ResetDialog';
 
 class NewPost extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class NewPost extends Component {
       }
     };
   }
-
+  // dodać do przycisku pojawienie sie dialogu tak samo jak działa drawer
   handleSubmit(event) {
     event.preventDefault();
     let formData = new FormData();
@@ -55,6 +56,9 @@ class NewPost extends Component {
     this.setState({
       selectedFile: event.target.files[0]
     });
+  }
+  handleResetOptions = () => {
+    return <ResetDialog />
   }
   render() {
     const {
@@ -124,8 +128,8 @@ class NewPost extends Component {
                     />
                     Save
               </Button>
-                  <Button size="large" className={classes.cancel}>
-                    Cancel
+                  <Button onClick={this.handleResetOptions} size="large" className={classes.cancel}>
+                    Reset
               </Button>
 
                 </CardActions>
