@@ -9,6 +9,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import Grid from "@material-ui/core/Grid";
 import styles from "./NewPost.styles.js";
 
 class NewPost extends Component {
@@ -57,77 +58,83 @@ class NewPost extends Component {
   }
   render() {
     const {
-        post: { title, text }
-      } = this.state,
+      post: { title, text }
+    } = this.state,
       { classes } = this.props;
     return (
       <>
-        <Card className={classes.card}>
-          <form className={style.Form} onSubmit={this.handleSubmit}>
-            <CardContent>
-              <h2 className={style.FormHeader}>Add a new Post</h2>
-              <TextField
-                label="Title"
-                className={classes.FormControl}
-                value={title}
-                onChange={this.handleTitleChange}
-                margin="normal"
-                variant="outlined"
-                placeholder="Write a title..."
-              />
+        <Grid
+          container
 
-              <TextField
-                label="Text"
-                className={classes.FormControl}
-                value={text}
-                multiline
-                rows="8"
-                onChange={this.handleTextChange}
-                margin="normal"
-                variant="outlined"
-                placeholder="Write an information about post..."
-              />
+          justify="center"
+          alignContent="center"
+        >
+          <Grid item xs={12}>
+            <Card className={classes.card}>
+              <form className={style.Form} onSubmit={this.handleSubmit}>
+                <CardContent>
+                  <h2 className={style.FormHeader}>Add a new Post</h2>
+                  <TextField
+                    label="Title"
+                    className={classes.FormControl}
+                    value={title}
+                    onChange={this.handleTitleChange}
+                    margin="normal"
+                    variant="outlined"
+                    placeholder="Write a title..."
+                  />
 
-              <input
-                accept="image/*"
-                style={{ display: "none" }}
-                id="raised-button-file"
-                multiple
-                type="file"
-                onChange={this.handlePhotoChange}
-              />
-              <label htmlFor="raised-button-file">
-                <Button
-                  variant="contained"
-                  color="default"
-                  component="span"
-                  className={classNames(classes.upload, classes.FormControl)}
-                  size="large"
-                >
-                  Upload
+                  <TextField
+                    label="Text"
+                    className={classes.FormControl}
+                    value={text}
+                    multiline
+                    rows="8"
+                    onChange={this.handleTextChange}
+                    margin="normal"
+                    variant="outlined"
+                    placeholder="Write an information about post..."
+                  />
+
+                  <input
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    id="raised-button-file"
+                    multiple
+                    type="file"
+                    onChange={this.handlePhotoChange}
+                  />
+                  <label htmlFor="raised-button-file">
+                    <Button
+                      variant="contained"
+                      color="default"
+                      component="span"
+                      className={classNames(classes.upload, classes.FormControl)}
+                      size="large"
+                    >
+                      Upload
                   <CloudUploadIcon className={classes.rightIcon} />
-                </Button>
-              </label>
-            </CardContent>
-            <CardActions className={style.FormResult}>
-              <Button variant="contained" size="large" className={classes.save}>
-                <SaveIcon
-                  className={classNames(classes.leftIcon, classes.iconSmall)}
-                />
-                Save
+                    </Button>
+                  </label>
+                </CardContent>
+                <CardActions className={style.FormResult}>
+                  <Button variant="contained" size="large" className={classes.save}>
+                    <SaveIcon
+                      className={classNames(classes.leftIcon, classes.iconSmall)}
+                    />
+                    Save
               </Button>
-              <Button size="large" className={classes.cancel}>
-                Cancel
+                  <Button size="large" className={classes.cancel}>
+                    Cancel
               </Button>
-              {/* </div> */}
-            </CardActions>
-          </form>
-        </Card>
+
+                </CardActions>
+              </form>
+            </Card>
+          </Grid>
+        </Grid>
       </>
     );
   }
 }
-// NewPost.propTypes = {
-//     classes: PropTypes.object.isRequired,
-//   };
 export default withStyles(styles)(NewPost);
