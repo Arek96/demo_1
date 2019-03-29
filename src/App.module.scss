@@ -1,0 +1,39 @@
+@font-face {
+  font-family: "RichardMurray";
+  src: url("./assets/fonts/webfonts_RichardMurray/RichardMurray.ttf.woff")
+      format("woff"),
+    url("./assets/fonts/webfonts_RichardMurray/RichardMurray.ttf.svg#RichardMurray")
+      format("svg"),
+    url("./assets/fonts/webfonts_RichardMurray/RichardMurray.ttf.eot"),
+    url("./assets/fonts/webfonts_RichardMurray/RichardMurray.ttf.eot?#iefix")
+      format("embedded-opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.DataContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  margin: 0 auto;
+}
+footer {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  height: 10vh;
+  font-size: 30px;
+  background-color: black;
+  color: white;
+  line-height: 10vh;
+  font-family: "RichardMurray";
+}
