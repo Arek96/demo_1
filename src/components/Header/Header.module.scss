@@ -48,36 +48,54 @@
   font-family: "roboto";
   font-size: 20px;
 }
-
-li:last-of-type .ItemMenu {
-  margin-right: 80px;
-}
-@media (max-width: 1024px) {
-  
-  
+@media (max-width: 1024px) and (orientation: portrait) {
+  .Logo{
+    font-size: 2.8rem;
+    line-height: 12vh;
+  }
 }
 
-@media (max-width: 812px) and (orientation: landscape) {
- 
-}
-
-@media (max-width: 533px) and (orientation: landscape) {
-
-
-}
-
+@media (max-width: 812px) and (orientation: portrait) {
+  .Logo{
+    font-size: 2.2rem;
+    line-height: 12vh;
+  }
+ }
 @media (max-width: 414px) and (orientation: portrait) {
-  
+  .Logo {
+    font-size: 1.9rem;
+    padding-right: 0.8rem;
+  }
 }
-
-@media (max-width: 360px) and (orientation: portrait) {
-
-  
-
+@media (max-width: 375) and (orientation: portrait) {
+  .Logo {
+    font-size: 1.9rem;
+    padding-right: 5rem;
+  }
 }
-
 @media (max-width: 320px) and (orientation: portrait) {
+  
+  .Logo {
+    font-size: 1.8rem;
+    padding-right: 1rem;
+  }
+}
+@media (max-width: 667px) and (orientation: landscape) {
+  .Logo {
+    font-size: 1.7rem;
+    padding-right: 1.5rem;
+  }
+}
+@media (max-width: 815px) and (orientation: landscape) {
+  .Logo {
+    font-size: 2.3rem;
+    padding-right: 1.5rem;
+  }
+}
 
-
-
+@media (max-width: 1366px)  and (orientation: landscape) {
+  
+  .Logo{
+    font-size: 3rem;
+  }
 }

@@ -18,14 +18,18 @@ import style from "../Header/Header.module.scss";
 
 const styles = theme => ({
   root: {
-    width: "100%"
+    width: "100%",
+
   },
   grow: {
     flexGrow: 1
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20
+    marginRight: 20,
+    [theme.breakpoints.down('xs')]: {
+      marginRight: 6,
+    }
   },
   title: {
     display: "none",
@@ -45,7 +49,7 @@ const styles = theme => ({
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing.unit * 3,
-      width: "auto"
+      width: "auto",
     }
   },
   searchIcon: {
@@ -83,7 +87,7 @@ const styles = theme => ({
     [theme.breakpoints.up("md")]: {
       display: "none"
     }
-  }
+  },
 });
 
 class Header extends React.Component {
@@ -136,6 +140,7 @@ class Header extends React.Component {
 
     const renderMobileMenu = (
       <Menu
+        className={classes.buttonMobile}
         anchorEl={mobileMoreAnchorEl}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
