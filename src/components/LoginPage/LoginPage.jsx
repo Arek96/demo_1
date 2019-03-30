@@ -15,6 +15,7 @@ class LoginPage extends Component {
   //this function gets the response from google authentication retrieved in child component GoogleLoginButton
   handleGoogleResp(response) {
     //this function passes the authentication token to a parent component of LoginPage
+    sessionStorage.setItem("authToken", response.authenticationToken);
     this.props.passAuthToken(response.authenticationToken);
   }
   render() {
@@ -26,7 +27,7 @@ class LoginPage extends Component {
           justify="center"
           alignContent="center"
         >
-          <Grid item xs={8} sm={6} md={4} lg={3} xl={2}>
+          <Grid item xs={10} sm={8} md={6} lg={5} xl={4}>
             <Card className={style.Card}>
               <Grid
                 container

@@ -1,3 +1,4 @@
+
 @font-face {
   font-family: "RichardMurray";
   src: url("./assets/fonts/webfonts_RichardMurray/RichardMurray.ttf.woff")
@@ -15,17 +16,21 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-.DataContainer {
-  min-height: 100vh;
+.Main {
   display: flex;
-  flex-direction: row;
-  align-items: center;
   justify-content: center;
+  align-content: center;
   width: 70%;
   margin: 0 auto;
+  min-height: 100vh;
 }
-footer {
+
+
+
+.App {
+  text-align: center;
+}
+.Footer {
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -37,3 +42,4 @@ footer {
   line-height: 10vh;
   font-family: "RichardMurray";
 }
+

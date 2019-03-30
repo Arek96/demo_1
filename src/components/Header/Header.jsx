@@ -4,8 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
-import { MenuItem, MenuList, Button } from "@material-ui/core";
-import Menu from "@material-ui/core/Menu";
+import { Menu, MenuItem, MenuList, Button } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -14,9 +13,14 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Drawer from "@material-ui/core/Drawer";
-import style from "../Header/Header.module.scss";
+import style from "./Header.module.scss";
 
-const styles = theme => ({
+
+
+
+
+const stylesMUI = theme => ({
+
   root: {
     width: "100%"
   },
@@ -110,9 +114,11 @@ class Header extends React.Component {
   };
 
   handleClickMenu = () => {
+
     this.setState(prevState => ({
       open: !prevState.open
     }));
+
   };
 
   render() {
@@ -129,8 +135,10 @@ class Header extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
+
         <MenuItem onClick={this.handleMenuClose}>Log In</MenuItem>
         <MenuItem onClick={this.handleMenuClose}>Sign Up</MenuItem>
+
       </Menu>
     );
 
@@ -146,6 +154,7 @@ class Header extends React.Component {
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
+
           <p>Log In</p>
         </MenuItem>
         <MenuItem onClick={this.handleProfileMenuOpen}>
@@ -153,6 +162,7 @@ class Header extends React.Component {
             <AccountCircle />
           </IconButton>
           <p>Sign In</p>
+
         </MenuItem>
       </Menu>
     );
@@ -170,7 +180,9 @@ class Header extends React.Component {
               <MenuIcon />
             </IconButton>
             <Link to="/" style={{ textDecoration: "none" }}>
+
               <h1 className={style.Logo}>Delfinagram</h1>
+
             </Link>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -187,12 +199,16 @@ class Header extends React.Component {
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <MenuItem>
+
                 <Link className={style.ItemMenu} to="/newPost">
+
                   Add a post
                 </Link>
               </MenuItem>
               <MenuItem>
+
                 <Link className={style.ItemMenu} to="/myPosts">
+
                   My posts
                 </Link>
               </MenuItem>
@@ -246,4 +262,6 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
+
 export default withStyles(styles)(Header);
+
