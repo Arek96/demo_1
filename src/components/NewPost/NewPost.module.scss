@@ -1,17 +1,11 @@
-// .FormContainer {
-//   min-height: 70vh;
-//   // background-color: blue;
-// }
+
 .Form {
-  position: relative;
-  width: 600px;
+  width: 40vw;
   min-height: 70vh;
   display: flex;
   flex-direction: column;
-  // flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-
   margin: 0 50%;
 }
 .FormHeader {

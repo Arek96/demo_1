@@ -142,17 +142,17 @@ class Header extends React.Component {
         open={isMobileMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleProfileMenuOpen}>
+        <MenuItem onClick={this.handleMenuClose}>
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
-          <p>Log In</p>
+          Log In
         </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
+        <MenuItem onClick={this.handleMenuClose}>
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
-          <p>Sign In</p>
+          Sign Up
         </MenuItem>
       </Menu>
     );
