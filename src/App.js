@@ -9,7 +9,6 @@ import Grid from "@material-ui/core/Grid/Grid";
 
 import NotLogged from "./components/NotLogged/NotLogged";
 
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +24,9 @@ class App extends Component {
   }
 
   render() {
+    const styles = theme => ({
+      toolbar: theme.mixins.toolbar
+    });
     const authRoutes =
       this.state.authToken == null ? (
         <Route path="/" component={NotLogged} />
@@ -37,14 +39,19 @@ class App extends Component {
     return (
       <Router>
         <div className={style.App}>
-          <header>
-
-<Header />
-          </header>
-
+          <Header />
           <main className={style.Main}>
-            <Grid xs={12} sm={10} lg={8} justify="center">
-              <section>
+            <Grid
+              container
+              justify="center"
+              alignContent="center"
+              xs={12}
+              sm={10}
+              md={8}
+              lg={6}
+              xl={5}
+            >
+              <section className={style.Section}>
                 <Switch>
                   <Route
                     path="/login"
@@ -61,7 +68,6 @@ class App extends Component {
           <footer className={style.Footer}>
             Copyright &copy; 2019 Delfinagram
           </footer>
-
         </div>
       </Router>
     );

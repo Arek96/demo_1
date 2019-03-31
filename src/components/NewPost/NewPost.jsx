@@ -10,6 +10,7 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import styles from "./NewPost.styles.js";
+import { Grid } from "@material-ui/core";
 
 class NewPost extends Component {
   constructor(props) {
@@ -61,7 +62,7 @@ class NewPost extends Component {
       } = this.state,
       { classes } = this.props;
     return (
-      <>
+      <Grid container xs={10} justify="center" alignContent="center">
         <Card className={classes.card}>
           <form className={style.Form} onSubmit={this.handleSubmit}>
             <CardContent>
@@ -123,7 +124,7 @@ class NewPost extends Component {
             </CardActions>
           </form>
         </Card>
-      </>
+      </Grid>
     );
   }
 }

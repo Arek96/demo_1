@@ -12,15 +12,10 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import Drawer from "@material-ui/core/Drawer";
 import style from "./Header.module.scss";
+import SlideMenu from "./SlideMenu/SlideMenu";
 
-
-
-
-
-const stylesMUI = theme => ({
-
+const styles = theme => ({
   root: {
     width: "100%"
   },
@@ -38,6 +33,7 @@ const stylesMUI = theme => ({
     }
   },
   search: {
+    display: "flex",
     position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -114,11 +110,9 @@ class Header extends React.Component {
   };
 
   handleClickMenu = () => {
-
     this.setState(prevState => ({
       open: !prevState.open
     }));
-
   };
 
   render() {
@@ -135,10 +129,8 @@ class Header extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-
         <MenuItem onClick={this.handleMenuClose}>Log In</MenuItem>
         <MenuItem onClick={this.handleMenuClose}>Sign Up</MenuItem>
-
       </Menu>
     );
 
@@ -162,7 +154,6 @@ class Header extends React.Component {
             <AccountCircle />
           </IconButton>
           <p>Sign In</p>
-
         </MenuItem>
       </Menu>
     );
@@ -180,35 +171,30 @@ class Header extends React.Component {
               <MenuIcon />
             </IconButton>
             <Link to="/" style={{ textDecoration: "none" }}>
-
               <h1 className={style.Logo}>Delfinagram</h1>
-
             </Link>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search post..."
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-              />
-            </div>
+
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search post..."
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput
+                  }}
+                />
+              </div>
               <MenuItem>
-
                 <Link className={style.ItemMenu} to="/newPost">
-
                   Add a post
                 </Link>
               </MenuItem>
               <MenuItem>
-
                 <Link className={style.ItemMenu} to="/myPosts">
-
                   My posts
                 </Link>
               </MenuItem>
@@ -233,24 +219,10 @@ class Header extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
-        <Drawer open={this.state.open} onClose={this.handleClickMenu}>
-          <div
-            className={style.DrawerDiv}
-            tabIndex={0}
-            role="button"
-            onClick={this.handleClickMenu}
-            onKeyDown={this.handleClickMenu}
-          >
-            <MenuList>
-              <MenuItem>
-                <Link to="/newPost">Add a post</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link to="/myPosts">My posts</Link>
-              </MenuItem>
-            </MenuList>
-          </div>
-        </Drawer>
+        <SlideMenu
+          open={this.state.open}
+          handleClickMenu={this.handleClickMenu}
+        />
         {renderMenu}
         {renderMobileMenu}
       </div>
@@ -262,6 +234,4 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-
 export default withStyles(styles)(Header);
-

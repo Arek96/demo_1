@@ -2,20 +2,19 @@
 //   min-height: 70vh;
 //   // background-color: blue;
 // }
+
 .Form {
-  position: relative;
-  width: 600px;
+  width: 90%;
   min-height: 70vh;
   display: flex;
   flex-direction: column;
+  align-content: center;
   // flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-
-  margin: 0 50%;
 }
 .FormHeader {
-  font-size: 3.5rem;
+  font-size: 3rem;
   font-family: "RichardMurray";
   font-weight: 300;
   margin-bottom: 20px;

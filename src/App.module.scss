@@ -1,4 +1,3 @@
-
 @font-face {
   font-family: "RichardMurray";
   src: url("./assets/fonts/webfonts_RichardMurray/RichardMurray.ttf.woff")
@@ -20,16 +19,21 @@
   display: flex;
   justify-content: center;
   align-content: center;
-  width: 70%;
   margin: 0 auto;
   min-height: 100vh;
+  margin-top: 90px !important;
 }
-
-
 
 .App {
   text-align: center;
 }
+.Section {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
 .Footer {
   display: flex;
   flex-direction: row;
@@ -42,4 +46,3 @@
   line-height: 10vh;
   font-family: "RichardMurray";
 }
-

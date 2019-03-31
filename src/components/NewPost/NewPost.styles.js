@@ -8,7 +8,7 @@ const styles = theme => ({
     border: "3px solid rgba(0, 0, 0, 0.2)"
   },
   FormControl: {
-    width: 500
+    width: "100%"
   },
   upload: {
     color: "black",
