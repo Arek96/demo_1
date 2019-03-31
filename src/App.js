@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-// import "./App.module.scss";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import NewPost from "./components/NewPost/NewPost";
 import PostLists from "./components/PostLists/PostLists";
 import Header from "./components/Header/Header";
@@ -27,7 +26,7 @@ class App extends Component {
             <Header />
           </header>
           <main className={style.DataContainer}>
-            <section>
+            <section className={style.DataSection}>
               <Route path="/newPost/" component={NewPost} />
               <Route path="/myPosts/" component={PostLists} />
             </section>

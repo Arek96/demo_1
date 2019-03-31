@@ -5,7 +5,8 @@ const styles = theme => ({
     justifyContent: "center",
     boxShadow: "0 0 20px 0 rgba(0, 0, 0, 0.7)",
     border: "3px solid rgba(0, 0, 0, 0.2)",
-    marginBottom: '9rem'
+    marginBottom: '9rem',
+    marginUp: '4rem'
   },
   FormControl: {
     width: '25vw'
