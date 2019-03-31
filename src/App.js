@@ -17,6 +17,12 @@ class App extends Component {
       authToken: sessionStorage.getItem("authToken")
     };
     this.getAuthToken = this.getAuthToken.bind(this);
+    this.resetAuthToken = this.resetAuthToken.bind(this);
+  }
+  resetAuthToken() {
+    this.setState({
+      authToken: null
+    });
   }
   getAuthToken(authToken) {
     this.setState({
@@ -37,7 +43,7 @@ class App extends Component {
     return (
       <Router>
         <div className={style.App}>
-          <Header />
+          <Header resetAuthToken={this.resetAuthToken} />
           <main className={style.Main}>
             <Grid
               container
