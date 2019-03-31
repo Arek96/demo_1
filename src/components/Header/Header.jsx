@@ -226,6 +226,7 @@ class Header extends React.Component {
         <SlideMenu
           open={this.state.open}
           handleClickMenu={this.handleClickMenu}
+          resetAuthToken={this.props.resetAuthToken}
         />
         {renderMenu}
         {renderMobileMenu}

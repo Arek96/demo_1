@@ -4,6 +4,7 @@ import { Drawer } from "@material-ui/core/";
 import { MenuItem, MenuList } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import style from "./SlideMenu.module.scss";
+import LogOut from "./LogOut/LogOut";
 
 class SlideMenu extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class SlideMenu extends Component {
           onKeyDown={this.handleClickMenu}
         >
           <MenuList className={style.MenuList}>
+            <LogOut resetAuthToken={this.props.resetAuthToken} />
             <MenuItem className={style.MenuItem}>
               <Link to="/newPost">Add a post</Link>
             </MenuItem>
