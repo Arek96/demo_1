@@ -38,7 +38,6 @@ class NewPost extends Component {
       openDialog: false,
     };
   }
-  // dodać do przycisku pojawienie sie dialogu tak samo jak działa drawer
   handleSubmit(event) {
     event.preventDefault();
     let formData = new FormData();
