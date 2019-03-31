@@ -20,47 +20,44 @@ class LoginPage extends Component {
   }
   render() {
     return (
-      <div className={style.LoginPage}>
-        <Grid
-          container
-          className={style.LoginPageGrid}
-          justify="center"
-          alignContent="center"
-        >
-          <Grid item xs={10} sm={8} md={6} lg={5} xl={4}>
-            <Card className={style.Card}>
-              <Grid
-                container
-                className={style.CardInnerGrid}
-                direction="column"
-                justify="space-around"
-                alignItems="center"
+      <Grid
+        container
+        className={style.LoginPageGrid}
+        justify="center"
+        alignContent="center"
+        xs={10}
+      >
+        <Card className={style.Card}>
+          <Grid
+            container
+            className={style.CardInnerGrid}
+            direction="column"
+            justify="space-around"
+            alignItems="center"
+          >
+            <CardContent>
+              <Typography
+                className={style.WelcomeSign}
+                color="textPrimary"
+                variant="h5"
+                align="center"
               >
-                <CardContent>
-                  <Typography
-                    className={style.WelcomeSign}
-                    color="textPrimary"
-                    variant="h5"
-                    align="center"
-                  >
-                    Welcome
-                  </Typography>
-                  <Typography
-                    color="textPrimary"
-                    variant="subtitle1"
-                    align="center"
-                  >
-                    Log in using socialmedia buttons below
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <GoogleLoginButton handleGoogleResp={this.handleGoogleResp} />
-                </CardActions>
-              </Grid>
-            </Card>
+                Welcome
+              </Typography>
+              <Typography
+                color="textPrimary"
+                variant="subtitle1"
+                align="center"
+              >
+                Log in using socialmedia buttons below
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <GoogleLoginButton handleGoogleResp={this.handleGoogleResp} />
+            </CardActions>
           </Grid>
-        </Grid>
-      </div>
+        </Card>
+      </Grid>
     );
   }
 }

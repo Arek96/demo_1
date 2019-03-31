@@ -11,9 +11,9 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import style from "./Header.module.scss";
 import SlideMenu from "./SlideMenu/SlideMenu";
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
   root: {
@@ -24,7 +24,10 @@ const styles = theme => ({
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20
+    marginRight: 20,
+    [theme.breakpoints.down("xs")]: {
+      marginRight: 6
+    }
   },
   title: {
     display: "none",
@@ -136,24 +139,25 @@ class Header extends React.Component {
 
     const renderMobileMenu = (
       <Menu
+        className={classes.buttonMobile}
         anchorEl={mobileMoreAnchorEl}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         open={isMobileMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleProfileMenuOpen}>
+        <MenuItem onClick={this.handleMenuClose}>
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
 
           <p>Log In</p>
         </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
+        <MenuItem onClick={this.handleMenuClose}>
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
-          <p>Sign In</p>
+          Sign Up
         </MenuItem>
       </Menu>
     );

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 import NewPost from "./components/NewPost/NewPost";
 import PostLists from "./components/PostLists/PostLists";
 import Header from "./components/Header/Header";
@@ -24,9 +25,6 @@ class App extends Component {
   }
 
   render() {
-    const styles = theme => ({
-      toolbar: theme.mixins.toolbar
-    });
     const authRoutes =
       this.state.authToken == null ? (
         <Route path="/" component={NotLogged} />
