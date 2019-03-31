@@ -95,10 +95,6 @@ class Header extends React.Component {
     mobileMoreAnchorEl: null
   };
 
-  handleProfileMenuOpen = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
   handleMenuClose = () => {
     this.setState({ anchorEl: null });
     this.handleMobileMenuClose();
@@ -123,19 +119,6 @@ class Header extends React.Component {
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    const renderMenu = (
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        open={isMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMenuClose}>Log In</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>Sign Up</MenuItem>
-      </Menu>
-    );
 
     const renderMobileMenu = (
       <Menu
@@ -180,6 +163,16 @@ class Header extends React.Component {
 
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
+              <MenuItem>
+                <Link className={style.ItemMenu} to="/newPost">
+                  Add a post
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link className={style.ItemMenu} to="/myPosts">
+                  My posts
+                </Link>
+              </MenuItem>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
                   <SearchIcon />
@@ -192,34 +185,16 @@ class Header extends React.Component {
                   }}
                 />
               </div>
-              <MenuItem>
-                <Link className={style.ItemMenu} to="/newPost">
-                  Add a post
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link className={style.ItemMenu} to="/myPosts">
-                  My posts
-                </Link>
-              </MenuItem>
-
               <IconButton
                 aria-owns={isMenuOpen ? "material-appbar" : undefined}
                 aria-haspopup="true"
-                onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
                 <AccountCircle />
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>
-              <IconButton
-                aria-haspopup="true"
-                onClick={this.handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon />
-              </IconButton>
+              <SearchIcon />
             </div>
           </Toolbar>
         </AppBar>
@@ -228,7 +203,7 @@ class Header extends React.Component {
           handleClickMenu={this.handleClickMenu}
           resetAuthToken={this.props.resetAuthToken}
         />
-        {renderMenu}
+
         {renderMobileMenu}
       </div>
     );

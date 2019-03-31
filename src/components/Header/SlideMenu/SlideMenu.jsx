@@ -21,7 +21,9 @@ class SlideMenu extends Component {
           onKeyDown={this.handleClickMenu}
         >
           <MenuList className={style.MenuList}>
-            <LogOut resetAuthToken={this.props.resetAuthToken} />
+            {sessionStorage.getItem("authToken") != null ? (
+              <LogOut resetAuthToken={this.props.resetAuthToken} />
+            ) : null}
             <MenuItem className={style.MenuItem}>
               <Link to="/newPost">Add a post</Link>
             </MenuItem>

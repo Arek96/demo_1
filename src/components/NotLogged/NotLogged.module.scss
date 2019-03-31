@@ -4,5 +4,10 @@
   justify-content: center;
   align-items: center;
 }
-.Message {
+.Link {
+  text-decoration: none;
+  color: white;
+  &:visited {
+    color: white;
+  }
 }
