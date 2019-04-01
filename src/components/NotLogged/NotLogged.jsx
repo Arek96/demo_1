@@ -10,7 +10,7 @@ const NotLogged = () => (
       You are not logged in, to go any further and explore our awesome app{" "}
       <Button variant="contained" color="primary">
         <Link className={styles.Link} to="/login">
-          Logg in
+          Log in
         </Link>
       </Button>
     </Typography>
