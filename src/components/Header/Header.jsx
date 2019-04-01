@@ -136,16 +136,6 @@ class Header extends React.Component {
 
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <MenuItem>
-                <Link className={style.ItemMenu} to="/newPost">
-                  Add a post
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link className={style.ItemMenu} to="/myPosts">
-                  My posts
-                </Link>
-              </MenuItem>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
                   <SearchIcon />
