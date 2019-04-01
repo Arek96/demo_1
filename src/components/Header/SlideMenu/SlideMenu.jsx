@@ -7,9 +7,7 @@ import style from "./SlideMenu.module.scss";
 import LogOut from "./LogOut/LogOut";
 
 class SlideMenu extends Component {
-  constructor(props) {
-    super(props);
-  }
+
   render() {
     return (
       <Drawer open={this.props.open} onClose={this.props.handleClickMenu}>
@@ -21,10 +19,10 @@ class SlideMenu extends Component {
           onKeyDown={this.handleClickMenu}
         >
           <MenuList className={style.MenuList}>
-            {sessionStorage.getItem("authToken") != null ? (
+            {sessionStorage.getItem("authToken") !== null ? (
               <LogOut resetAuthToken={this.props.resetAuthToken} />
             ) : null}
-            <MenuItem className={style.MenuItem}>
+            <MenuItem>
               <Link to="/newPost">Add a post</Link>
             </MenuItem>
             <MenuItem>
