@@ -67,10 +67,10 @@ class NewPost extends Component {
     });
   }
   handleDialog = () => {
-    this.state.post.title.length > 0 && this.state.post.text.length > 0
+    this.state.post.title.length > 0 && this.state.post.text.length > 0 && Boolean(this.state.selectedFile)
       ? this.setState(prevState => ({
-          openDialog: !prevState.openDialog
-        }))
+        openDialog: !prevState.openDialog
+      }))
       : alert("Please fill in all informations about a post");
   };
   handleDataReset = () => {
@@ -85,8 +85,8 @@ class NewPost extends Component {
   };
   render() {
     const {
-        post: { title, text }
-      } = this.state,
+      post: { title, text }
+    } = this.state,
       { classes } = this.props;
     return (
       <Grid container xs={10} justify="center" alignContent="center">

@@ -4,13 +4,13 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
-import { Menu, MenuItem, MenuList, Button } from "@material-ui/core";
+import { Menu, MenuItem } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MoreIcon from "@material-ui/icons/MoreVert";
+
 import style from "./Header.module.scss";
 import SlideMenu from "./SlideMenu/SlideMenu";
 import { Link } from "react-router-dom";
@@ -115,36 +115,9 @@ class Header extends React.Component {
   };
 
   render() {
-    const { anchorEl, mobileMoreAnchorEl } = this.state;
+    const { anchorEl } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    const renderMobileMenu = (
-      <Menu
-        className={classes.buttonMobile}
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        open={isMobileMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMenuClose}>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-
-          <p>Log In</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-          Sign Up
-        </MenuItem>
-      </Menu>
-    );
-
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -203,8 +176,6 @@ class Header extends React.Component {
           handleClickMenu={this.handleClickMenu}
           resetAuthToken={this.props.resetAuthToken}
         />
-
-        {renderMobileMenu}
       </div>
     );
   }
@@ -213,5 +184,4 @@ class Header extends React.Component {
 Header.propTypes = {
   classes: PropTypes.object.isRequired
 };
-
 export default withStyles(styles)(Header);
