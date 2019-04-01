@@ -17,6 +17,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
+import Alert from "./Alert/Alert";
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -35,6 +36,7 @@ class NewPost extends Component {
         title: "",
         text: ""
       },
+      elAnchor: null,
       openDialog: false
     };
   }
@@ -66,13 +68,21 @@ class NewPost extends Component {
       selectedFile: event.target.files[0]
     });
   }
-  handleDialog = () => {
-    this.state.post.title.length > 0 && this.state.post.text.length > 0 && Boolean(this.state.selectedFile)
+  handleDialog = event => {
+    event.preventDefault();
+    console.log(event.currentTarget);
+    this.state.post.title.length > 0 &&
+    this.state.post.text.length > 0 &&
+    !!this.state.selectedFile
       ? this.setState(prevState => ({
-        openDialog: !prevState.openDialog
-      }))
-      : alert("Please fill in all informations about a post");
+          openDialog: !prevState.openDialog
+        }))
+      : this.setState(() => ({
+          elAnchor: event.currentTarget
+        }));
   };
+
+  // alert("Please fill in all informations about a post");
   handleDataReset = () => {
     this.setState(prevState => ({
       post: {
@@ -85,8 +95,8 @@ class NewPost extends Component {
   };
   render() {
     const {
-      post: { title, text }
-    } = this.state,
+        post: { title, text }
+      } = this.state,
       { classes } = this.props;
     return (
       <Grid container xs={10} justify="center" alignContent="center">
@@ -178,6 +188,7 @@ class NewPost extends Component {
             </Button>
           </DialogActions>
         </Dialog>
+        <Alert open={this.state.elAnchor} />
       </Grid>
     );
   }
