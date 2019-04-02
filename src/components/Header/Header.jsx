@@ -4,7 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
-import { Menu, MenuItem } from "@material-ui/core";
+import { Menu, MenuItem, Typography } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -90,10 +90,13 @@ const styles = theme => ({
 });
 
 class Header extends React.Component {
-  state = {
-    anchorEl: null,
-    mobileMoreAnchorEl: null
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      anchorEl: null,
+      mobileMoreAnchorEl: null
+    };
+  }
 
   handleMenuClose = () => {
     this.setState({ anchorEl: null });
@@ -118,6 +121,18 @@ class Header extends React.Component {
     const { anchorEl } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
+    let userMessage = Boolean(this.props.user) ? (
+      <IconButton
+        aria-owns={isMenuOpen ? "material-appbar" : undefined}
+        aria-haspopup="true"
+        color="inherit"
+      >
+        <Typography>{`Hello, ${this.props.user.GivenName}`}</Typography>
+        <AccountCircle />
+      </IconButton>
+    ) : (
+      <Link to="login">Log In</Link>
+    );
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -148,13 +163,8 @@ class Header extends React.Component {
                   }}
                 />
               </div>
-              <IconButton
-                aria-owns={isMenuOpen ? "material-appbar" : undefined}
-                aria-haspopup="true"
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
+
+              {userMessage}
             </div>
             <div className={classes.sectionMobile}>
               <SearchIcon />
