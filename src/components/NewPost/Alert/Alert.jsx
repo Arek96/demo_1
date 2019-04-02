@@ -1,16 +1,17 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Popover from "@material-ui/core/Popover";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const styles = theme => ({
   typography: {
     margin: theme.spacing.unit * 2
   }
 });
-
 class Alert extends React.Component {
   constructor(props) {
     super(props);
@@ -18,59 +19,48 @@ class Alert extends React.Component {
       anchorEl: null
     };
   }
-
-  //   handleClick = event => {
-  //     this.setState({
-  //       anchorEl: event.currentTarget,
-  //     });
-  //   };
-
   handleClose = () => {
     this.setState({
       anchorEl: null
     });
   };
-
+  componentDidUpdate = prevProps => {
+    if (this.props.open !== prevProps.open) {
+      this.setState({
+        anchorEl: this.props.open
+      });
+    }
+  };
   render() {
-    const { classes } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
-
+    const open = Boolean(this.state.anchorEl);
     return (
       <div>
-        {/* <Button
-          aria-owns={open ? "simple-popper" : undefined}
-          aria-haspopup="true"
-          variant="contained"
-          onClick={this.handleClick}
-        >
-          Open Popover
-        </Button> */}
-        <Popover
-          id="simple-popper"
+        <Dialog
           open={open}
-          anchorEl={anchorEl}
           onClose={this.handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center"
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "center"
-          }}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
         >
-          <Typography className={classes.typography}>
-            The content of the Popover.
-          </Typography>
-        </Popover>
+          <DialogContent>
+            <DialogContentText
+              style={{
+                color: "black",
+                fontFamily: "roboto",
+                fontSize: "1.2rem",
+                textAlign: "center"
+              }}
+            >
+              Please fill in all informations about a post !
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary" autoFocus>
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
 }
-
-// SimplePopover.propTypes = {
-//   classes: PropTypes.object.isRequired
-// };
-
 export default withStyles(styles)(Alert);

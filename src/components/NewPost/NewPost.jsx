@@ -11,22 +11,12 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import styles from "./NewPost.styles.js";
 import { Grid } from "@material-ui/core";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Slide from "@material-ui/core/Slide";
 import Alert from "./Alert/Alert";
-
-function Transition(props) {
-  return <Slide direction="up" {...props} />;
-}
+import ResetDialog from "./ResetDialog/ResetDialog";
 
 class NewPost extends Component {
   constructor(props) {
     super(props);
-
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handlePhotoChange = this.handlePhotoChange.bind(this);
@@ -69,8 +59,6 @@ class NewPost extends Component {
     });
   }
   handleDialog = event => {
-    event.preventDefault();
-    console.log(event.currentTarget);
     this.state.post.title.length > 0 &&
     this.state.post.text.length > 0 &&
     !!this.state.selectedFile
@@ -81,8 +69,6 @@ class NewPost extends Component {
           elAnchor: event.currentTarget
         }));
   };
-
-  // alert("Please fill in all informations about a post");
   handleDataReset = () => {
     this.setState(prevState => ({
       post: {
@@ -164,30 +150,11 @@ class NewPost extends Component {
             </CardActions>
           </form>
         </Card>
-        <Dialog
+        <ResetDialog
           open={this.state.openDialog}
-          TransitionComponent={Transition}
-          keepMounted
-          aria-labelledby="alert-dialog-slide-title"
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle id="alert-dialog-slide-title">
-            {"Do you want to reset the data provided to add a post ?"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              The changes you made won't be saved !
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleDataReset} color="primary">
-              Reset
-            </Button>
-            <Button onClick={this.handleDialog} color="primary">
-              Cancel
-            </Button>
-          </DialogActions>
-        </Dialog>
+          handleDialog={this.handleDialog}
+          handleDataReset={this.handleDataReset}
+        />
         <Alert open={this.state.elAnchor} />
       </Grid>
     );
