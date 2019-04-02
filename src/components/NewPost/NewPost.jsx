@@ -11,7 +11,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import styles from "./NewPost.styles.js";
 import { Grid } from "@material-ui/core";
-import Alert from "./Alert/Alert";
+// import Alert from "./Alert/Alert";
 import ResetDialog from "./ResetDialog/ResetDialog";
 
 class NewPost extends Component {
@@ -26,7 +26,7 @@ class NewPost extends Component {
         title: "",
         text: ""
       },
-      elAnchor: null,
+      // elAnchor: null,
       openDialog: false
     };
   }
@@ -58,15 +58,13 @@ class NewPost extends Component {
       selectedFile: event.target.files[0]
     });
   }
-  handleDialog = event => {
-    this.state.post.title.length > 0 &&
-    this.state.post.text.length > 0 &&
-    !!this.state.selectedFile
+  handleDialog = () => {
+    this.isSaveEnabled
       ? this.setState(prevState => ({
           openDialog: !prevState.openDialog
         }))
       : this.setState(() => ({
-          elAnchor: event.currentTarget
+          openDialog: null
         }));
   };
   handleDataReset = () => {
@@ -79,6 +77,13 @@ class NewPost extends Component {
     }));
     this.handleDialog();
   };
+  get isSaveEnabled() {
+    return (
+      this.state.post.title.length > 0 &&
+      this.state.post.text.length > 0 &&
+      !!this.state.selectedFile
+    );
+  }
   render() {
     const {
         post: { title, text }
@@ -134,7 +139,12 @@ class NewPost extends Component {
               </label>
             </CardContent>
             <CardActions className={style.FormResult}>
-              <Button variant="contained" size="large" className={classes.save}>
+              <Button
+                variant="contained"
+                size="large"
+                className={classes.save}
+                disabled={!this.isSaveEnabled}
+              >
                 <SaveIcon
                   className={classNames(classes.leftIcon, classes.iconSmall)}
                 />
@@ -144,6 +154,7 @@ class NewPost extends Component {
                 onClick={this.handleDialog}
                 size="large"
                 className={classes.cancel}
+                disabled={!this.isSaveEnabled}
               >
                 Reset
               </Button>
@@ -155,7 +166,7 @@ class NewPost extends Component {
           handleDialog={this.handleDialog}
           handleDataReset={this.handleDataReset}
         />
-        <Alert open={this.state.elAnchor} />
+        {/* <Alert open={this.state.elAnchor} /> */}
       </Grid>
     );
   }
