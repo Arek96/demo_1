@@ -135,13 +135,7 @@ class NewPost extends Component {
               </label>
             </CardContent>
             <CardActions className={style.FormResult}>
-              <Button
-                // className={style.SaveButton}
-                variant="contained"
-                size="large"
-                className={classes.save}
-                disabled={!this.isSaveEnabled}
-              >
+              <Button variant="contained" size="large" className={classes.save}>
                 <SaveIcon
                   className={classNames(classes.leftIcon, classes.iconSmall)}
                 />
@@ -164,6 +158,7 @@ class NewPost extends Component {
           handleDialog={this.handleDialog}
           handleDataReset={this.handleDataReset}
         />
+        <Alert open={this.state.elAnchor} />
       </Grid>
     );
   }
