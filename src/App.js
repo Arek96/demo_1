@@ -16,12 +16,36 @@ class App extends Component {
     this.state = {
       authToken: sessionStorage.getItem("authToken")
     };
+    if (Boolean(this.state.authToken)) {
+      this.getUserFromApi();
+    }
+
+    this.getUserFromApi = this.getUserFromApi.bind(this);
     this.getAuthToken = this.getAuthToken.bind(this);
     this.resetAuthToken = this.resetAuthToken.bind(this);
   }
+  getUserFromApi() {
+    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
+      method: "GET",
+      headers: {
+        "X-ZUMO-AUTH": this.state.authToken
+      }
+    })
+      .then(r => r.json())
+      .then(resp => this.setState({ user: resp }));
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.authToken != this.state.authToken &&
+      Boolean(this.state.authToken)
+    ) {
+      this.getUserFromApi();
+    }
+  }
   resetAuthToken() {
     this.setState({
-      authToken: null
+      authToken: null,
+      user: null
     });
   }
   getAuthToken(authToken) {
@@ -43,7 +67,11 @@ class App extends Component {
     return (
       <Router>
         <div className={style.App}>
-          <Header resetAuthToken={this.resetAuthToken} />
+          <Header
+            resetAuthToken={this.resetAuthToken}
+            authToken={this.state.authToken}
+            user={this.state.user}
+          />
           <main className={style.Main}>
             <Grid
               container
