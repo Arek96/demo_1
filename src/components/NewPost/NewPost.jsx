@@ -11,7 +11,6 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import styles from "./NewPost.styles.js";
 import { Grid } from "@material-ui/core";
-// import Alert from "./Alert/Alert";
 import ResetDialog from "./ResetDialog/ResetDialog";
 
 class NewPost extends Component {
@@ -26,7 +25,6 @@ class NewPost extends Component {
         title: "",
         text: ""
       },
-      // elAnchor: null,
       openDialog: false
     };
   }
