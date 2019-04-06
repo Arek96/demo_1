@@ -19,22 +19,32 @@ class UserProfile extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <Grid container xs={10} justify="center" alignContent="center">
-                <Card className={style.ProfileContainer} >
-                    <CardContent>
-                        <Avatar alt="Profile photo" src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg" className={classes.avatar} />
-                        <Typography>Profile</Typography>
-                        <Button
-                            variant="contained"
-                            size="large"
-                            className={classes.edit}
-                        >
-                            Edit profile
-                        </Button>
-                    </CardContent>
+            <>
+                <Grid container direction='column'>
+                    <Grid item>
 
-                </Card>
-            </Grid>
+                        <Card className={style.ProfileContainer} >
+                            <CardContent>
+                                <Avatar alt="Profile photo" src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg" className={classes.avatar} />
+                                <Typography>Login</Typography>
+                                <Button
+                                    variant="contained"
+                                    size="large"
+                                    className={classes.edit}
+                                >
+                                    Edit profile
+                        </Button>
+                                <Typography>Posts:</Typography>
+                                <Typography>Dawid Pasieka</Typography>
+                                <Typography>Jebany Debil</Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item>
+                        <div style={{ width: '100%', height: 1050, backgroundColor: "gray" }}>Jebac starego w ochapie</div>
+                    </Grid>
+                </Grid>
+            </>
         )
     }
 }

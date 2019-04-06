@@ -37,7 +37,7 @@ class NewPost extends Component {
     fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
       method: "POST",
       headers: {
-        "X-ZUMO-AUTH": this.props.authToken
+        "X-ZUMO-AUTH": sessionStorage.getItem('authToken')
       },
       body: formData
     }).then(r => console.log(r));
@@ -87,7 +87,7 @@ class NewPost extends Component {
     return (
       <Grid container xs={10} justify="center" alignContent="center">
         <Card className={classes.card}>
-          <form className={style.Form} onSubmit={this.handleSubmit}>
+          <form className={style.Form}>
             <CardContent>
               <h2 className={style.FormHeader}>Add a new Post</h2>
               <TextField
@@ -139,6 +139,7 @@ class NewPost extends Component {
                 variant="contained"
                 size="large"
                 className={classes.save}
+                onClick={this.handleSubmit}
               >
                 <SaveIcon
                   className={classNames(classes.leftIcon, classes.iconSmall)}

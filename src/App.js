@@ -81,8 +81,8 @@ class App extends Component {
               xs={12}
               sm={10}
               md={8}
-              lg={6}
-              xl={5}
+              lg={9}
+              xl={7}
             >
               <section className={style.Section}>
                 <Switch>
