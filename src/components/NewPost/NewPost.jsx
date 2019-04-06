@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import style from "../NewPost/NewPost.module.scss";
+
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -9,6 +9,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import style from "../NewPost/NewPost.module.scss";
 import styles from "./NewPost.styles.js";
 import { Grid } from "@material-ui/core";
 import ResetDialog from "./ResetDialog/ResetDialog";
@@ -80,8 +81,8 @@ class NewPost extends Component {
   }
   render() {
     const {
-        post: { title, text }
-      } = this.state,
+      post: { title, text }
+    } = this.state,
       { classes } = this.props;
     return (
       <Grid container xs={10} justify="center" alignContent="center">
