@@ -20,6 +20,9 @@ class SlideMenu extends Component {
         <React.Fragment>
           <LogOut resetAuthToken={this.props.resetAuthToken} />
           <MenuItem>
+            <Link to="/userProfile">My profile</Link>
+          </MenuItem>
+          <MenuItem>
             <Link to="/newPost">Add a post</Link>
           </MenuItem>
           <MenuItem>
@@ -27,8 +30,8 @@ class SlideMenu extends Component {
           </MenuItem>
         </React.Fragment>
       ) : (
-        publicDrawerItems
-      );
+          publicDrawerItems
+        );
     return (
       <Drawer open={this.props.open} onClose={this.props.handleClickMenu}>
         <div
