@@ -12,7 +12,7 @@ for (let i = 0; i < 3; i++) {
 
 }
 
-const PostPhoto = props => {
+const PostPhoto = () => {
 
     return arrayPost.map(element => <Grid item key={post.id}
         xs={10}
