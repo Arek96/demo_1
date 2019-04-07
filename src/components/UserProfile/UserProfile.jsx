@@ -24,7 +24,7 @@ class UserProfile extends Component {
         const { classes } = this.props;
         return (
             <>
-                <Grid container direction='column' style={{ marginTop: '3rem' }}>
+                <Grid container direction='column' className={classes.wrap}>
                     <Grid item
                     >
                         <Card

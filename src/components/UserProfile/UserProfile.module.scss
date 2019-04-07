@@ -9,7 +9,6 @@ $devices_sizes:(("xs", 0px,600px),("sm",600px,960px),("md",960px,1280px), ("lg",
     }
   }
 }
-
 .ProfileContainer{
     display: flex;
     flex-direction: row;
@@ -49,5 +48,4 @@ $devices_sizes:(("xs", 0px,600px),("sm",600px,960px),("md",960px,1280px), ("lg",
             opacity: 0.8;
             transition: 0.3s;
         }
-
 }
