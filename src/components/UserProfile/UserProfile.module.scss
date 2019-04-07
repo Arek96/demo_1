@@ -1,3 +1,36 @@
 .ProfileContainer{
-    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.BioContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+}
+.ButtonContainer{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+}
+
+.PhotosContainer{
+    margin-top: 4rem;
+    margin-bottom: 9rem;  
+}
+.TypographyProperties{
+    margin-bottom: 50px;
+}
+.postImage{
+    
+        padding: 10px;
+        img {
+            width: 100%;
+            height: 100%; 
+        }
+        &:hover{
+            cursor: pointer;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+
 }
