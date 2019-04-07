@@ -41,6 +41,13 @@ class NewPost extends Component {
       },
       body: formData
     }).then(r => console.log(r));
+    this.setState({
+      post: {
+        title: '',
+        text: '',
+      },
+      selectedFile: null,
+    })
   }
   handleTitleChange(event) {
     this.setState({

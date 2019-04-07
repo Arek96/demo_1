@@ -7,6 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import { Grid, Typography, withStyles } from "@material-ui/core";
 import style from "../UserProfile/UserProfile.module.scss";
 import styles from '../UserProfile/UserProfile.styles';
+import PostPhoto from './PostPhoto'
 
 
 class UserProfile extends Component {
@@ -48,96 +49,7 @@ class UserProfile extends Component {
                         </Card>
                     </Grid>
                     <Grid container direction='row' justify="center" className={style.PhotosContainer} >
-                        <Grid item
-                            xs={10}
-                            sm={8}
-                            md={6}
-                            lg={4}
-                            xl={4}
-                            className={style.postImage}>
-                            <img src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg" alt="avatar" />
-                        </Grid>
-                        <Grid item
-                            xs={10}
-                            sm={8}
-                            md={6}
-                            lg={4}
-                            xl={4}
-                            className={style.postImage}>
-                            <img src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg" alt="avatar" />
-                        </Grid>
-                        <Grid item
-                            xs={10}
-                            sm={8}
-                            md={6}
-                            lg={4}
-                            xl={4}
-                            className={style.postImage}>
-                            <img src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg" alt="avatar" />
-                        </Grid>
-                        <Grid item
-                            xs={10}
-                            sm={8}
-                            md={6}
-                            lg={4}
-                            xl={4}
-                            className={style.postImage}>
-                            <img src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg" alt="avatar" />
-                        </Grid>
-                        <Grid item
-                            xs={10}
-                            sm={8}
-                            md={6}
-                            lg={4}
-                            xl={4}
-                            className={style.postImage}>
-                            <img src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg" alt="avatar" />
-                        </Grid>
-                        <Grid item
-                            xs={10}
-                            sm={8}
-                            md={6}
-                            lg={4}
-                            xl={4}
-                            className={style.postImage}>
-                            <img src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg" alt="avatar" />
-                        </Grid>
-                        <Grid item
-                            xs={10}
-                            sm={8}
-                            md={6}
-                            lg={4}
-                            xl={4}
-                            className={style.postImage}>
-                            <img src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg" alt="avatar" />
-                        </Grid>
-                        <Grid item
-                            xs={10}
-                            sm={8}
-                            md={6}
-                            lg={4}
-                            xl={4}
-                            className={style.postImage}>
-                            <img src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg" alt="avatar" />
-                        </Grid>
-                        <Grid item
-                            xs={10}
-                            sm={8}
-                            md={6}
-                            lg={4}
-                            xl={4}
-                            className={style.postImage}>
-                            <img src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg" alt="avatar" />
-                        </Grid>
-                        <Grid item
-                            xs={10}
-                            sm={8}
-                            md={6}
-                            lg={4}
-                            xl={4}
-                            className={style.postImage}>
-                            <img src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg" alt="avatar" />
-                        </Grid>
+                        <PostPhoto />
                     </Grid>
                 </Grid>
             </>
