@@ -37,7 +37,7 @@ class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (
       prevState.authToken !== this.state.authToken &&
-      Boolean(this.state.authToken)
+      this.state.authToken
     ) {
       this.getUserFromApi();
     }

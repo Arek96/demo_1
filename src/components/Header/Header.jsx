@@ -43,7 +43,7 @@ const styles = theme => ({
     "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.25)
     },
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 3,
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
@@ -78,7 +78,8 @@ const styles = theme => ({
   sectionDesktop: {
     display: "none",
     [theme.breakpoints.up("md")]: {
-      display: "flex"
+      display: "flex",
+
     }
   },
   sectionMobile: {
@@ -127,12 +128,18 @@ class Header extends React.Component {
         aria-haspopup="true"
         color="inherit"
       >
-        <Typography>{`Hello, ${this.props.user.GivenName}`}</Typography>
-        <AccountCircle />
-      </IconButton>
+        <Link to='/userProfile' style={{ textDecoration: 'none' }}>
+          <div className={style.Hello}>
+            <Typography style={{
+              color: 'white', paddingRight: 5,
+            }}>{`Hello, ${this.props.user.GivenName}`}</Typography>
+            <AccountCircle style={{ color: 'white' }} />
+          </div>
+        </Link>
+      </IconButton >
     ) : (
-      <Link to="login">Log In</Link>
-    );
+        <Link to="login">Log In</Link>
+      );
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
