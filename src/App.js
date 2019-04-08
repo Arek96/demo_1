@@ -7,7 +7,7 @@ import Header from "./components/Header/Header";
 import style from "./App.module.scss";
 import LoginPage from "./components/LoginPage/LoginPage";
 import Grid from "@material-ui/core/Grid/Grid";
-
+import UserProfile from './components/UserProfile/UserProfile';
 import NotLogged from "./components/NotLogged/NotLogged";
 
 class App extends Component {
@@ -36,8 +36,8 @@ class App extends Component {
   }
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevState.authToken != this.state.authToken &&
-      Boolean(this.state.authToken)
+      prevState.authToken !== this.state.authToken &&
+      this.state.authToken
     ) {
       this.getUserFromApi();
     }
@@ -56,14 +56,15 @@ class App extends Component {
 
   render() {
     const authRoutes =
-      this.state.authToken == null ? (
+      this.state.authToken === null ? (
         <Route path="/" component={NotLogged} />
       ) : (
-        <React.Fragment>
-          <Route path="/newPost" component={NewPost} />
-          <Route path="/myPosts" component={PostLists} />
-        </React.Fragment>
-      );
+          <React.Fragment>
+            <Route path="/newPost" component={NewPost} />
+            <Route path="/myPosts" component={PostLists} />
+            <Route path="/userProfile" component={UserProfile} />
+          </React.Fragment>
+        );
     return (
       <Router>
         <div className={style.App}>
@@ -80,8 +81,8 @@ class App extends Component {
               xs={12}
               sm={10}
               md={8}
-              lg={6}
-              xl={5}
+              lg={7}
+              xl={6}
             >
               <section className={style.Section}>
                 <Switch>
