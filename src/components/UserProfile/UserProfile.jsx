@@ -48,9 +48,9 @@ class UserProfile extends Component {
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid container direction='row' justify="center" className={style.PhotosContainer} >
-                        <PostPhoto />
-                    </Grid>
+
+                    <PostPhoto />
+
                 </Grid>
             </>
         )
