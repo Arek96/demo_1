@@ -51,15 +51,17 @@ class PostModal extends React.Component {
     // const { classes } = this.props;
 
     return (
-      <div>
-        {/* <Button onClick={this.handleOpen}>Open Modal</Button> */}
-        <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-          open={this.state.open}
-          onClose={this.handleClose}
-        />
-      </div>
+
+
+      <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={this.props.open}
+        onClose={this.handleClose}
+      >
+        <div>chuj</div>
+      </Modal>
+
     );
   }
 }
