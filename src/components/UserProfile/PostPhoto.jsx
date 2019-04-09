@@ -50,7 +50,7 @@ const PostPhoto = () => {
           </Grid>
         ))}
       </Grid>
-      <PostModal open={openModal} />
+      <PostModal open={openModal} handlePhotoPost={handlePhotoPost} />
     </>
   );
 };
