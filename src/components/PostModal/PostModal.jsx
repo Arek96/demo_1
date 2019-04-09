@@ -40,12 +40,4 @@ class PostModal extends React.Component {
     );
   }
 }
-
-// PostModal.propTypes = {
-//   classes: PropTypes.object.isRequired
-// };
-
-// We need an intermediary variable for handling the recursive nesting.
-// const SimpleModalWrapped = withStyles(styles)(PostModal);
-
 export default PostModal;
