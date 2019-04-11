@@ -14,10 +14,12 @@ for (let i = 0; i < 30; i++) {
   arrayPost.push(clone);
 }
 
-const PostPhoto = () => {
+const PostPhoto = props => {
   const [openModal, setOpenModal] = useState(false);
-  const handlePhotoPost = () => {
+  const [currentPhoto, setCurrentPhoto] = useState("");
+  const handlePhotoPost = image => {
     setOpenModal(!openModal);
+    setCurrentPhoto((currentPhoto = image));
   };
   return (
     <>
@@ -31,6 +33,7 @@ const PostPhoto = () => {
           <Grid
             item
             key={"gallery" + element.id}
+            id={"gallery" + element.id}
             xs={10}
             sm={8}
             md={6}
@@ -39,7 +42,11 @@ const PostPhoto = () => {
             className={style.postImage}
           >
             <button
-              onClick={handlePhotoPost}
+              onClick={() =>
+                handlePhotoPost(
+                  `url("https://picsum.photos/200/300/?${element.id}")`
+                )
+              }
               className="buttonGallery"
               style={{
                 backgroundImage: `url("https://picsum.photos/200/300/?${
@@ -50,7 +57,11 @@ const PostPhoto = () => {
           </Grid>
         ))}
       </Grid>
-      <PostModal open={openModal} handlePhotoPost={handlePhotoPost} />
+      <PostModal
+        open={openModal}
+        imagePost={`https://picsum.photos/200/300/?${element.id})`}
+        handlePhotoPost={handlePhotoPost}
+      />
     </>
   );
 };

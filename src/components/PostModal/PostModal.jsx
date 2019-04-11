@@ -1,9 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+// import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import Button from "@material-ui/core/Button";
+import ModalCard from "./ModalCard";
+import style from "./ModalCard.module.scss";
+import Dialog from "@material-ui/core/Dialog";
 class PostModal extends React.Component {
   constructor(props) {
     super(props);
@@ -18,25 +18,17 @@ class PostModal extends React.Component {
       });
     }
   };
-
-  // handleOpen = () => {
-  //   this.setState({ open: true });
-  // };
-
-  // handleClose = () => {
-  //   this.setState({ open: false });
-  // };
-
   render() {
     return (
-      <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+      <Dialog
+        // className={style.Modal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
         open={this.props.open}
         onClose={this.props.handlePhotoPost}
       >
-        <div>siema</div>
-      </Modal>
+        <ModalCard />
+      </Dialog>
     );
   }
 }

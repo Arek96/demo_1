@@ -37,17 +37,17 @@ class NewPost extends Component {
     fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
       method: "POST",
       headers: {
-        "X-ZUMO-AUTH": sessionStorage.getItem('authToken')
+        "X-ZUMO-AUTH": sessionStorage.getItem("authToken")
       },
       body: formData
     }).then(r => console.log(r));
     this.setState({
       post: {
-        title: '',
-        text: '',
+        title: "",
+        text: ""
       },
-      selectedFile: null,
-    })
+      selectedFile: null
+    });
   }
   handleTitleChange(event) {
     this.setState({
@@ -88,8 +88,8 @@ class NewPost extends Component {
   }
   render() {
     const {
-      post: { title, text }
-    } = this.state,
+        post: { title, text }
+      } = this.state,
       { classes } = this.props;
     return (
       <Grid container xs={10} justify="center" alignContent="center">
