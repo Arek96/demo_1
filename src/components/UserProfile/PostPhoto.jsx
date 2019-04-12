@@ -15,55 +15,52 @@ for (let i = 0; i < 30; i++) {
 }
 
 const PostPhoto = props => {
-  const [openModal, setOpenModal] = useState(false);
-  const [currentPhoto, setCurrentPhoto] = useState("");
-  const handlePhotoPost = image => {
-    setOpenModal(!openModal);
-    setCurrentPhoto((currentPhoto = image));
-  };
-  return (
-    <>
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        className={style.PhotosContainer}
-      >
-        {arrayPost.map(element => (
-          <Grid
-            item
-            key={"gallery" + element.id}
-            id={"gallery" + element.id}
-            xs={10}
-            sm={8}
-            md={6}
-            lg={4}
-            xl={4}
-            className={style.postImage}
-          >
-            <button
-              onClick={() =>
-                handlePhotoPost(
-                  `url("https://picsum.photos/200/300/?${element.id}")`
-                )
-              }
-              className="buttonGallery"
-              style={{
-                backgroundImage: `url("https://picsum.photos/200/300/?${
-                  element.id
-                }")`
-              }}
+    const [openModal, setOpenModal] = useState(false);
+    const [currentPhoto, setCurrentPhoto] = useState("");
+    const handlePhotoPost = image => {
+        setOpenModal(!openModal);
+        setCurrentPhoto(image);
+    };
+    return (
+        <>
+            <Grid
+                container
+                direction="row"
+                justify="center"
+                className={style.PhotosContainer}
+            >
+                {arrayPost.map(element => (
+                    <Grid
+                        item
+                        key={"gallery" + element.id}
+                        xs={10}
+                        sm={8}
+                        md={6}
+                        lg={4}
+                        xl={4}
+                        className={style.postImage}
+                    >
+                        <button
+                            onClick={() =>
+                                handlePhotoPost(
+                                    `https://picsum.photos/200/300/?${element.id}`
+                                )
+                            }
+                            style={{
+                                backgroundImage: `url("https://picsum.photos/200/300/?${
+                                    element.id
+                                    }")`
+                            }}
+                        />
+                    </Grid>
+                ))}
+            </Grid>
+            <PostModal
+                open={openModal}
+                handlePhotoPost={handlePhotoPost}
+                image={currentPhoto}
             />
-          </Grid>
-        ))}
-      </Grid>
-      <PostModal
-        open={openModal}
-        imagePost={`https://picsum.photos/200/300/?${element.id})`}
-        handlePhotoPost={handlePhotoPost}
-      />
-    </>
-  );
+        </>
+    );
 };
-
 export default PostPhoto;
