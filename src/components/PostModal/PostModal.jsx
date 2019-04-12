@@ -1,76 +1,35 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+// import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import Button from "@material-ui/core/Button";
-
-// function rand() {
-//   return Math.round(Math.random() * 20) - 10;
-// }
-
-// function getModalStyle() {
-//   const top = 50 + rand();
-//   const left = 50 + rand();
-
-//   return {
-//     top: `${top}%`,
-//     left: `${left}%`,
-//     transform: `translate(-${top}%, -${left}%)`
-//   };
-// }
-
-// const styles = theme => ({
-//   paper: {
-//     position: "absolute",
-//     width: theme.spacing.unit * 50,
-//     backgroundColor: theme.palette.background.paper,
-//     boxShadow: theme.shadows[5],
-//     padding: theme.spacing.unit * 4,
-//     outline: "none"
-//   }
-// });
-
+import ModalCard from "./ModalCard";
+import style from "./ModalCard.module.scss";
+import Dialog from "@material-ui/core/Dialog";
 class PostModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: this.props.open
+      openModal: false
     };
   }
-
-  handleOpen = () => {
-    this.setState({ open: true });
+  componentDidUpdate = prevProps => {
+    if (this.props.open !== prevProps.open) {
+      this.setState({
+        openDialog: this.props.open
+      });
+    }
   };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
   render() {
-    // const { classes } = this.props;
-
     return (
-
-
-      <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+      <Dialog
+        // className={style.Modal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
         open={this.props.open}
-        onClose={this.handleClose}
+        onClose={this.props.handlePhotoPost}
       >
-        <div>chuj</div>
-      </Modal>
-
+        <ModalCard />
+      </Dialog>
     );
   }
 }
-
-// PostModal.propTypes = {
-//   classes: PropTypes.object.isRequired
-// };
-
-// We need an intermediary variable for handling the recursive nesting.
-// const SimpleModalWrapped = withStyles(styles)(PostModal);
-
 export default PostModal;
