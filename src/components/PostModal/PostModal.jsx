@@ -1,5 +1,4 @@
 import React from "react";
-// import { withStyles } from "@material-ui/core/styles";
 import ModalCard from "./ModalCard";
 import style from "./ModalCard.module.scss";
 import Dialog from "@material-ui/core/Dialog";
@@ -25,7 +24,7 @@ class PostModal extends React.Component {
         aria-describedby="alert-dialog-description"
         open={this.props.open}
         onClose={this.props.handlePhotoPost}
-
+        scroll='body'
       >
         <ModalCard image={this.props.image} />
       </Dialog>
