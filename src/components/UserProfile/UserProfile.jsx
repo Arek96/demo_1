@@ -8,12 +8,20 @@ import { Grid, Typography, withStyles } from "@material-ui/core";
 import style from "../UserProfile/UserProfile.module.scss";
 import styles from "../UserProfile/UserProfile.styles";
 import PostPhoto from "./PostPhoto";
+import EditProfile from "./EditProfile/EditProfile";
 
 class UserProfile extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    // this.handlePhotoPost = this.handlePhotoPost.bind(this);
+    this.state = {
+      editPageisOpen: false,
+    };
+
+  }
+  handleEditButton = () => {
+    this.setState(prevState => ({
+      editPageisOpen: !prevState.editPageisOpen
+    }))
   }
 
   render() {
@@ -41,7 +49,7 @@ class UserProfile extends Component {
                   >
                     dawidpolednik
                   </Typography>
-                  <Button variant="contained" className={classes.edit}>
+                  <Button variant="contained" className={classes.edit} onClick={this.handleEditButton}>
                     Edit profile
                   </Button>
                 </div>
@@ -59,7 +67,7 @@ class UserProfile extends Component {
               </CardContent>
             </Card>
           </Grid>
-
+          {/* <EditProfile open={this.state.editPageisOpen} /> */}
           <PostPhoto />
         </Grid>
       </>
