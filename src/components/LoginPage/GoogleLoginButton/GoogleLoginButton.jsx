@@ -1,17 +1,11 @@
 import React from "react";
 import { GoogleLogin } from "react-google-login";
+import { fetchAuthToken } from "../../../actions/loginActions";
+import { connect } from "react-redux";
 
 function GoogleLoginButton(props) {
   const responseGoogle = data => {
-    fetch("https://delfinkitrainingapi.azurewebsites.net/.auth/login/google", {
-      method: "POST",
-      headers: { "content-type": "Application/JSON" },
-      body: JSON.stringify({
-        id_token: data.tokenId
-      })
-    })
-      .then(response => response.json())
-      .then(resp => props.handleGoogleResp(resp));
+    props.fetchAuthToken(data);
   };
 
   return (
@@ -22,7 +16,16 @@ function GoogleLoginButton(props) {
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
       />
+      {props.authToken}
     </React.Fragment>
   );
 }
-export default GoogleLoginButton;
+const mapDispatch = dispatch => {
+  return {
+    fetchAuthToken: data => dispatch(fetchAuthToken(data))
+  };
+};
+export default connect(
+  null,
+  mapDispatch
+)(GoogleLoginButton);

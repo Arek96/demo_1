@@ -1,13 +1,24 @@
 export const ADD_POST = "ADD_POST";
+export const GET_POSTS = "GET_POSTS";
 
-export const addPost = data => ({
+export const addPost = (formData, resp) => ({
   type: ADD_POST,
   payload: {
     post: {
-      title: data.post.title,
-      description: data.post.text,
-      photo: data.photo
+      Title: JSON.parse(formData.get("post")).title,
+      Text: JSON.parse(formData.get("post")).text,
+      Id: resp.Id,
+      ThumbnailPhoto: resp.ThumbnailPhoto,
+      PublishDate: resp.PublishDate,
+      UserId: resp.UserId
     }
+  }
+});
+
+export const getPosts = data => ({
+  type: GET_POSTS,
+  payload: {
+    posts: data
   }
 });
 
@@ -20,7 +31,20 @@ export const fetchPostToAPI = (formData, authToken) => {
       },
       body: formData
     })
-      .then(r => console.log(r))
-      .then(dispatch(addPost(formData)));
+      .then(r => r.json())
+      .then(resp => dispatch(addPost(formData, resp)));
+  };
+};
+
+export const getPostsFromAPI = () => {
+  return dispatch => {
+    return fetch(
+      `https://delfinkitrainingapi.azurewebsites.net/api/post/${
+        this.props.postId
+      }`,
+      { method: "GET", headers: { "X-ZUMO-AUTH": this.props.authToken } }
+    )
+      .then(r => r.json())
+      .then(resp => dispatch(getPosts(resp)));
   };
 };

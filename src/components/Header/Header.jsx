@@ -4,13 +4,12 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
-import { Menu, MenuItem, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-
 import style from "./Header.module.scss";
 import SlideMenu from "./SlideMenu/SlideMenu";
 import { Link } from "react-router-dom";
@@ -121,14 +120,24 @@ class Header extends React.Component {
     const { anchorEl } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
-    let userMessage = Boolean(this.props.user) ? (
+    let userMessage = this.props.user ? (
       <IconButton
         aria-owns={isMenuOpen ? "material-appbar" : undefined}
         aria-haspopup="true"
         color="inherit"
       >
-        <Typography>{`Hello, ${this.props.user.GivenName}`}</Typography>
-        <AccountCircle />
+        <Typography>{`Hello, ${this.props.user.name}`}</Typography>
+        {Boolean(this.props.user.photo) ? (
+          <Avatar
+            style={{ height: 10, margin: 10 }}
+            alt={`${this.props.user.name}${this.props.user.surname}`}
+            src={this.props.user.photo}
+          />
+        ) : (
+          <Avatar>{`${this.props.user.name[0]}${
+            this.props.user.surname[0]
+          }`}</Avatar>
+        )}
       </IconButton>
     ) : (
       <Link to="login">Log In</Link>

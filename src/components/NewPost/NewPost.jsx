@@ -11,8 +11,9 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import styles from "./NewPost.styles.js";
 import { Grid } from "@material-ui/core";
-// import Alert from "./Alert/Alert";
 import ResetDialog from "./ResetDialog/ResetDialog";
+import { connect } from "react-redux";
+import { fetchPostToAPI } from "../../actions/postActions";
 
 class NewPost extends Component {
   constructor(props) {
@@ -35,13 +36,8 @@ class NewPost extends Component {
     let formData = new FormData();
     formData.append("photo", this.state.selectedFile);
     formData.append("post", JSON.stringify(this.state.post));
-    fetch("https://delfinkitrainingapi.azurewebsites.net/api/post", {
-      method: "POST",
-      headers: {
-        "X-ZUMO-AUTH": this.props.authToken
-      },
-      body: formData
-    }).then(r => console.log(r));
+    console.log(JSON.parse(formData.get("post")));
+    this.props.fetchPostToAPI(formData, this.props.authToken);
   }
   handleTitleChange(event) {
     this.setState({
@@ -168,4 +164,11 @@ class NewPost extends Component {
     );
   }
 }
-export default withStyles(styles)(NewPost);
+const mapDispatch = dispatch => ({
+  fetchPostToAPI: (formData, authToken) =>
+    dispatch(fetchPostToAPI(formData, authToken))
+});
+export default connect(
+  state => ({ authToken: state.authToken }),
+  mapDispatch
+)(withStyles(styles)(NewPost));
