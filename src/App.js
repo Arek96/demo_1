@@ -1,77 +1,47 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
 import NewPost from "./components/NewPost/NewPost";
 import PostLists from "./components/PostLists/PostLists";
 import Header from "./components/Header/Header";
 import style from "./App.module.scss";
 import LoginPage from "./components/LoginPage/LoginPage";
 import Grid from "@material-ui/core/Grid/Grid";
-
 import NotLogged from "./components/NotLogged/NotLogged";
+import { connect } from "react-redux";
+import { fetchUser } from "./actions/userActions";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      authToken: sessionStorage.getItem("authToken")
-    };
-    if (Boolean(this.state.authToken)) {
-      this.getUserFromApi();
+    this.state = {};
+    if (Boolean(this.props.authToken)) {
+      this.props.fetchUser(this.props.authToken);
     }
+  }
 
-    this.getUserFromApi = this.getUserFromApi.bind(this);
-    this.getAuthToken = this.getAuthToken.bind(this);
-    this.resetAuthToken = this.resetAuthToken.bind(this);
-  }
-  getUserFromApi() {
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
-      method: "GET",
-      headers: {
-        "X-ZUMO-AUTH": this.state.authToken
-      }
-    })
-      .then(r => r.json())
-      .then(resp => this.setState({ user: resp }));
-  }
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevState.authToken != this.state.authToken &&
-      Boolean(this.state.authToken)
+      prevProps.authToken != this.props.authToken &&
+      Boolean(this.props.authToken)
     ) {
-      this.getUserFromApi();
+      this.props.fetchUser(this.props.authToken);
     }
-  }
-  resetAuthToken() {
-    this.setState({
-      authToken: null,
-      user: null
-    });
-  }
-  getAuthToken(authToken) {
-    this.setState({
-      authToken: authToken
-    });
   }
 
   render() {
-    const authRoutes =
-      this.state.authToken == null ? (
-        <Route path="/" component={NotLogged} />
-      ) : (
-        <React.Fragment>
-          <Route path="/newPost" component={NewPost} />
-          <Route path="/myPosts" component={PostLists} />
-        </React.Fragment>
-      );
+    const authRoutes = !this.props.authToken ? (
+      <Route path="/" component={NotLogged} />
+    ) : (
+      <React.Fragment>
+        <Route path="/newPost" component={NewPost} />
+        <Route path="/myPosts" component={PostLists} />
+      </React.Fragment>
+    );
+
     return (
       <Router>
         <div className={style.App}>
-          <Header
-            resetAuthToken={this.resetAuthToken}
-            authToken={this.state.authToken}
-            user={this.state.user}
-          />
+          <Header user={this.props.user} />
           <main className={style.Main}>
             <Grid
               container
@@ -87,9 +57,7 @@ class App extends Component {
                 <Switch>
                   <Route
                     path="/login"
-                    render={props => (
-                      <LoginPage {...props} passAuthToken={this.getAuthToken} />
-                    )}
+                    render={props => <LoginPage {...props} />}
                   />
                   {authRoutes}
                 </Switch>
@@ -105,5 +73,17 @@ class App extends Component {
     );
   }
 }
+const mapDispatch = dispatch => {
+  return {
+    fetchUser: authToken => dispatch(fetchUser(authToken))
+  };
+};
+const mapState = state => ({
+  authToken: state.authToken,
+  user: state.user
+});
 
-export default App;
+export default connect(
+  mapState,
+  mapDispatch
+)(App);
