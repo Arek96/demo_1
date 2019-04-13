@@ -25,6 +25,7 @@ class PostModal extends React.Component {
         aria-describedby="alert-dialog-description"
         open={this.props.open}
         onClose={this.props.handlePhotoPost}
+
       >
         <ModalCard image={this.props.image} />
       </Dialog>

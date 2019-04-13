@@ -20,7 +20,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 const styles = theme => ({
   media: {
-    height: '100%',
+    height: '0%',
     width: "100%",
     paddingTop: "56.25%",
   },
@@ -39,7 +39,7 @@ const styles = theme => ({
   },
   avatar: {
     backgroundColor: red[500]
-  }
+  },
 });
 class ModalCard extends Component {
   constructor(props) {
@@ -56,31 +56,31 @@ class ModalCard extends Component {
     const { classes } = this.props;
 
     return (
-      <Card>
+      <Card className={style.Card}>
         <CardHeader
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
               DP
             </Avatar>
           }
-          action={
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
+          title={
+            <Typography style={classes.Title} variant='subtitle2'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam mi dolor, ultrices non lectus</Typography>
           }
-          title='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam mi dolor, ultrices non lectus '
           subheader={new Date().toLocaleDateString()}
         />
-        <CardMedia
+        {/* <CardMedia
           className={classes.media}
           image={this.props.image}
           title="image"
-        />
+        /> */}
+        <div className={style.ContainerToIMG}><div className={style.DivIMG}><img src={this.props.image}></img></div></div>
         <CardContent>
-          <Typography component="p" align='justify'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam iusto quaerat et. Adipisci libero voluptatem omnis quod! Recusandae pariatur rem adipisci, ullam reprehenderit, quae non ipsam iste, nostrum odio aliquid.
+          <Typography style={classes.Text} align='justify' variant='subtitle2'>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.Ullam iusto quaerat et. Adipisci libero voluptatem omnis quod! Recusandae pariatur rem adipisci, ullam reprehenderit, quae non ipsam iste, nostrum odio aliquid.
           </Typography>
         </CardContent>
+
+
         <CardActions className={classes.actions} disableActionSpacing>
           <IconButton
             className={classnames(classes.expand, {
@@ -103,7 +103,7 @@ class ModalCard extends Component {
             </Typography>
           </CardContent>
         </Collapse>
-      </Card>
+      </Card >
     );
   }
 }
