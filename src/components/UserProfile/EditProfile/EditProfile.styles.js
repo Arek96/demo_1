@@ -28,10 +28,16 @@ const styles = theme => ({
     changePhoto: {
         color: "black",
         backgroundColor: "#FFD10D",
+        [theme.breakpoints.down("xs")]: {
+            width: '100%',
+            fontSize: '0.6rem',
+            textAlign: 'center'
+        }
     },
     buttonAction: {
         color: "white",
-        backgroundColor: "#3F51B5"
+        backgroundColor: "#3F51B5",
+
     },
     EditActions: {
         width: '55%',
@@ -40,6 +46,11 @@ const styles = theme => ({
         alignItems: 'center',
         justifyContent: 'space-between',
         marginBottom: '1.5rem',
+        [theme.breakpoints.down("xs")]: {
+            width: '100%',
+            height: '120px',
+            flexDirection: 'column',
+        }
     }
 });
 export default styles;
