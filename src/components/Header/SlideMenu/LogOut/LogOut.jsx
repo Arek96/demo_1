@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { MenuItem } from "@material-ui/core";
+import { logOut } from "../../../../actions/loginActions";
+import { connect } from "react-redux";
 
 class LogOut extends Component {
   constructor(props) {
@@ -9,7 +11,7 @@ class LogOut extends Component {
   }
   emptySessionStorage() {
     sessionStorage.removeItem("authToken");
-    this.props.resetAuthToken();
+    this.props.logOut();
   }
   render() {
     return (
@@ -19,4 +21,8 @@ class LogOut extends Component {
     );
   }
 }
-export default LogOut;
+
+export default connect(
+  null,
+  { logOut }
+)(LogOut);
