@@ -1,37 +1,45 @@
 const styles = theme => ({
-    card: {
-        minHeight: "70vh",
-        display: "flex",
-        justifyContent: "center",
-        boxShadow: "0 0 20px 0 rgba(0, 0, 0, 0.7)",
-        border: "3px solid rgba(0, 0, 0, 0.2)",
-        marginBottom: "9rem",
-        marginUp: "4rem"
+    ContentEditProfile: {
+        paddingTop: '0',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    FormControl: {
-        width: "100%"
+    TextWidth: {
+        width: "80%"
     },
-    upload: {
+    avatar: {
+        marginBottom: '20px',
+        width: 150,
+        height: 150,
+        [theme.breakpoints.down("sm")]: {
+            width: 150,
+            height: 150,
+            margin: '5px 50px 10px 20px',
+        },
+        [theme.breakpoints.down("xs")]: {
+            width: 140,
+            height: 140,
+            margin: '5px 30px 10px 20px',
+        }
+    },
+    changePhoto: {
         color: "black",
         backgroundColor: "#FFD10D",
-        margin: "1.2rem auto 4rem auto"
     },
-    save: {
+    buttonAction: {
         color: "white",
         backgroundColor: "#3F51B5"
     },
-    cancel: {
-        color: "white",
-        backgroundColor: "#3F51B5"
-    },
-    rightIcon: {
-        marginLeft: theme.spacing.unit
-    },
-    leftIcon: {
-        marginRight: theme.spacing.unit
-    },
-    iconSmall: {
-        fontSize: 20
+    EditActions: {
+        width: '55%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: '1.5rem',
     }
 });
 export default styles;

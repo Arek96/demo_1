@@ -1,0 +1,23 @@
+.FormEdit {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+  }
+.FormEditHeader{
+    text-align: center;
+    font-size: 2rem;
+    font-family: "roboto";
+    font-weight: 300;
+    margin: 15px auto;
+}
+.ButtonsAvatarContainer{
+    display: flex;
+    width:60%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
