@@ -134,7 +134,7 @@ class EditProfile extends Component {
                                 <TextField
                                     label="Biogram"
                                     className={classes.TextWidth}
-                                    value={surname}
+                                    value={biogram}
                                     multiline
                                     rows="8"
                                     // onChange={this.handleTextChange}
