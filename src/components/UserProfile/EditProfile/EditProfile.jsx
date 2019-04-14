@@ -4,8 +4,9 @@ import styles from "./EditProfile.styles.js";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-// import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import SaveIcon from "@material-ui/icons/Save";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -64,14 +65,51 @@ class EditProfile extends Component {
             <Grid container xs={10} justify="center" alignContent="center">
                 <Dialog
                     open={modalEditPageisOpen}
+                    scroll='body'
                 >
-                    <Card className={classes.card}>
-                        <form className={style.Form}>
-                            <CardContent>
-                                <h2 className={style.FormHeader}>Edit your profile informations</h2>
+                    <Card>
+                        <form className={style.FormEdit}>
+
+                            <h2 className={style.FormEditHeader}>Edit your profile informations</h2>
+                            <CardContent className={classes.ContentEditProfile} >
+                                <Avatar
+                                    alt="Profile photo"
+                                    src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg"
+                                    className={classes.avatar}
+                                />
+                                <div className={style.ButtonsAvatarContainer}>
+                                    <input
+                                        accept="image/*"
+                                        style={{ display: "none" }}
+                                        id="raised-button-file"
+                                        multiple
+                                        type="file"
+                                        onChange={this.handleAvatarChange}
+                                    />
+                                    <label htmlFor="raised-button-file">
+                                        <Button
+                                            variant="contained"
+                                            color="default"
+                                            component="span"
+                                            className={classes.changePhoto}
+                                            size="medium"
+                                        >
+                                            Change a photo
+                                        </Button>
+                                    </label>
+                                    <Button
+                                        variant="contained"
+                                        color="default"
+                                        component="span"
+                                        className={classes.changePhoto}
+                                        size="medium"
+                                    >
+                                        Delete a photo
+                                    </Button>
+                                </div>
                                 <TextField
                                     label="Name"
-                                    className={classes.FormControl}
+                                    className={classes.TextWidth}
                                     value={name}
                                     // onChange={this.handleTitleChange}
                                     margin="normal"
@@ -80,7 +118,7 @@ class EditProfile extends Component {
                                 />
                                 <TextField
                                     label="Surname"
-                                    className={classes.FormControl}
+                                    className={classes.TextWidth}
                                     value={surname}
                                     // onChange={this.handleTitleChange}
                                     margin="normal"
@@ -90,7 +128,7 @@ class EditProfile extends Component {
 
                                 <TextField
                                     label="Biogram"
-                                    className={classes.FormControl}
+                                    className={classes.TextWidth}
                                     value={surname}
                                     multiline
                                     rows="8"
@@ -99,49 +137,28 @@ class EditProfile extends Component {
                                     variant="outlined"
                                     placeholder="Write an information about yourself..."
                                 />
-                                {/* 
-                            <input
-                                accept="image/*"
-                                style={{ display: "none" }}
-                                id="raised-button-file"
-                                multiple
-                                type="file"
-                                onChange={this.handlePhotoChange}
-                            />
-                            <label htmlFor="raised-button-file">
-                                <Button
-                                    variant="contained"
-                                    color="default"
-                                    component="span"
-                                    className={classNames(classes.upload, classes.FormControl)}
-                                    size="large"
-                                >
-                                    Upload
-                  <CloudUploadIcon className={classes.rightIcon} />
-                                </Button>
-                            </label> */}
                             </CardContent>
-                            <CardActions className={style.FormResult}>
+                            <CardActions className={classes.EditActions}>
                                 <Button
                                     // disabled={!this.isSaveEnabled}
                                     variant="contained"
                                     size="large"
-                                    className={classes.save}
+                                    className={classes.buttonAction}
                                 // onClick={this.handleSubmit}
                                 >
                                     <SaveIcon
                                         className={classNames(classes.leftIcon, classes.iconSmall)}
                                     />
                                     Save
-              </Button>
+                                </Button>
                                 <Button
                                     variant="contained"
                                     // onClick={this.handleDialog}
                                     size="large"
-                                    className={classes.cancel}
+                                    className={classes.buttonAction}
                                 // disabled={!this.isSaveEnabled}
                                 >
-                                    Back
+                                    Cancel
                             </Button>
                             </CardActions>
                         </form>
