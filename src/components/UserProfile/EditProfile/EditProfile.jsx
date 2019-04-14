@@ -5,72 +5,101 @@ import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+// import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import SaveIcon from "@material-ui/icons/Save";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import { Grid } from "@material-ui/core";
+import { Grid, Dialog } from "@material-ui/core";
 
 
 class EditProfile extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: '',
-            surname: '',
-            biogram: '',
-            photo: '',
+            user: {
+                name: '',
+                surname: '',
+                biogram: '',
+                photo: '',
+            },
             editPageisOpen: false,
         }
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleSurnameChange = this.handleSurnameChange.bind(this);
+        this.handleBiogramChange = this.handleBiogramChange.bind(this);
+        this.handleAvatarChange = this.handleAvatarChange.bind(this);
     }
-    // componentDidUpdate = prevProps => {
-    //     if (this.props.open !== prevProps.open) {
-    //         this.setState({
-    //             editPageisOpen: this.props.open
-    //         });
-    //     }
-    // }
+    handleNameChange(event) {
+        this.setState({
+            user: { ...this.state.user, name: event.target.value }
+        })
+    }
+    handleSurnameChange(event) {
+        this.setState({
+            user: { ...this.state.user, name: event.target.value }
+        })
+    }
+    handleBiogramChange(event) {
+        this.setState({
+            user: { ...this.state.user, biogram: event.target.value }
+        })
+    }
+    handleAvatarChange(event) {
+        this.setState({
+            user: { ...this.state.user, photo: event.target.files[0] }
+        })
+    }
+    componentDidUpdate = prevProps => {
+        if (this.props.open !== prevProps.open) {
+            this.setState({
+                modalEditPageisOpen: this.props.open
+            });
+        }
+    }
     render() {
         const { classes } = this.props;
-        const { name, surname, biogram, photo, editPageisOpen } = this.state;
+        const { name, surname, biogram, photo, modalEditPageisOpen } = this.state;
         return (
             <Grid container xs={10} justify="center" alignContent="center">
-                <Card className={classes.card}>
-                    <form className={style.Form}>
-                        <CardContent>
-                            <h2 className={style.FormHeader}>Add a new Post</h2>
-                            <TextField
-                                label="Name"
-                                className={classes.FormControl}
-                                value={name}
-                                // onChange={this.handleTitleChange}
-                                margin="normal"
-                                variant="outlined"
-                                placeholder="Write your name..."
-                            />
-                            <TextField
-                                label="Surname"
-                                className={classes.FormControl}
-                                value={surname}
-                                // onChange={this.handleTitleChange}
-                                margin="normal"
-                                variant="outlined"
-                                placeholder="Write your surname..."
-                            />
+                <Dialog
+                    open={modalEditPageisOpen}
+                >
+                    <Card className={classes.card}>
+                        <form className={style.Form}>
+                            <CardContent>
+                                <h2 className={style.FormHeader}>Edit your profile informations</h2>
+                                <TextField
+                                    label="Name"
+                                    className={classes.FormControl}
+                                    value={name}
+                                    // onChange={this.handleTitleChange}
+                                    margin="normal"
+                                    variant="outlined"
+                                    placeholder="Write your name..."
+                                />
+                                <TextField
+                                    label="Surname"
+                                    className={classes.FormControl}
+                                    value={surname}
+                                    // onChange={this.handleTitleChange}
+                                    margin="normal"
+                                    variant="outlined"
+                                    placeholder="Write your surname..."
+                                />
 
-                            <TextField
-                                label="Biogram"
-                                className={classes.FormControl}
-                                value={surname}
-                                multiline
-                                rows="8"
-                                // onChange={this.handleTextChange}
-                                margin="normal"
-                                variant="outlined"
-                                placeholder="Write an information about yourself..."
-                            />
-                            {/* 
+                                <TextField
+                                    label="Biogram"
+                                    className={classes.FormControl}
+                                    value={surname}
+                                    multiline
+                                    rows="8"
+                                    // onChange={this.handleTextChange}
+                                    margin="normal"
+                                    variant="outlined"
+                                    placeholder="Write an information about yourself..."
+                                />
+                                {/* 
                             <input
                                 accept="image/*"
                                 style={{ display: "none" }}
@@ -91,33 +120,33 @@ class EditProfile extends Component {
                   <CloudUploadIcon className={classes.rightIcon} />
                                 </Button>
                             </label> */}
-                        </CardContent>
-                        <CardActions className={style.FormResult}>
-                            <Button
-                                // disabled={!this.isSaveEnabled}
-                                variant="contained"
-                                size="large"
-                                className={classes.save}
-                            // onClick={this.handleSubmit}
-                            >
-                                <SaveIcon
-                                    className={classNames(classes.leftIcon, classes.iconSmall)}
-                                />
-                                Save
+                            </CardContent>
+                            <CardActions className={style.FormResult}>
+                                <Button
+                                    // disabled={!this.isSaveEnabled}
+                                    variant="contained"
+                                    size="large"
+                                    className={classes.save}
+                                // onClick={this.handleSubmit}
+                                >
+                                    <SaveIcon
+                                        className={classNames(classes.leftIcon, classes.iconSmall)}
+                                    />
+                                    Save
               </Button>
-                            <Button
-                                variant="contained"
-                                // onClick={this.handleDialog}
-                                size="large"
-                                className={classes.cancel}
-                            // disabled={!this.isSaveEnabled}
-                            >
-                                Back
+                                <Button
+                                    variant="contained"
+                                    // onClick={this.handleDialog}
+                                    size="large"
+                                    className={classes.cancel}
+                                // disabled={!this.isSaveEnabled}
+                                >
+                                    Back
                             </Button>
-                        </CardActions>
-                    </form>
-                </Card>
-
+                            </CardActions>
+                        </form>
+                    </Card>
+                </Dialog>
             </Grid>
         )
     }

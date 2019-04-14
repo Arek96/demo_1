@@ -14,13 +14,13 @@ class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editPageisOpen: false,
+      modalEditPageisOpen: false,
     };
 
   }
   handleEditButton = () => {
     this.setState(prevState => ({
-      editPageisOpen: !prevState.editPageisOpen
+      modalEditPageisOpen: !prevState.modalEditPageisOpen
     }))
   }
 
@@ -67,7 +67,7 @@ class UserProfile extends Component {
               </CardContent>
             </Card>
           </Grid>
-          {/* <EditProfile open={this.state.editPageisOpen} /> */}
+          <EditProfile open={this.state.modalEditPageisOpen} />
           <PostPhoto />
         </Grid>
       </>
