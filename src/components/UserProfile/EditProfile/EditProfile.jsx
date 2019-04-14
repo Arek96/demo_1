@@ -75,7 +75,7 @@ class EditProfile extends Component {
                     <Card>
                         <form className={style.FormEdit}>
 
-                            <h2 className={style.FormEditHeader}>Edit your profile informations</h2>
+                            <h2 className={style.FormEditHeader}>Edit a profile</h2>
                             <CardContent className={classes.ContentEditProfile} >
                                 <Avatar
                                     alt="Profile photo"
