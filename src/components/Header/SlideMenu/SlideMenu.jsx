@@ -5,6 +5,7 @@ import { MenuItem, MenuList } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import style from "./SlideMenu.module.scss";
 import LogOut from "./LogOut/LogOut";
+import { connect } from "react-redux";
 
 class SlideMenu extends Component {
   render() {
@@ -15,23 +16,24 @@ class SlideMenu extends Component {
         </MenuItem>
       </React.Fragment>
     );
-    const privateDrawerItems =
-      sessionStorage.getItem("authToken") !== null ? (
-        <React.Fragment>
-          <LogOut resetAuthToken={this.props.resetAuthToken} />
-          <MenuItem>
-            <Link to="/userProfile">My profile</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to="/newPost">Add a post</Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to="/myPosts">My posts</Link>
-          </MenuItem>
-        </React.Fragment>
-      ) : (
-          publicDrawerItems
-        );
+
+    const privateDrawerItems = this.props.authToken ? (
+      <React.Fragment>
+        <LogOut />
+        <MenuItem>
+          <Link to="/userProfile">My profile</Link>
+        </MenuItem>
+        <MenuItem>
+          <Link to="/newPost">Add a post</Link>
+        </MenuItem>
+        <MenuItem>
+          <Link to="/myPosts">My posts</Link>
+        </MenuItem>
+      </React.Fragment>
+    ) : (
+      publicDrawerItems
+    );
+
     return (
       <Drawer open={this.props.open} onClose={this.props.handleClickMenu}>
         <div
@@ -47,4 +49,5 @@ class SlideMenu extends Component {
     );
   }
 }
-export default SlideMenu;
+
+export default connect(state => ({ authToken: state.authToken }))(SlideMenu);
