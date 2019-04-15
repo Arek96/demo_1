@@ -17,35 +17,35 @@ $devices_sizes: (
 }
 
 .FormEdit {
-    width: 100%;
-    display: flex;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+.FormEditHeader {
+  text-align: center;
+  font-size: 3.5rem;
+  font-family: "RichardMurray";
+  font-weight: 300;
+  margin: 15px auto;
+}
+.ButtonsAvatarContainer {
+  display: flex;
+  width: 65%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+@include breakpoint-only("xs") {
+  .FormEditHeader {
+    font-size: 2rem;
+  }
+  .ButtonsAvatarContainer {
     flex-direction: column;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
+    height: 100px;
+    justify-content: space-around;
   }
-.FormEditHeader{
-    text-align: center;
-    font-size: 3.5rem;
-    font-family: "RichardMurray";
-    font-weight: 300;
-    margin: 15px auto;
 }
-.ButtonsAvatarContainer{
-    display: flex;
-    width:65%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-}
-  @include breakpoint-only("xs") {
-    .FormEditHeader{
-        font-size: 1.4rem;
-    }
-    .ButtonsAvatarContainer {
-      flex-direction: column;
-      height: 140px;
-      justify-content: space-around;
-    }
-  }
