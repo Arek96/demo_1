@@ -10,6 +10,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import NotLogged from "./components/NotLogged/NotLogged";
 import { connect } from "react-redux";
 import { fetchUser } from "./actions/userActions";
+import Home from "./components/Home/Home";
 
 class App extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (
       prevProps.authToken != this.props.authToken &&
       Boolean(this.props.authToken)
@@ -34,6 +35,7 @@ class App extends Component {
       <Route path="/" component={NotLogged} />
     ) : (
       <React.Fragment>
+        <Route path="/home" component={Home} />
         <Route path="/newPost" component={NewPost} />
         <Route path="/myPosts" component={PostLists} />
         <Route path="/userProfile" component={UserProfile} />
@@ -80,12 +82,12 @@ const mapDispatch = dispatch => {
     fetchUser: authToken => dispatch(fetchUser(authToken))
   };
 };
-const mapState = state => ({
+const mapProps = state => ({
   authToken: state.authToken,
   user: state.user
 });
 
 export default connect(
-  mapState,
+  mapProps,
   mapDispatch
 )(App);

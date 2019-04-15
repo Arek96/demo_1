@@ -36,15 +36,16 @@ export const fetchPostToAPI = (formData, authToken) => {
   };
 };
 
-export const getPostsFromAPI = () => {
+export const getPostsFromAPI = authToken => {
   return dispatch => {
-    return fetch(
-      `https://delfinkitrainingapi.azurewebsites.net/api/post/${
-        this.props.postId
-      }`,
-      { method: "GET", headers: { "X-ZUMO-AUTH": this.props.authToken } }
-    )
+    return fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/`, {
+      method: "GET",
+      headers: { "X-ZUMO-AUTH": authToken }
+    })
       .then(r => r.json())
-      .then(resp => dispatch(getPosts(resp)));
+      .then(resp => {
+        console.log(resp);
+        return dispatch(getPosts(resp));
+      });
   };
 };

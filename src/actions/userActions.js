@@ -28,3 +28,12 @@ export const fetchUser = authToken => {
       });
   };
 };
+
+export const updateUser = updatedData => {
+  return dispatch =>
+    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
+      method: "PUT",
+      headers: { "X-ZUMO-AUTH": this.props.authToken },
+      body: formData
+    }).then(r => console.log(r));
+};
