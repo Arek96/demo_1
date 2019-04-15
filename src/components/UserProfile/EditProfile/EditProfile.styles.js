@@ -30,7 +30,7 @@ const styles = theme => ({
         backgroundColor: "#FFD10D",
         [theme.breakpoints.down("xs")]: {
             width: '100%',
-            fontSize: '0.8rem',
+            fontSize: '0.6rem',
             textAlign: 'center'
         }
     },
