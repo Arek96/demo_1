@@ -11,6 +11,7 @@ const reducer = (state = { authToken: null, posts: [] }, action) => {
     case LOG_OUT:
       return { ...state, authToken: null, user: null };
     case GET_USER:
+      console.log(action);
       return {
         ...state,
         user: action.payload.user

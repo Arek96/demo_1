@@ -6,7 +6,7 @@ import Header from "./components/Header/Header";
 import style from "./App.module.scss";
 import LoginPage from "./components/LoginPage/LoginPage";
 import Grid from "@material-ui/core/Grid/Grid";
-import UserProfile from "./components/UserProfile/UserProfile";
+import UserProfile from "./components/UserProfile/UserProfileContainer";
 
 import NotLogged from "./components/NotLogged/NotLogged";
 import { connect } from "react-redux";
@@ -21,8 +21,8 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.authToken != this.props.authToken && this.props.authToken) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.authToken !== this.props.authToken && this.props.authToken) {
       this.props.fetchUser(this.props.authToken);
     }
   }

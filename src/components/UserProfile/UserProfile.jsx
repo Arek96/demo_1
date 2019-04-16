@@ -12,20 +12,39 @@ import EditProfile from "./EditProfile/EditProfile";
 
 class UserProfile extends Component {
   constructor(props) {
+    console.log(props);
     super(props);
     this.state = {
-      modalEditPageisOpen: false,
+      modalEditPageisOpen: false
     };
-
+    if (props.authToken) {
+      props.fetchUser(props.authToken);
+    }
   }
   handleEditButton = () => {
     this.setState(prevState => ({
       modalEditPageisOpen: !prevState.modalEditPageisOpen
-    }))
+    }));
+  };
+  componentDidUpdate(prevProps) {
+    if (prevProps.authToken !== this.props.authToken && this.props.authToken) {
+      this.props.fetchUser(this.props.authToken);
+    }
+    console.log(this.props);
   }
 
   render() {
+    const checkUser = () => {
+      if (this.props.user) {
+        return (
+          <Typography className={classes.typography}>
+            {`${this.props.user.name}  ${this.props.user.surname}`}
+          </Typography>
+        );
+      } else return null;
+    };
     const { classes } = this.props;
+    console.log(this.props.user);
     return (
       <>
         <Grid container direction="column" className={classes.wrap}>
@@ -49,7 +68,11 @@ class UserProfile extends Component {
                   >
                     dawidpolednik
                   </Typography>
-                  <Button variant="contained" className={classes.edit} onClick={this.handleEditButton}>
+                  <Button
+                    variant="contained"
+                    className={classes.edit}
+                    onClick={this.handleEditButton}
+                  >
                     Edit profile
                   </Button>
                 </div>
@@ -60,9 +83,7 @@ class UserProfile extends Component {
                 >
                   Posts: <strong>0</strong>
                 </Typography>
-                <Typography className={classes.typography}>
-                  Dawid Pasieka
-                </Typography>
+                {checkUser()}
                 <Typography className={classes.typography}>Biogram</Typography>
               </CardContent>
             </Card>
