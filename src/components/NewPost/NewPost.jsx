@@ -36,6 +36,7 @@ class NewPost extends Component {
     let formData = new FormData();
     formData.append("photo", this.state.selectedFile);
     formData.append("post", JSON.stringify(this.state.post));
+
     this.props.fetchPostToAPI(formData, this.props.authToken);
   }
   handleTitleChange(event) {
