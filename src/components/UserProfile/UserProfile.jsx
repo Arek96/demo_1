@@ -34,7 +34,7 @@ class UserProfile extends Component {
               classes.typography,
               classes.loginControl
             )}>
-            {`${this.props.user.name}  ${this.props.user.surname}`}
+            {`${this.props.user.GivenName}  ${this.props.user.Name}`}
           </Typography>
         );
       } else return null;
@@ -45,11 +45,23 @@ class UserProfile extends Component {
         <Grid container direction="column" className={classes.wrap}>
           <Grid item>
             <Card className={style.ProfileContainer}>
-              <Avatar
+              {/* <Avatar
                 alt="Profile photo"
-                src={this.props.user.photo}
+                src={this.props.user.Photo}
                 className={classes.avatar}
-              />
+              /> */}
+              {this.props.user.photo ? (
+                <Avatar
+                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                  src={this.props.user.Photo}
+                  className={classes.avatar}
+                />
+              ) : (
+                  <Avatar
+                    className={classes.avatar}>{`${this.props.user.GivenName[0]}${
+                      this.props.user.Name[0]
+                      }`}</Avatar>
+                )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
                   {checkUser()}
