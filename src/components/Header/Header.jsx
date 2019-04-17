@@ -133,16 +133,16 @@ class Header extends React.Component {
                 color: "white",
                 paddingRight: 5
               }}
-            >{`Hello, ${this.props.user.name}`}</Typography>
+            >{`Hello, ${this.props.user.GivenName}`}</Typography>
             {this.props.user.photo ? (
               <Avatar
                 style={{ height: 10, margin: 10 }}
-                alt={`${this.props.user.name}${this.props.user.surname}`}
-                src={this.props.user.photo}
+                alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                src={this.props.user.Photo}
               />
             ) : (
-              <Avatar>{`${this.props.user.name[0]}${
-                this.props.user.surname[0]
+              <Avatar>{`${this.props.user.Name[0]}${
+                this.props.user.GivenName[0]
               }`}</Avatar>
             )}
           </div>

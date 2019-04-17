@@ -5,10 +5,10 @@ export const getUser = data => {
     type: GET_USER,
     payload: {
       user: {
-        name: data.GivenName,
-        surname: data.Name,
-        id: data.Id,
-        photo: data.Photo
+        GivenName: data.GivenName,
+        Name: data.Name,
+        Id: data.Id,
+        Photo: data.Photo
       }
     }
   };
