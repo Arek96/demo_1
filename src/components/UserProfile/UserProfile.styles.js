@@ -30,6 +30,7 @@ const styles = theme => ({
         margin: '10px 70px 10px 20px',
         width: 170,
         height: 170,
+        fontSize: '3rem',
         alignSelf: 'center',
         [theme.breakpoints.down("sm")]: {
             width: 150,

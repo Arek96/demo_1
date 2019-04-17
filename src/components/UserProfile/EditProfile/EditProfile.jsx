@@ -32,14 +32,14 @@ class EditProfile extends Component {
   }
   handleNameChange(event) {
     this.setState({
-      updatedUser: { ...this.state.updatedUser, name: event.target.value }
+      updatedUser: { ...this.state.updatedUser, GivenName: event.target.value }
 
     });
     console.log(this.state.updatedUser)
   }
   handleSurnameChange(event) {
     this.setState({
-      updatedUser: { ...this.state.updatedUser, surname: event.target.value }
+      updatedUser: { ...this.state.updatedUser, Name: event.target.value }
     });
   }
   handleBiogramChange(event) {
@@ -49,7 +49,7 @@ class EditProfile extends Component {
   }
   handleAvatarChange(event) {
     this.setState({
-      updatedUser: { ...this.state.updatedUser, photo: event.target.files[0] }
+      updatedUser: { ...this.state.updatedUser, Photo: event.target.files[0] }
     });
   }
   handleDialogEdit = () => {
@@ -64,10 +64,11 @@ class EditProfile extends Component {
   handleSubmit(event) {
     event.preventDefault();
     let formData = new FormData();
-    if (this.state.updatedUser.photo) {
-      formData.append("photo", this.state.updatedUser.photo);
+    if (this.state.updatedUser.Photo) {
+      formData.append("photo", this.state.updatedUser.Photo);
     }
     formData.append("user", JSON.stringify(this.state.updatedUser));
+    console.log(JSON.parse(formData.get("user")))
     this.props.fetchUpdatedUser(formData, this.props.authToken)
   }
   componentDidUpdate = prevProps => {
@@ -79,7 +80,7 @@ class EditProfile extends Component {
   };
   render() {
     const { classes } = this.props;
-    const { name, surname, biogram, modalEditPageisOpen } = this.state;
+    const { GivenName, Name, biogram, modalEditPageisOpen } = this.state;
     return (
       <Grid container xs={10} justify="center" alignContent="center">
         <Dialog open={modalEditPageisOpen} scroll="body">
@@ -125,8 +126,8 @@ class EditProfile extends Component {
                 <TextField
                   label="Name"
                   className={classes.TextWidth}
-                  value={name}
-                  defaultValue={this.props.user.name}
+                  value={GivenName}
+                  defaultValue={this.props.user.GivenName}
                   onChange={this.handleNameChange}
                   margin="normal"
                   variant="outlined"
@@ -136,8 +137,8 @@ class EditProfile extends Component {
                 <TextField
                   label="Surname"
                   className={classes.TextWidth}
-                  value={surname}
-                  defaultValue={this.props.user.surname}
+                  value={Name}
+                  defaultValue={this.props.user.Name}
                   onChange={this.handleSurnameChange}
                   margin="normal"
                   variant="outlined"
