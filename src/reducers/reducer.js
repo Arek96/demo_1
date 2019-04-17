@@ -1,5 +1,5 @@
 import { LOG_IN, LOG_OUT } from "../actions/loginActions";
-import { GET_USER } from "../actions/userActions";
+import { GET_USER, UPDATE_USER } from "../actions/userActions";
 import { ADD_POST, GET_POSTS } from "../actions/postActions";
 const reducer = (state = { authToken: null, posts: [] }, action) => {
   switch (action.type) {
@@ -11,7 +11,6 @@ const reducer = (state = { authToken: null, posts: [] }, action) => {
     case LOG_OUT:
       return { ...state, authToken: null, user: null };
     case GET_USER:
-      console.log(action);
       return {
         ...state,
         user: action.payload.user
@@ -26,6 +25,11 @@ const reducer = (state = { authToken: null, posts: [] }, action) => {
         ...state,
         posts: action.payload.posts
       };
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: action.payload.user,
+      }
     default:
       return state;
   }

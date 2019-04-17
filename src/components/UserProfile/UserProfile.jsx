@@ -17,34 +17,29 @@ class UserProfile extends Component {
     this.state = {
       modalEditPageisOpen: false
     };
-    if (props.authToken) {
-      props.fetchUser(props.authToken);
-    }
   }
   handleEditButton = () => {
     this.setState(prevState => ({
       modalEditPageisOpen: !prevState.modalEditPageisOpen
     }));
   };
-  componentDidUpdate(prevProps) {
-    if (prevProps.authToken !== this.props.authToken && this.props.authToken) {
-      this.props.fetchUser(this.props.authToken);
-    }
-    console.log(this.props);
-  }
-
   render() {
     const checkUser = () => {
       if (this.props.user) {
         return (
-          <Typography className={classes.typography}>
+          <Typography variant="headline"
+            align="justify"
+            style={{ paddingTop: "10px" }}
+            className={classNames(
+              classes.typography,
+              classes.loginControl
+            )}>
             {`${this.props.user.name}  ${this.props.user.surname}`}
           </Typography>
         );
       } else return null;
     };
     const { classes } = this.props;
-    console.log(this.props.user);
     return (
       <>
         <Grid container direction="column" className={classes.wrap}>
@@ -52,22 +47,12 @@ class UserProfile extends Component {
             <Card className={style.ProfileContainer}>
               <Avatar
                 alt="Profile photo"
-                src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg"
+                src={this.props.user.photo}
                 className={classes.avatar}
               />
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
-                  <Typography
-                    variant="headline"
-                    align="justify"
-                    style={{ paddingTop: "10px" }}
-                    className={classNames(
-                      classes.typography,
-                      classes.loginControl
-                    )}
-                  >
-                    dawidpolednik
-                  </Typography>
+                  {checkUser()}
                   <Button
                     variant="contained"
                     className={classes.edit}
@@ -83,7 +68,6 @@ class UserProfile extends Component {
                 >
                   Posts: <strong>0</strong>
                 </Typography>
-                {checkUser()}
                 <Typography className={classes.typography}>Biogram</Typography>
               </CardContent>
             </Card>

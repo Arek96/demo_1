@@ -16,7 +16,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    if (Boolean(this.props.authToken)) {
+    if (this.props.authToken) {
       this.props.fetchUser(this.props.authToken);
     }
   }
@@ -31,12 +31,12 @@ class App extends Component {
     const authRoutes = !this.props.authToken ? (
       <Route path="/" component={NotLogged} />
     ) : (
-      <React.Fragment>
-        <Route path="/newPost" component={NewPost} />
-        <Route path="/myPosts" component={PostLists} />
-        <Route path="/userProfile" component={UserProfile} />
-      </React.Fragment>
-    );
+        <React.Fragment>
+          <Route path="/newPost" component={NewPost} />
+          <Route path="/myPosts" component={PostLists} />
+          <Route path="/userProfile" component={UserProfile} />
+        </React.Fragment>
+      );
     return (
       <Router>
         <div className={style.App}>

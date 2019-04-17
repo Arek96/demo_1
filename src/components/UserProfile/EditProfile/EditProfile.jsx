@@ -12,16 +12,15 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { Grid, Dialog } from "@material-ui/core";
+import { fetchUser, fetchUpdatedUser } from "../../../actions/userActions";
+import { connect } from "react-redux";
 
 class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {
-        name: "",
-        surname: "",
-        biogram: "",
-        photo: ""
+      updatedUser: {
+        ...props.user
       },
       modalEditPageisOpen: false
     };
@@ -33,22 +32,24 @@ class EditProfile extends Component {
   }
   handleNameChange(event) {
     this.setState({
-      user: { ...this.state.user, name: event.target.value }
+      updatedUser: { ...this.state.updatedUser, name: event.target.value }
+
     });
+    console.log(this.state.updatedUser)
   }
   handleSurnameChange(event) {
     this.setState({
-      user: { ...this.state.user, surname: event.target.value }
+      updatedUser: { ...this.state.updatedUser, surname: event.target.value }
     });
   }
   handleBiogramChange(event) {
-    this.setState({
-      user: { ...this.state.user, biogram: event.target.value }
-    });
+    // this.setState({
+    //   updatedUser: { ...this.state.updatedUser, biogram: event.target.value }
+    // });
   }
   handleAvatarChange(event) {
     this.setState({
-      user: { ...this.state.user, photo: event.target.files[0] }
+      updatedUser: { ...this.state.updatedUser, photo: event.target.files[0] }
     });
   }
   handleDialogEdit = () => {
@@ -63,17 +64,11 @@ class EditProfile extends Component {
   handleSubmit(event) {
     event.preventDefault();
     let formData = new FormData();
-    if (this.state.user.photo) {
-      formData.append("photo", this.state.user.photo);
+    if (this.state.updatedUser.photo) {
+      formData.append("photo", this.state.updatedUser.photo);
     }
-    formData.append("user", JSON.stringify(this.state.user));
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
-      method: "PUT",
-      headers: {
-        "X-ZUMO-AUTH": this.props.authToken
-      },
-      body: formData
-    }).then(r => console.log(r));
+    formData.append("user", JSON.stringify(this.state.updatedUser));
+    this.props.fetchUpdatedUser(formData, this.props.authToken)
   }
   componentDidUpdate = prevProps => {
     if (this.props.open !== prevProps.open) {
@@ -84,7 +79,7 @@ class EditProfile extends Component {
   };
   render() {
     const { classes } = this.props;
-    const { name, surname, biogram, photo, modalEditPageisOpen } = this.state;
+    const { name, surname, biogram, modalEditPageisOpen } = this.state;
     return (
       <Grid container xs={10} justify="center" alignContent="center">
         <Dialog open={modalEditPageisOpen} scroll="body">
@@ -116,7 +111,7 @@ class EditProfile extends Component {
                     />
                     Change a photo
                   </Button>
-                  {/* </label> */}
+
                   <Button
                     variant="contained"
                     color="default"
@@ -131,6 +126,7 @@ class EditProfile extends Component {
                   label="Name"
                   className={classes.TextWidth}
                   value={name}
+                  defaultValue={this.props.user.name}
                   onChange={this.handleNameChange}
                   margin="normal"
                   variant="outlined"
@@ -141,6 +137,7 @@ class EditProfile extends Component {
                   label="Surname"
                   className={classes.TextWidth}
                   value={surname}
+                  defaultValue={this.props.user.surname}
                   onChange={this.handleSurnameChange}
                   margin="normal"
                   variant="outlined"
@@ -187,4 +184,17 @@ class EditProfile extends Component {
     );
   }
 }
-export default withStyles(styles)(EditProfile);
+const mapDispatch = dispatch => {
+  return {
+    fetchUser: authToken => dispatch(fetchUser(authToken)),
+    fetchUpdatedUser: (formData, authToken) => dispatch(fetchUpdatedUser(formData, authToken))
+  };
+};
+const mapState = state => ({
+  authToken: state.authToken,
+  user: state.user
+});
+export default connect(
+  mapState,
+  mapDispatch
+)(withStyles(styles)(EditProfile));
