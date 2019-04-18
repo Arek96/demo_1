@@ -1,0 +1,60 @@
+$devices_sizes: (
+  ("xs", 0px, 600px),
+  ("sm", 600px, 960px),
+  ("md", 960px, 1280px),
+  ("lg", 1280px, 1920px),
+  ("xl", 1920px, 3840px)
+);
+
+@mixin breakpoint-only($size-name) {
+  @each $size, $lower-breakpoint, $greater-breakpoint in $devices_sizes {
+    @if ($size == $size-name) {
+      @media screen and (min-width: $lower-breakpoint) and (max-width: $greater-breakpoint) {
+        @content;
+      }
+    }
+  }
+}
+.ProfileContainer {
+  display: flex;
+  flex-direction: row;
+}
+.BioContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.ButtonContainer {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+@include breakpoint-only("sm") {
+  .ButtonContainer {
+    flex-direction: column;
+  }
+}
+@include breakpoint-only("xs") {
+  .ButtonContainer {
+    flex-direction: column;
+  }
+}
+.PhotosContainer {
+  margin-top: 4rem;
+  margin-bottom: 9rem;
+}
+.postImage {
+  padding: 20px 0;
+  
+  button {
+    width: 250px;
+    height: 250px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.8;
+      transition: 0.3s;
+    }
+  }
+}
