@@ -9,13 +9,15 @@ import style from "../UserProfile/UserProfile.module.scss";
 import styles from "../UserProfile/UserProfile.styles";
 import PostPhoto from "./PostPhoto";
 import EditProfile from "./EditProfile/EditProfile";
+import RemoveProfile from "./RemoveProfile/RemoveProfile";
 
 class UserProfile extends Component {
   constructor(props) {
     console.log(props);
     super(props);
     this.state = {
-      modalEditPageisOpen: false
+      modalEditPageisOpen: false,
+      modalDeletePageisOpen: false
     };
   }
   handleEditButton = () => {
@@ -23,17 +25,21 @@ class UserProfile extends Component {
       modalEditPageisOpen: !prevState.modalEditPageisOpen
     }));
   };
+  handleRemoveButton = () => {
+    this.setState(prevState => ({
+      modalDeletetPageisOpen: !prevState.modalDeletePageisOpen
+    }));
+  };
   render() {
     const checkUser = () => {
       if (this.props.user) {
         return (
-          <Typography variant="headline"
+          <Typography
+            variant="headline"
             align="justify"
             style={{ paddingTop: "10px" }}
-            className={classNames(
-              classes.typography,
-              classes.loginControl
-            )}>
+            className={classNames(classes.typography, classes.loginControl)}
+          >
             {`${this.props.user.GivenName}  ${this.props.user.Name}`}
           </Typography>
         );
@@ -57,11 +63,10 @@ class UserProfile extends Component {
                   className={classes.avatar}
                 />
               ) : (
-                  <Avatar
-                    className={classes.avatar}>{`${this.props.user.GivenName[0]}${
-                      this.props.user.Name[0]
-                      }`}</Avatar>
-                )}
+                <Avatar className={classes.avatar}>{`${
+                  this.props.user.GivenName
+                }${this.props.user.Name}`}</Avatar>
+              )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
                   {checkUser()}
@@ -71,6 +76,13 @@ class UserProfile extends Component {
                     onClick={this.handleEditButton}
                   >
                     Edit profile
+                  </Button>
+                  <Button
+                    variant="contained"
+                    className={classes.edit}
+                    onClick={this.handleRemoveButton}
+                  >
+                    Remove profile
                   </Button>
                 </div>
                 <Typography
@@ -85,6 +97,7 @@ class UserProfile extends Component {
             </Card>
           </Grid>
           <EditProfile open={this.state.modalEditPageisOpen} />
+          <RemoveProfile open={this.state.modalEditPageisOpen} />
           <PostPhoto />
         </Grid>
       </>
