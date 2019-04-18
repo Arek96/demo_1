@@ -22,7 +22,7 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.authToken != this.props.authToken && this.props.authToken) {
+    if (prevProps.authToken !== this.props.authToken && this.props.authToken) {
       this.props.fetchUser(this.props.authToken);
     }
   }
