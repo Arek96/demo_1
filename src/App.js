@@ -32,13 +32,12 @@ class App extends Component {
     const authRoutes = !this.props.authToken ? (
       <Route path="/" component={NotLogged} />
     ) : (
-      <React.Fragment>
-        <Route path="/newPost" component={NewPost} />
-        <Route path="/myPosts" component={PostLists} />
-        <Route path="/userProfile" component={UserProfile} />
-        <Route path="/removeProfile" component={RemoveProfile} />
-      </React.Fragment>
-    );
+        <React.Fragment>
+          <Route path="/newPost" component={NewPost} />
+          <Route path="/myPosts" component={PostLists} />
+          <Route path="/userProfile" component={UserProfile} />
+        </React.Fragment>
+      );
     return (
       <Router>
         <div className={style.App}>

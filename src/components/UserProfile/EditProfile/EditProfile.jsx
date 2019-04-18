@@ -22,7 +22,7 @@ class EditProfile extends Component {
       updatedUser: {
         ...props.user
       },
-      modalEditPageisOpen: false
+      open: false
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSurnameChange = this.handleSurnameChange.bind(this);
@@ -52,11 +52,6 @@ class EditProfile extends Component {
       updatedUser: { ...this.state.updatedUser, Photo: event.target.files[0] }
     });
   }
-  handleDialogEdit = () => {
-    this.setState(prevState => ({
-      modalEditPageisOpen: !prevState.modalEditPageisOpen
-    }));
-  };
   handlePhoto = () => {
     const input = document.getElementById("raised-button-file");
     input.click();
@@ -74,16 +69,16 @@ class EditProfile extends Component {
   componentDidUpdate = prevProps => {
     if (this.props.open !== prevProps.open) {
       this.setState({
-        modalEditPageisOpen: this.props.open
+        open: this.props.open
       });
     }
   };
   render() {
-    const { classes } = this.props;
-    const { GivenName, Name, biogram, modalEditPageisOpen } = this.state;
+    const { classes, handleEditDialog } = this.props;
+    const { GivenName, Name, biogram, open } = this.state;
     return (
       <Grid container xs={10} justify="center" alignContent="center">
-        <Dialog open={modalEditPageisOpen} scroll="body">
+        <Dialog open={open} scroll="body">
           <Card>
             <form className={style.FormEdit} onSubmit={this.handleSubmit}>
               <h2 className={style.FormEditHeader}>Edit a profile</h2>
@@ -171,7 +166,7 @@ class EditProfile extends Component {
                 </Button>
                 <Button
                   variant="contained"
-                  onClick={this.handleDialogEdit}
+                  onClick={handleEditDialog}
                   size="large"
                   className={classes.buttonAction}
                 >

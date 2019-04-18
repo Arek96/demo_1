@@ -13,22 +13,22 @@ import RemoveProfile from "./RemoveProfile/RemoveProfile";
 
 class UserProfile extends Component {
   constructor(props) {
-    console.log(props);
     super(props);
     this.state = {
       modalEditPageisOpen: false,
       modalDeletePageisOpen: false
     };
   }
-  handleEditButton = () => {
+  handleEditDialog = () => {
     this.setState(prevState => ({
       modalEditPageisOpen: !prevState.modalEditPageisOpen
     }));
   };
-  handleRemoveButton = () => {
+  handleDeleteDialog = () => {
     this.setState(prevState => ({
-      modalDeletetPageisOpen: !prevState.modalDeletePageisOpen
+      modalDeletePageisOpen: !prevState.modalDeletePageisOpen
     }));
+
   };
   render() {
     const checkUser = () => {
@@ -63,26 +63,26 @@ class UserProfile extends Component {
                   className={classes.avatar}
                 />
               ) : (
-                <Avatar className={classes.avatar}>{`${
-                  this.props.user.GivenName
-                }${this.props.user.Name}`}</Avatar>
-              )}
+                  <Avatar className={classes.avatar}>{`${
+                    this.props.user.GivenName
+                    }${this.props.user.Name}`}</Avatar>
+                )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
                   {checkUser()}
                   <Button
                     variant="contained"
                     className={classes.edit}
-                    onClick={this.handleEditButton}
+                    onClick={this.handleEditDialog}
                   >
                     Edit profile
                   </Button>
                   <Button
                     variant="contained"
-                    className={classes.edit}
-                    onClick={this.handleRemoveButton}
+                    className={classes.delete}
+                    onClick={this.handleDeleteDialog}
                   >
-                    Remove profile
+                    Delete profile
                   </Button>
                 </div>
                 <Typography
@@ -96,8 +96,8 @@ class UserProfile extends Component {
               </CardContent>
             </Card>
           </Grid>
-          <EditProfile open={this.state.modalEditPageisOpen} />
-          <RemoveProfile open={this.state.modalEditPageisOpen} />
+          <EditProfile open={this.state.modalEditPageisOpen} handleEditDialog={this.handleEditDialog} />
+          <RemoveProfile open={this.state.modalDeletePageisOpen} handleDeleteDialog={this.handleDeleteDialog} />
           <PostPhoto />
         </Grid>
       </>

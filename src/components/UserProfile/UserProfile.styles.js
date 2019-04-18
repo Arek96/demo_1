@@ -18,6 +18,20 @@ const styles = theme => ({
             fontSize: "0.6rem"
         }
     },
+    delete: {
+        width: 130,
+        height: 30,
+        color: "white",
+        backgroundColor: "#3F51B5",
+        marginLeft: '1.2rem',
+        marginTop: '8px',
+        fontSize: "0.7rem",
+        [theme.breakpoints.down("sm")]: {
+            width: '100%',
+            marginLeft: 0,
+            fontSize: "0.6rem"
+        }
+    },
     loginControl: {
         [theme.breakpoints.down("sm")]: {
             fontSize: '1.1rem'
