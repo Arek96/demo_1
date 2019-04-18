@@ -11,6 +11,7 @@ import UserProfile from "./components/UserProfile/UserProfileContainer";
 import NotLogged from "./components/NotLogged/NotLogged";
 import { connect } from "react-redux";
 import { fetchUser } from "./actions/userActions";
+import RemoveProfile from "./components/UserProfile/RemoveProfile/RemoveProfile";
 
 class App extends Component {
   constructor(props) {
@@ -31,12 +32,13 @@ class App extends Component {
     const authRoutes = !this.props.authToken ? (
       <Route path="/" component={NotLogged} />
     ) : (
-        <React.Fragment>
-          <Route path="/newPost" component={NewPost} />
-          <Route path="/myPosts" component={PostLists} />
-          <Route path="/userProfile" component={UserProfile} />
-        </React.Fragment>
-      );
+      <React.Fragment>
+        <Route path="/newPost" component={NewPost} />
+        <Route path="/myPosts" component={PostLists} />
+        <Route path="/userProfile" component={UserProfile} />
+        <Route path="/removeProfile" component={RemoveProfile} />
+      </React.Fragment>
+    );
     return (
       <Router>
         <div className={style.App}>

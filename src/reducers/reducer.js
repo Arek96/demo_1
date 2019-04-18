@@ -1,5 +1,5 @@
 import { LOG_IN, LOG_OUT } from "../actions/loginActions";
-import { GET_USER, UPDATE_USER } from "../actions/userActions";
+import { GET_USER, UPDATE_USER, REMOVE_USER } from "../actions/userActions";
 import { ADD_POST, GET_POSTS } from "../actions/postActions";
 const reducer = (state = { authToken: null, posts: [] }, action) => {
   switch (action.type) {
@@ -28,8 +28,12 @@ const reducer = (state = { authToken: null, posts: [] }, action) => {
     case UPDATE_USER:
       return {
         ...state,
-        user: action.payload.user,
-      }
+        user: action.payload.user
+      };
+    case REMOVE_USER:
+      return {
+        state: null
+      };
     default:
       return state;
   }
