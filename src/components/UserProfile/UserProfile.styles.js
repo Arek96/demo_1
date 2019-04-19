@@ -29,7 +29,7 @@ const styles = theme => ({
         [theme.breakpoints.down("sm")]: {
             width: '100%',
             marginLeft: 0,
-            fontSize: "0.6rem"
+            fontSize: "0.5rem"
         }
     },
     loginControl: {
