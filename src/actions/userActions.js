@@ -59,10 +59,8 @@ export const fetchUpdatedUser = (formData, authToken) => {
     })
       .then(r => r.json())
       .then(resp => {
-        console.log(resp);
-        // return dispatch(updateUser(resp))
+        return dispatch(updateUser(resp))
       });
-    // .catch(r => console.log(r))
   };
 };
 export const fetchRemoveUser = authToken => dispatch => {
@@ -71,6 +69,6 @@ export const fetchRemoveUser = authToken => dispatch => {
     headers: {
       "X-ZUMO-AUTH": authToken
     }
-  }).then(r => console.log(r));
+  })
   return dispatch(removeUser());
 };

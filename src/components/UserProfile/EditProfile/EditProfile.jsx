@@ -6,7 +6,6 @@ import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import SaveIcon from "@material-ui/icons/Save";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -33,7 +32,6 @@ class EditProfile extends Component {
   handleNameChange(event) {
     this.setState({
       updatedUser: { ...this.state.updatedUser, GivenName: event.target.value }
-
     });
     console.log(this.state.updatedUser)
   }
@@ -52,7 +50,7 @@ class EditProfile extends Component {
       updatedUser: { ...this.state.updatedUser, Photo: event.target.files[0] }
     });
   }
-  handlePhoto = () => {
+  handlePhoto() {
     const input = document.getElementById("raised-button-file");
     input.click();
   };
@@ -63,7 +61,6 @@ class EditProfile extends Component {
       formData.append("photo", this.state.updatedUser.Photo);
     }
     formData.append("user", JSON.stringify(this.state.updatedUser));
-    console.log(JSON.parse(formData.get("user")))
     this.props.fetchUpdatedUser(formData, this.props.authToken)
   }
   componentDidUpdate = prevProps => {
@@ -107,7 +104,6 @@ class EditProfile extends Component {
                     />
                     Change a photo
                   </Button>
-
                   <Button
                     variant="contained"
                     color="default"
