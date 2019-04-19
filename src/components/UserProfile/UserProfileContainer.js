@@ -10,7 +10,8 @@ const mapDispatch = dispatch => {
 
 const mapState = state => ({
   authToken: state.authToken,
-  user: state.user
+  user: state.user,
+  photo: state.user.photo
 });
 export default connect(
   mapState,

@@ -42,7 +42,6 @@ export const fetchUser = authToken => {
     })
       .then(r => r.json())
       .then(resp => {
-        console.log(resp);
         return dispatch(getUser(resp));
       });
   };
@@ -57,10 +56,9 @@ export const fetchUpdatedUser = (formData, authToken) => {
       },
       body: formData
     })
-      .then(r => r.json())
-      .then(resp => {
-        return dispatch(updateUser(resp))
-      });
+      .then(r => { return dispatch(updateUser(r)) })
+
+
   };
 };
 export const fetchRemoveUser = authToken => dispatch => {

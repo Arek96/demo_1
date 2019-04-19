@@ -51,21 +51,16 @@ class UserProfile extends Component {
         <Grid container direction="column" className={classes.wrap}>
           <Grid item>
             <Card className={style.ProfileContainer}>
-              {/* <Avatar
-                alt="Profile photo"
-                src={this.props.user.Photo}
-                className={classes.avatar}
-              /> */}
               {this.props.user.photo ? (
                 <Avatar
                   alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                  src={this.props.user.Photo}
+                  src={this.props.user.photo}
                   className={classes.avatar}
                 />
               ) : (
                   <Avatar className={classes.avatar}>{`${
-                    this.props.user.GivenName
-                    }${this.props.user.Name}`}</Avatar>
+                    this.props.user.GivenName[0]
+                    }${this.props.user.Name[0]}`}</Avatar>
                 )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>

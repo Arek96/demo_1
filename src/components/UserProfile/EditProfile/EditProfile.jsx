@@ -47,8 +47,9 @@ class EditProfile extends Component {
   }
   handleAvatarChange(event) {
     this.setState({
-      updatedUser: { ...this.state.updatedUser, Photo: event.target.files[0] }
-    });
+      photo: event.target.files[0]
+    }
+    );
   }
   handlePhoto() {
     const input = document.getElementById("raised-button-file");
@@ -57,8 +58,8 @@ class EditProfile extends Component {
   handleSubmit(event) {
     event.preventDefault();
     let formData = new FormData();
-    if (this.state.updatedUser.Photo) {
-      formData.append("photo", this.state.updatedUser.Photo);
+    if (this.state.photo) {
+      formData.append("photo", this.state.photo);
     }
     formData.append("user", JSON.stringify(this.state.updatedUser));
     this.props.fetchUpdatedUser(formData, this.props.authToken)
@@ -80,9 +81,10 @@ class EditProfile extends Component {
             <form className={style.FormEdit} onSubmit={this.handleSubmit}>
               <h2 className={style.FormEditHeader}>Edit a profile</h2>
               <CardContent className={classes.ContentEditProfile}>
+
                 <Avatar
                   alt="Profile photo"
-                  src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg"
+                  src={this.props.photo}
                   className={classes.avatar}
                 />
                 <div className={style.ButtonsAvatarContainer}>
@@ -184,7 +186,8 @@ const mapDispatch = dispatch => {
 };
 const mapState = state => ({
   authToken: state.authToken,
-  user: state.user
+  user: state.user,
+  photo: state.user.photo,
 });
 export default connect(
   mapState,

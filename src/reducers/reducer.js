@@ -28,8 +28,10 @@ const reducer = (state = { authToken: null, posts: [] }, action) => {
     case UPDATE_USER:
       return {
         ...state,
-        user: action.payload.user
-      };
+        user: action.payload.user,
+
+      }, console.log(state.user)
+        ;
     case REMOVE_USER:
       return {
         state: null
