@@ -18,7 +18,6 @@ export const updateUser = formData => {
     }
   };
 };
-
 export const getUser = data => {
   return {
     type: GET_USER,
@@ -60,7 +59,7 @@ export const fetchUpdatedUser = (formData, authToken) => {
       .then(r => r.json())
       .then(resp => {
         console.log(resp);
-        // return dispatch(updateUser(resp))
+        return dispatch(updateUser(resp))
       });
     // .catch(r => console.log(r))
   };

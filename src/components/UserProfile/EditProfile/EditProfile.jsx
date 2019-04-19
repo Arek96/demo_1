@@ -6,13 +6,13 @@ import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import SaveIcon from "@material-ui/icons/Save";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { Grid, Dialog } from "@material-ui/core";
 import { fetchUser, fetchUpdatedUser } from "../../../actions/userActions";
+import img from '../../../img/withoutPhoto.PNG';
 import { connect } from "react-redux";
 
 class EditProfile extends Component {
@@ -83,11 +83,19 @@ class EditProfile extends Component {
             <form className={style.FormEdit} onSubmit={this.handleSubmit}>
               <h2 className={style.FormEditHeader}>Edit a profile</h2>
               <CardContent className={classes.ContentEditProfile}>
-                <Avatar
-                  alt="Profile photo"
-                  src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg"
-                  className={classes.avatar}
-                />
+                {this.props.user.photo ? (
+                  <Avatar
+                    alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                    src={this.props.user.Photo}
+                    className={classes.avatar}
+                  />
+                ) : (
+                    <Avatar
+                      alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                      src={img}
+                      className={classes.avatar}
+                    />
+                  )}
                 <div className={style.ButtonsAvatarContainer}>
                   <Button
                     variant="contained"

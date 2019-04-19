@@ -10,6 +10,7 @@ import styles from "../UserProfile/UserProfile.styles";
 import PostPhoto from "./PostPhoto";
 import EditProfile from "./EditProfile/EditProfile";
 import RemoveProfile from "./RemoveProfile/RemoveProfile";
+import img from '../../img/withoutPhoto.PNG';
 
 class UserProfile extends Component {
   constructor(props) {
@@ -51,11 +52,6 @@ class UserProfile extends Component {
         <Grid container direction="column" className={classes.wrap}>
           <Grid item>
             <Card className={style.ProfileContainer}>
-              {/* <Avatar
-                alt="Profile photo"
-                src={this.props.user.Photo}
-                className={classes.avatar}
-              /> */}
               {this.props.user.photo ? (
                 <Avatar
                   alt={`${this.props.user.GivenName}${this.props.user.Name}`}
@@ -63,9 +59,11 @@ class UserProfile extends Component {
                   className={classes.avatar}
                 />
               ) : (
-                  <Avatar className={classes.avatar}>{`${
-                    this.props.user.GivenName
-                    }${this.props.user.Name}`}</Avatar>
+                  <Avatar
+                    alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                    src={img}
+                    className={classes.avatar}
+                  />
                 )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
