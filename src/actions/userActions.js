@@ -7,14 +7,11 @@ export const removeUser = () => {
     type: REMOVE_USER
   };
 };
-export const updateUser = formData => {
+export const updateUser = data => {
   return {
     type: UPDATE_USER,
     payload: {
-      user: {
-        ...JSON.parse(formData.get("user")),
-        photo: formData.get("photo")
-      }
+      user: data
     }
   };
 };
@@ -47,7 +44,12 @@ export const fetchUser = authToken => {
   };
 };
 
-export const fetchUpdatedUser = (formData, authToken) => {
+export const fetchUpdatedUser = (authToken, user, photo) => {
+  let formData = new FormData();
+  if (photo) {
+    formData.append("photo", photo);
+  }
+  formData.append("user", JSON.stringify(user));
   return dispatch => {
     return fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
       method: "PUT",
@@ -57,8 +59,6 @@ export const fetchUpdatedUser = (formData, authToken) => {
       body: formData
     })
       .then(r => { return dispatch(updateUser(r)) })
-
-
   };
 };
 export const fetchRemoveUser = authToken => dispatch => {

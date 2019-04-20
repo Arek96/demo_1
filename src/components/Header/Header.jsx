@@ -141,8 +141,8 @@ class Header extends React.Component {
                 src={this.props.user.Photo}
               />
             ) : (
-                <Avatar>{`${this.props.user.GivenName[0]}${
-                  this.props.user.Name[0]
+                <Avatar>{`${this.props.user.GivenName}${
+                  this.props.user.Name
                   }`}</Avatar>
               )}
           </div>

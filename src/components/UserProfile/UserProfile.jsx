@@ -59,8 +59,8 @@ class UserProfile extends Component {
                 />
               ) : (
                   <Avatar className={classes.avatar}>{`${
-                    this.props.user.GivenName[0]
-                    }${this.props.user.Name[0]}`}</Avatar>
+                    this.props.user.GivenName
+                    }${this.props.user.Name}`}</Avatar>
                 )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
