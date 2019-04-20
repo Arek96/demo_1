@@ -21,6 +21,7 @@ class EditProfile extends Component {
       updatedUser: {
         ...props.user
       },
+      photo: null,
       open: false
     };
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -57,12 +58,12 @@ class EditProfile extends Component {
   };
   handleSubmit(event) {
     event.preventDefault();
-    let formData = new FormData();
-    if (this.state.photo) {
-      formData.append("photo", this.state.photo);
-    }
-    formData.append("user", JSON.stringify(this.state.updatedUser));
-    this.props.fetchUpdatedUser(formData, this.props.authToken)
+    // let formData = new FormData();
+    // if (this.state.photo) {
+    //   formData.append("photo", this.state.photo);
+    // }
+    // formData.append("user", JSON.stringify(this.state.updatedUser));
+    this.props.fetchUpdatedUser(this.props.authToken, this.state.updatedUser, this.state.photo)
   }
   componentDidUpdate = prevProps => {
     if (this.props.open !== prevProps.open) {
@@ -181,7 +182,7 @@ class EditProfile extends Component {
 const mapDispatch = dispatch => {
   return {
     fetchUser: authToken => dispatch(fetchUser(authToken)),
-    fetchUpdatedUser: (formData, authToken) => dispatch(fetchUpdatedUser(formData, authToken))
+    fetchUpdatedUser: (authToken, updatedUser, photo) => dispatch(fetchUpdatedUser(authToken, updatedUser, photo))
   };
 };
 const mapState = state => ({
