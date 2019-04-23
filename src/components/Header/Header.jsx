@@ -13,6 +13,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import style from "./Header.module.scss";
 import SlideMenu from "./SlideMenu/SlideMenu";
 import { Link } from "react-router-dom";
+import img from "../../img/withoutPhoto.PNG";
 
 const styles = theme => ({
   root: {
@@ -133,7 +134,11 @@ class Header extends React.Component {
                 color: "white",
                 paddingRight: 5
               }}
-            >{`Hello, ${this.props.user.GivenName}`}</Typography>
+            >
+              {this.props.user.GivenName
+                ? `Hello, ${this.props.user.GivenName}`
+                : "Hello!"}
+            </Typography>
             {this.props.user.Photo ? (
               <Avatar
                 style={{ height: 35, margin: 10 }}
@@ -141,9 +146,13 @@ class Header extends React.Component {
                 src={this.props.user.Photo}
               />
             ) : (
-              <Avatar>{`${this.props.user.GivenName[0]}${
-                this.props.user.Name[0]
-              }`}</Avatar>
+              <Avatar
+                style={{ height: 35, margin: 10 }}
+                alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                src={img}
+              >
+                }`}
+              </Avatar>
             )}
           </div>
         </Link>

@@ -4,17 +4,6 @@ import style from "../UserProfile/UserProfile.module.scss";
 import PostModal from "../PostModal/PostModal";
 import { connect } from "react-redux";
 import { getPostsFromAPI } from "../../actions/postActions";
-// let arrayPost = [];
-// let post = {
-//   id: 0
-// };
-// for (let i = 0; i < 30; i++) {
-//   let clone = {
-//     ...post,
-//     id: post.id++
-//   };
-//   arrayPost.push(clone);
-// }
 
 class PostPhoto extends React.Component {
   constructor(props) {
@@ -24,15 +13,15 @@ class PostPhoto extends React.Component {
     };
   }
   setOpenModal = () => {
-    // this.setState(prevState => ({
-    //     openModal: !prevState.openModal
-    // }))
+    this.setState(prevState => ({
+      openModal: !prevState.openModal
+    }));
   };
-  // const [currentPhoto, setCurrentPhoto] = useState("");
-  // handlePhotoPost = image => {
-  //     setOpenModal(!openModal);
-  //     // setCurrentPhoto(image);
-  // };
+
+  //   handlePhotoPost = image => {
+  //       setOpenModal(!openModal);
+  //       // setCurrentPhoto(image);
+  //   };
   componentDidMount() {
     this.props.getPostsFromAPI(this.props.authToken);
   }
@@ -47,34 +36,8 @@ class PostPhoto extends React.Component {
           justify="center"
           className={style.PhotosContainer}
         >
-          {/* {arrayPost.map(element => (
-                        <Grid
-                            item
-                            key={"gallery" + element.id}
-                            xs={10}
-                            sm={8}
-                            md={6}
-                            lg={4}
-                            xl={4}
-                            className={style.postImage}
-                        >
-                            <button
-                                // onClick={() =>
-                                //     handlePhotoPost(
-                                //         `https://picsum.photos/200/300/?${element.id}`
-                                //     )
-                                // }
-                                style={{
-                                    backgroundImage: `url("https://picsum.photos/200/300/?${
-                                        element.id
-                                        }")`
-                                }}
-                            />
-                        </Grid>
-                    ))} */}
           {this.props.posts && this.props.posts.length > 0
             ? this.props.posts.map(post => {
-                console.log(post);
                 return (
                   <Grid
                     item
@@ -90,17 +53,14 @@ class PostPhoto extends React.Component {
                       style={{
                         backgroundImage: `url(${post.ThumbnailPhoto})`
                       }}
+                      onClick={this.setOpenModal}
                     />
                   </Grid>
                 );
               })
             : null}
         </Grid>
-        <PostModal
-          open={openModal}
-          // handlePhotoPost={handlePhotoPost}
-          // image={currentPhoto}
-        />
+        <PostModal />
       </>
     );
   }
