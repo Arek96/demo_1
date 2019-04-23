@@ -34,7 +34,6 @@ class EditProfile extends Component {
     this.setState({
       updatedUser: { ...this.state.updatedUser, GivenName: event.target.value }
     });
-    console.log(this.state.updatedUser)
   }
   handleSurnameChange(event) {
     this.setState({
@@ -49,21 +48,20 @@ class EditProfile extends Component {
   handleAvatarChange(event) {
     this.setState({
       photo: event.target.files[0]
-    }
-    );
+    });
   }
   handlePhoto() {
     const input = document.getElementById("raised-button-file");
     input.click();
-  };
+  }
   handleSubmit(event) {
     event.preventDefault();
-    // let formData = new FormData();
-    // if (this.state.photo) {
-    //   formData.append("photo", this.state.photo);
-    // }
-    // formData.append("user", JSON.stringify(this.state.updatedUser));
-    this.props.fetchUpdatedUser(this.props.authToken, this.state.updatedUser, this.state.photo)
+    this.props.fetchUpdatedUser(
+      this.props.authToken,
+      this.state.updatedUser,
+      this.state.photo
+    );
+    this.props.handleEditDialog();
   }
   componentDidUpdate = prevProps => {
     if (this.props.open !== prevProps.open) {
@@ -82,7 +80,6 @@ class EditProfile extends Component {
             <form className={style.FormEdit} onSubmit={this.handleSubmit}>
               <h2 className={style.FormEditHeader}>Edit a profile</h2>
               <CardContent className={classes.ContentEditProfile}>
-
                 <Avatar
                   alt="Profile photo"
                   src={this.props.photo}
@@ -182,13 +179,14 @@ class EditProfile extends Component {
 const mapDispatch = dispatch => {
   return {
     fetchUser: authToken => dispatch(fetchUser(authToken)),
-    fetchUpdatedUser: (authToken, updatedUser, photo) => dispatch(fetchUpdatedUser(authToken, updatedUser, photo))
+    fetchUpdatedUser: (authToken, updatedUser, photo) =>
+      dispatch(fetchUpdatedUser(authToken, updatedUser, photo))
   };
 };
 const mapState = state => ({
   authToken: state.authToken,
   user: state.user,
-  photo: state.user.photo,
+  photo: state.user.photo
 });
 export default connect(
   mapState,

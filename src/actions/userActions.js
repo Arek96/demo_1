@@ -15,7 +15,6 @@ export const updateUser = data => {
     }
   };
 };
-
 export const getUser = data => {
   return {
     type: GET_USER,
@@ -43,7 +42,6 @@ export const fetchUser = authToken => {
       });
   };
 };
-
 export const fetchUpdatedUser = (authToken, user, photo) => {
   let formData = new FormData();
   if (photo) {
@@ -58,7 +56,11 @@ export const fetchUpdatedUser = (authToken, user, photo) => {
       },
       body: formData
     })
-      .then(r => { return dispatch(updateUser(r)) })
+      .then(response => response.json())
+      .then(r => {
+        console.log(r);
+        return dispatch(updateUser(r));
+      });
   };
 };
 export const fetchRemoveUser = authToken => dispatch => {
@@ -67,6 +69,6 @@ export const fetchRemoveUser = authToken => dispatch => {
     headers: {
       "X-ZUMO-AUTH": authToken
     }
-  })
+  });
   return dispatch(removeUser());
 };
