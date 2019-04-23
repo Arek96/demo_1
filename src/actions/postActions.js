@@ -32,7 +32,8 @@ export const fetchPostToAPI = (formData, authToken) => {
       body: formData
     })
       .then(r => r.json())
-      .then(resp => dispatch(addPost(formData, resp)));
+      .then(resp => dispatch(addPost(formData, resp), console.log(resp)),);
+      
   };
 };
 

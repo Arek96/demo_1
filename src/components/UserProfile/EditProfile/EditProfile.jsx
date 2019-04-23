@@ -12,6 +12,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { Grid, Dialog } from "@material-ui/core";
 import { fetchUser, fetchUpdatedUser } from "../../../actions/userActions";
+import img from '../../../img/withoutPhoto.PNG';
 import { connect } from "react-redux";
 
 class EditProfile extends Component {
@@ -80,11 +81,19 @@ class EditProfile extends Component {
             <form className={style.FormEdit} onSubmit={this.handleSubmit}>
               <h2 className={style.FormEditHeader}>Edit a profile</h2>
               <CardContent className={classes.ContentEditProfile}>
-                <Avatar
-                  alt="Profile photo"
-                  src={this.props.photo}
-                  className={classes.avatar}
-                />
+                {this.props.user.photo ? (
+                  <Avatar
+                    alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                    src={this.props.user.Photo}
+                    className={classes.avatar}
+                  />
+                ) : (
+                    <Avatar
+                      alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                      src={img}
+                      className={classes.avatar}
+                    />
+                  )}
                 <div className={style.ButtonsAvatarContainer}>
                   <Button
                     variant="contained"
