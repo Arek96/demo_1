@@ -10,7 +10,7 @@ import styles from "../UserProfile/UserProfile.styles";
 import PostPhoto from "./PostPhoto";
 import EditProfile from "./EditProfile/EditProfile";
 import RemoveProfile from "./RemoveProfile/RemoveProfile";
-import img from '../../img/withoutPhoto.PNG';
+import img from "../../img/withoutPhoto.PNG";
 
 class UserProfile extends Component {
   constructor(props) {
@@ -29,7 +29,6 @@ class UserProfile extends Component {
     this.setState(prevState => ({
       modalDeletePageisOpen: !prevState.modalDeletePageisOpen
     }));
-
   };
   render() {
     const checkUser = () => {
@@ -52,19 +51,19 @@ class UserProfile extends Component {
         <Grid container direction="column" className={classes.wrap}>
           <Grid item>
             <Card className={style.ProfileContainer}>
-              {this.props.user.photo ? (
+              {this.props.user.Photo ? (
                 <Avatar
                   alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                  src={this.props.user.photo}
+                  src={this.props.user.Photo}
                   className={classes.avatar}
                 />
               ) : (
-                  <Avatar
-                    alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                    src={img}
-                    className={classes.avatar}
-                  />
-                )}
+                <Avatar
+                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                  src={img}
+                  className={classes.avatar}
+                />
+              )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
                   {checkUser()}
@@ -94,8 +93,14 @@ class UserProfile extends Component {
               </CardContent>
             </Card>
           </Grid>
-          <EditProfile open={this.state.modalEditPageisOpen} handleEditDialog={this.handleEditDialog} />
-          <RemoveProfile open={this.state.modalDeletePageisOpen} handleDeleteDialog={this.handleDeleteDialog} />
+          <EditProfile
+            open={this.state.modalEditPageisOpen}
+            handleEditDialog={this.handleEditDialog}
+          />
+          <RemoveProfile
+            open={this.state.modalDeletePageisOpen}
+            handleDeleteDialog={this.handleDeleteDialog}
+          />
           <PostPhoto />
         </Grid>
       </>

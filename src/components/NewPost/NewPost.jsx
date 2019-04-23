@@ -36,8 +36,8 @@ class NewPost extends Component {
     let formData = new FormData();
     formData.append("photo", this.state.selectedFile);
     formData.append("post", JSON.stringify(this.state.post));
-
     this.props.fetchPostToAPI(formData, this.props.authToken);
+    this.props.history.push("/userProfile");
   }
   handleTitleChange(event) {
     this.setState({
@@ -96,7 +96,6 @@ class NewPost extends Component {
                 variant="outlined"
                 placeholder="Write a title..."
               />
-
               <TextField
                 label="Text"
                 className={classes.FormControl}
@@ -108,7 +107,6 @@ class NewPost extends Component {
                 variant="outlined"
                 placeholder="Write an information about post..."
               />
-
               <input
                 accept="image/*"
                 style={{ display: "none" }}

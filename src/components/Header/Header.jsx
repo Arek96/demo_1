@@ -136,21 +136,21 @@ class Header extends React.Component {
             >{`Hello, ${this.props.user.GivenName}`}</Typography>
             {this.props.user.Photo ? (
               <Avatar
-                style={{ height: 10, margin: 10 }}
+                style={{ height: 35, margin: 10 }}
                 alt={`${this.props.user.GivenName}${this.props.user.Name}`}
                 src={this.props.user.Photo}
               />
             ) : (
-                <Avatar>{`${this.props.user.GivenName}${
-                  this.props.user.Name
-                  }`}</Avatar>
-              )}
+              <Avatar>{`${this.props.user.GivenName[0]}${
+                this.props.user.Name[0]
+              }`}</Avatar>
+            )}
           </div>
         </Link>
       </IconButton>
     ) : (
-        <Link to="login">Log In</Link>
-      );
+      <Link to="login">Log In</Link>
+    );
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
