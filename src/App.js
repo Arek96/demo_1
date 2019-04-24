@@ -23,7 +23,7 @@ class App extends Component {
 
   componentDidUpdate(prevProps) {
     if (
-      prevProps.authToken != this.props.authToken &&
+      prevProps.authToken !== this.props.authToken &&
       Boolean(this.props.authToken)
     ) {
       this.props.fetchUser(this.props.authToken);

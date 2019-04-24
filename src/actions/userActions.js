@@ -5,10 +5,10 @@ export const getUser = data => {
     type: GET_USER,
     payload: {
       user: {
-        name: data.GivenName,
-        surname: data.Name,
-        id: data.Id,
-        photo: data.Photo
+        GivenName: data.GivenName,
+        Name: data.Name,
+        Id: data.Id,
+        Photo: data.Photo
       }
     }
   };
@@ -34,6 +34,6 @@ export const updateUser = updatedData => {
     fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
       method: "PUT",
       headers: { "X-ZUMO-AUTH": this.props.authToken },
-      body: formData
+      body: updatedData
     }).then(r => console.log(r));
 };

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import styles from "./Home.module.scss";
 import { getPostsFromAPI } from "../../actions/postActions";
 import Post from "./Post/Post";
+import { Grid } from "@material-ui/core";
 
 class Home extends Component {
   constructor(props) {
@@ -12,16 +13,16 @@ class Home extends Component {
   }
   componentDidUpdate(prevProps) {
     if (this.props.posts !== prevProps.posts) {
-      this.props.getPostsFromAPI(this.props.authToken);
+      //this.props.getPostsFromAPI(this.props.authToken);
     }
   }
   render() {
     return (
-      <div className={styles.Home}>
+      <Grid item style={{ width: "100%" }} sm={8} xxl={7}>
         {this.props.posts.map(post => {
           return <Post key={post.Id} post={post} user={this.props.user} />;
         })}
-      </div>
+      </Grid>
     );
   }
 }
