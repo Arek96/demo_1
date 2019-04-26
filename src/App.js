@@ -12,6 +12,7 @@ import NotLogged from "./components/NotLogged/NotLogged";
 import { connect } from "react-redux";
 import { fetchUser } from "./actions/userActions";
 import RemoveProfile from "./components/UserProfile/RemoveProfile/RemoveProfile";
+import Home from "./components/Home/Home";
 
 class App extends Component {
   constructor(props) {
@@ -32,12 +33,14 @@ class App extends Component {
     const authRoutes = !this.props.authToken ? (
       <Route path="/" component={NotLogged} />
     ) : (
-        <React.Fragment>
-          <Route path="/newPost" component={NewPost} />
-          <Route path="/myPosts" component={PostLists} />
-          <Route path="/userProfile" component={UserProfile} />
-        </React.Fragment>
-      );
+      <React.Fragment>
+        <Route path="/home" component={Home} />
+        <Route path="/newPost" component={NewPost} />
+        <Route path="/myPosts" component={PostLists} />
+        <Route path="/userProfile" component={UserProfile} />
+      </React.Fragment>
+    );
+
     return (
       <Router>
         <div className={style.App}>
@@ -78,12 +81,12 @@ const mapDispatch = dispatch => {
     fetchUser: authToken => dispatch(fetchUser(authToken))
   };
 };
-const mapState = state => ({
+const mapProps = state => ({
   authToken: state.authToken,
   user: state.user
 });
 
 export default connect(
-  mapState,
+  mapProps,
   mapDispatch
 )(App);

@@ -27,7 +27,7 @@ class SlideMenu extends Component {
           <Link to="/newPost">Add a post</Link>
         </MenuItem>
         <MenuItem>
-          <Link to="/myPosts">My posts</Link>
+          <Link to="/home">Home</Link>
         </MenuItem>
       </div>
     ) : (

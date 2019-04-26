@@ -14,7 +14,10 @@ import styles from "./NewPost.styles.js";
 import { Grid } from "@material-ui/core";
 import ResetDialog from "./ResetDialog/ResetDialog";
 import { connect } from "react-redux";
-import { fetchPostToAPI } from "../../actions/postActions";
+import {
+  fetchPostToAPI,
+  fetchEditedPostToAPI
+} from "../../actions/postActions";
 
 class NewPost extends Component {
   constructor(props) {
@@ -23,18 +26,24 @@ class NewPost extends Component {
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handlePhotoChange = this.handlePhotoChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
     this.state = {
-      post: {
-        title: "",
-        text: ""
-      },
+      post: this.props.edit
+        ? {
+            title: this.props.postToEdit.Title,
+            text: this.props.postToEdit.Text
+          }
+        : { title: "", text: "" },
       openDialog: false
     };
   }
   handleSubmit(event) {
     event.preventDefault();
     let formData = new FormData();
-    formData.append("photo", this.state.selectedFile);
+    if (this.state.selectedFile) {
+      formData.append("photo", this.state.selectedFile);
+    }
+
     formData.append("post", JSON.stringify(this.state.post));
     this.props.fetchPostToAPI(formData, this.props.authToken);
     this.props.history.push("/userProfile");
@@ -70,11 +79,11 @@ class NewPost extends Component {
     this.handleDialog();
   };
   get isSaveEnabled() {
-    return (
-      this.state.post.title.length > 0 &&
+    return this.state.post.title.length > 0 &&
       this.state.post.text.length > 0 &&
-      !!this.state.selectedFile
-    );
+      this.props.edit
+      ? true
+      : !!this.state.selectedFile;
   }
   render() {
     const {
@@ -82,11 +91,18 @@ class NewPost extends Component {
       } = this.state,
       { classes } = this.props;
     return (
-      <Grid container xs={10} justify="center" alignContent="center">
+      <Grid
+        container
+        xs={this.props.edit ? 12 : 10}
+        justify="center"
+        alignContent="center"
+      >
         <Card className={classes.card}>
           <form className={style.Form}>
             <CardContent>
-              <h2 className={style.FormHeader}>Add a new Post</h2>
+              <h2 className={style.FormHeader}>
+                {this.props.edit ? "Edit post" : "Add a new Post"}
+              </h2>
               <TextField
                 label="Title"
                 className={classes.FormControl}
@@ -164,7 +180,9 @@ class NewPost extends Component {
 }
 const mapDispatch = dispatch => ({
   fetchPostToAPI: (formData, authToken) =>
-    dispatch(fetchPostToAPI(formData, authToken))
+    dispatch(fetchPostToAPI(formData, authToken)),
+  fetchEditedPostToAPI: (postId, formData, authToken) =>
+    dispatch(fetchEditedPostToAPI(postId, formData, authToken))
 });
 export default connect(
   state => ({ authToken: state.authToken }),
