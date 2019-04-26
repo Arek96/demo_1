@@ -9,24 +9,21 @@ class PostPhoto extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openModal: false
+      openModal: false,
+      currentPost: ""
     };
   }
-  setOpenModal = () => {
+  setOpenModal = post => {
     this.setState(prevState => ({
-      openModal: !prevState.openModal
+      openModal: !prevState.openModal,
+      currentPost: post
     }));
   };
-
-  //   handlePhotoPost = image => {
-  //       setOpenModal(!openModal);
-  //       // setCurrentPhoto(image);
-  //   };
   componentDidMount() {
     this.props.getPostsFromAPI(this.props.authToken);
   }
   render() {
-    const { openModal } = this.state;
+    const { openModal, currentPost } = this.state;
     console.log(this.props.posts);
     return (
       <>
@@ -38,37 +35,38 @@ class PostPhoto extends React.Component {
         >
           {this.props.posts && this.props.posts.length > 0
             ? this.props.posts.map(post => {
-              return (
-                <Grid
-                  item
-                  key={post.Id}
-                  xs={10}
-                  sm={8}
-                  md={6}
-                  lg={4}
-                  xl={4}
-                  className={style.postImage}
-                >
-                  <button
-                    style={{
-                      backgroundImage: `url(${post.ThumbnailPhoto})`
-                    }}
-                    onClick={this.setOpenModal}
-                  />
-                  <PostModal open={openModal} changeModal={this.setOpenModal} post={post} />
-                </Grid>
-
-              );
-
-            })
+                return (
+                  <Grid
+                    item
+                    key={post.Id}
+                    xs={10}
+                    sm={8}
+                    md={6}
+                    lg={4}
+                    xl={4}
+                    className={style.postImage}
+                  >
+                    <button
+                      style={{
+                        backgroundImage: `url(${post.ThumbnailPhoto})`
+                      }}
+                      onClick={() => this.setOpenModal(post)}
+                    />
+                  </Grid>
+                );
+              })
             : null}
         </Grid>
-
+        <PostModal
+          open={openModal}
+          changeModal={this.setOpenModal}
+          post={currentPost}
+          user={this.props.user}
+        />
       </>
     );
   }
 }
-
 const mapState = state => ({
   authToken: state.authToken,
   posts: state.posts,

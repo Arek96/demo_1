@@ -41,7 +41,9 @@ class UserProfile extends Component {
             style={{ paddingTop: "10px" }}
             className={classNames(classes.typography, classes.loginControl)}
           >
-            {this.props.user.GivenName && this.props.user.Name ? `${this.props.user.GivenName}  ${this.props.user.Name}` : `Please edit your profile`}
+            {this.props.user.GivenName && this.props.user.Name
+              ? `${this.props.user.GivenName}  ${this.props.user.Name}`
+              : `Please edit your profile`}
           </Typography>
         );
       } else return null;
@@ -59,12 +61,12 @@ class UserProfile extends Component {
                   className={classes.avatar}
                 />
               ) : (
-                  <Avatar
-                    alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                    src={img}
-                    className={classes.avatar}
-                  />
-                )}
+                <Avatar
+                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                  src={img}
+                  className={classes.avatar}
+                />
+              )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
                   {checkUser()}
@@ -88,7 +90,9 @@ class UserProfile extends Component {
                   style={{ fontSize: "0.7rem" }}
                   className={classes.typography}
                 >
-                  {this.props.posts.length > 0 ? `Posts: ${this.props.posts.length}` : 'Posts: 0'}
+                  {this.props.posts && this.props.posts.length > 0
+                    ? `Posts: ${this.props.posts.length}`
+                    : "Posts: 0"}
                 </Typography>
                 <Typography className={classes.typography}>Biogram</Typography>
               </CardContent>

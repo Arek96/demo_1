@@ -1,22 +1,17 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import classnames from "classnames";
 import Card from "@material-ui/core/Card";
 import style from "./ModalCard.module.scss";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import red from "@material-ui/core/colors/red";
 import img from "../../img/withoutPhoto.PNG";
-import { connect } from "react-redux";
 const styles = theme => ({
   avatar: {
     backgroundColor: red[500]
-  },
+  }
 });
 class ModalCard extends Component {
   constructor(props) {
@@ -46,47 +41,39 @@ class ModalCard extends Component {
 
     return `${date.getDate()} ${
       month[date.getMonth()]
-      }, ${date.getFullYear()} `;
+    }, ${date.getFullYear()} `;
   };
 
   render() {
-    console.log(this.props.post)
+    console.log(this.props.post);
     const { classes } = this.props;
-    const checkPhoto = () =>
-      this.props.user.Photo ? (
-        <Avatar
-          style={{ margin: 10 }}
-          alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-          src={this.props.user.Photo}
-        />
-      ) : (
-          <Avatar
-            style={{ margin: 10 }}
-            alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-            src={img}
-          >
-            }`}
-        </Avatar>
-        )
+    const checkPhoto = () => (
+      <Avatar
+        style={{ margin: 10 }}
+        alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+        src={this.props.user.Photo || img}
+      />
+    );
+
     return (
       <Card className={style.Card}>
         <CardHeader
-          // avatar={
-          //   checkPhoto()
-          // }
+          avatar={checkPhoto()}
           title={this.props.post.Title}
           subheader={this.publishDate()}
         />
-        <div className={style.ContainerToIMG}><div className={style.DivIMG}><img alt='photo' src={this.props.post.ThumbnailPhoto} ></img></div></div>
+        <div className={style.ContainerToIMG}>
+          <div className={style.DivIMG}>
+            <img alt="photo" src={this.props.post.ThumbnailPhoto} />
+          </div>
+        </div>
         <CardContent>
-          <Typography align='justify' paragraph>
+          <Typography align="justify" paragraph>
             {this.props.post.Text}
           </Typography>
         </CardContent>
-      </Card >
+      </Card>
     );
   }
 }
-export default (withStyles(styles)(ModalCard));
-
-
+export default withStyles(styles)(ModalCard);

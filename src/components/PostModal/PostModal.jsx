@@ -26,7 +26,7 @@ class PostModal extends React.Component {
         onClose={this.props.changeModal}
         scroll="body"
       >
-        <ModalCard/>
+        <ModalCard post={this.props.post} user={this.props.user} />
       </Dialog>
     );
   }
