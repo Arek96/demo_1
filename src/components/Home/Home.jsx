@@ -13,7 +13,6 @@ class Home extends Component {
   }
   componentDidUpdate(prevProps) {
     if (this.props.posts !== prevProps.posts) {
-      //this.props.getPostsFromAPI(this.props.authToken);
     }
   }
   render() {
