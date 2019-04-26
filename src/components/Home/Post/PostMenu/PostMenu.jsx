@@ -99,7 +99,7 @@ class PostMenu extends Component {
           disableAutoFocusItem
           id="postMenu"
           anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
+          open={anchorEl}
           onClose={handleCloseMenu}
         >
           <MenuItem

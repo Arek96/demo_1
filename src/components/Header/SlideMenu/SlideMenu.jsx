@@ -19,16 +19,16 @@ class SlideMenu extends Component {
 
     const privateDrawerItems = this.props.authToken ? (
       <div>
-        <LogOut />
+        <MenuItem>
+          <Link to="/home">Home</Link>
+        </MenuItem>
         <MenuItem>
           <Link to="/userProfile">My profile</Link>
         </MenuItem>
         <MenuItem>
           <Link to="/newPost">Add a post</Link>
         </MenuItem>
-        <MenuItem>
-          <Link to="/home">Home</Link>
-        </MenuItem>
+        <LogOut />
       </div>
     ) : (
         publicDrawerItems

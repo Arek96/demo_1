@@ -47,7 +47,6 @@ export const fetchEditedPostToAPI = (postId, formData, authToken) => {
     })
       .then(r => r.json())
       .then(resp => {
-        console.log(resp);
         dispatch(editPost(resp));
       });
   };

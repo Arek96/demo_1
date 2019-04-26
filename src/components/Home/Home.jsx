@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import styles from "./Home.module.scss";
 import { getPostsFromAPI } from "../../actions/postActions";
 import Post from "./Post/Post";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 
 class Home extends Component {
   constructor(props) {
@@ -19,9 +19,9 @@ class Home extends Component {
   render() {
     return (
       <Grid item style={{ width: "100%" }} sm={8} xxl={7}>
-        {this.props.posts.map(post => {
-          return <Post key={post.Id} post={post} user={this.props.user} />;
-        })}
+        {this.props.posts.length > 0 ? this.props.posts.map(post => {
+          return <Post key={post.Id} post={post} user={this.props.user} />
+        }) : <Typography variant='h5'>You don't have any posts yet. </Typography>}
       </Grid>
     );
   }

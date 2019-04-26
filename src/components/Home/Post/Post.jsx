@@ -13,6 +13,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import PostMenu from "./PostMenu/PostMenu";
 import styles from "./Post.module.scss";
+import img from "../../../img/withoutPhoto.PNG";
 
 class Post extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class Post extends Component {
       anchorEl: null
     };
   }
+
   publishDate = () => {
     let date = new Date(this.props.post.PublishDate);
     let month = [];
@@ -40,7 +42,7 @@ class Post extends Component {
 
     return `${date.getDate()} ${
       month[date.getMonth()]
-    }, ${date.getFullYear()} `;
+      }, ${date.getFullYear()} `;
   };
   handleExpandClick = () => {
     this.setState({
@@ -55,13 +57,28 @@ class Post extends Component {
     this.setState({ anchorEl: null });
   };
   render() {
+    const checkPhoto = () =>
+      this.props.user.Photo ? (
+        <Avatar
+          style={{ margin: 10 }}
+          alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+          src={this.props.user.Photo}
+        />
+      ) : (
+          <Avatar
+            style={{ height: 35, margin: 10 }}
+            alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+            src={img}
+          >
+            }`}
+        </Avatar>
+        )
+
     return (
       <Card className={styles.PostCard}>
         <CardHeader
           avatar={
-            <Avatar>
-              {`${this.props.user.GivenName}${this.props.user.Name}`}
-            </Avatar>
+            checkPhoto()
           }
           action={
             <IconButton>
@@ -94,8 +111,8 @@ class Post extends Component {
               {this.state.expanded
                 ? this.props.post.Text
                 : this.props.post.Text.length < 100
-                ? this.props.post.Text
-                : `${this.props.post.Text.substr(0, 100)}...`}
+                  ? this.props.post.Text
+                  : `${this.props.post.Text.substr(0, 100)}...`}
             </Typography>
           </CardContent>
         </Collapse>

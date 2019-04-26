@@ -15,6 +15,15 @@ export const updateUser = data => {
     }
   };
 };
+// export const updateUser = updatedData => {
+//   return dispatch =>
+//     fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
+//       method: "PUT",
+//       headers: { "X-ZUMO-AUTH": this.props.authToken },
+//       body: updatedData
+//     }).then(r => console.log(r));
+// };
+
 export const getUser = data => {
   return {
     type: GET_USER,
@@ -73,11 +82,3 @@ export const fetchRemoveUser = authToken => dispatch => {
   return dispatch(removeUser());
 };
 
-export const updateUser = updatedData => {
-  return dispatch =>
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/user`, {
-      method: "PUT",
-      headers: { "X-ZUMO-AUTH": this.props.authToken },
-      body: updatedData
-    }).then(r => console.log(r));
-};

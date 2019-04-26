@@ -21,9 +21,11 @@ const reducer = (state = { authToken: null, posts: [] }, action) => {
         user: action.payload.user
       };
     case ADD_POST:
+      const posts = state.posts;
+      posts.push(action.payload.post)
       return {
         ...state,
-        posts: state.posts.concat(action.payload.post)
+        posts: posts.reverse()
       };
     case GET_POSTS:
       return {

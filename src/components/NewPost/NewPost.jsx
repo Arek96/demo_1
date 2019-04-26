@@ -30,9 +30,9 @@ class NewPost extends Component {
     this.state = {
       post: this.props.edit
         ? {
-            title: this.props.postToEdit.Title,
-            text: this.props.postToEdit.Text
-          }
+          title: this.props.postToEdit.Title,
+          text: this.props.postToEdit.Text
+        }
         : { title: "", text: "" },
       openDialog: false
     };
@@ -45,8 +45,29 @@ class NewPost extends Component {
     }
 
     formData.append("post", JSON.stringify(this.state.post));
-    this.props.fetchPostToAPI(formData, this.props.authToken);
-    this.props.history.push("/userProfile");
+    if (this.props.edit) {
+      this.props.fetchEditedPostToAPI(
+        this.props.postToEdit.Id,
+        formData,
+        this.props.authToken
+      )
+    }
+    else {
+      this.props.fetchPostToAPI(formData, this.props.authToken)
+      this.props.history.push("/home")
+    }
+
+    if (this.props.edit) {
+      this.props.closeDialog();
+    }
+    this.setState({
+      post: {
+        title: "",
+        text: "",
+        selectedFile: ""
+      }
+    });
+
   }
   handleTitleChange(event) {
     this.setState({
@@ -87,8 +108,8 @@ class NewPost extends Component {
   }
   render() {
     const {
-        post: { title, text }
-      } = this.state,
+      post: { title, text }
+    } = this.state,
       { classes } = this.props;
     return (
       <Grid
