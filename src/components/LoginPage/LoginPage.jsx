@@ -6,6 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import GoogleLoginButton from "./GoogleLoginButton/GoogleLoginButton";
 import Grid from "@material-ui/core/Grid";
 import style from "./LoginPage.module.scss";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 class LoginPage extends Component {
   constructor(props) {
@@ -16,7 +18,6 @@ class LoginPage extends Component {
   handleGoogleResp(response) {
     //this function passes the authentication token to a parent component of LoginPage
     sessionStorage.setItem("authToken", response.authenticationToken);
-    this.props.passAuthToken(response.authenticationToken);
   }
   render() {
     return (
@@ -57,9 +58,10 @@ class LoginPage extends Component {
             </CardActions>
           </Grid>
         </Card>
+        {this.props.authToken ? <Redirect to="/home" /> : null}
       </Grid>
     );
   }
 }
 
-export default LoginPage;
+export default connect(state => ({ authToken: state.authToken }))(LoginPage);

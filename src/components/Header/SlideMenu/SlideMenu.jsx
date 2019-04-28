@@ -10,29 +10,29 @@ import { connect } from "react-redux";
 class SlideMenu extends Component {
   render() {
     const publicDrawerItems = (
-      <React.Fragment>
+      <div>
         <MenuItem>
           <Link to="/login">Log in</Link>
         </MenuItem>
-      </React.Fragment>
+      </div>
     );
 
     const privateDrawerItems = this.props.authToken ? (
-      <React.Fragment>
-        <LogOut />
+      <div>
+        <MenuItem>
+          <Link to="/home">Home</Link>
+        </MenuItem>
         <MenuItem>
           <Link to="/userProfile">My profile</Link>
         </MenuItem>
         <MenuItem>
           <Link to="/newPost">Add a post</Link>
         </MenuItem>
-        <MenuItem>
-          <Link to="/myPosts">My posts</Link>
-        </MenuItem>
-      </React.Fragment>
+        <LogOut />
+      </div>
     ) : (
-      publicDrawerItems
-    );
+        publicDrawerItems
+      );
 
     return (
       <Drawer open={this.props.open} onClose={this.props.handleClickMenu}>

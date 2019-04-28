@@ -9,48 +9,80 @@ import style from "../UserProfile/UserProfile.module.scss";
 import styles from "../UserProfile/UserProfile.styles";
 import PostPhoto from "./PostPhoto";
 import EditProfile from "./EditProfile/EditProfile";
+import RemoveProfile from "./RemoveProfile/RemoveProfile";
+import img from "../../img/withoutPhoto.PNG";
+import { connect } from "react-redux";
 
 class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       modalEditPageisOpen: false,
+      modalDeletePageisOpen: false
     };
-
   }
-  handleEditButton = () => {
+  handleEditDialog = () => {
     this.setState(prevState => ({
       modalEditPageisOpen: !prevState.modalEditPageisOpen
-    }))
-  }
-
+    }));
+  };
+  handleDeleteDialog = () => {
+    this.setState(prevState => ({
+      modalDeletePageisOpen: !prevState.modalDeletePageisOpen
+    }));
+  };
   render() {
+    const checkUser = () => {
+      if (this.props.user) {
+        return (
+          <Typography
+            variant="headline"
+            align="justify"
+            style={{ paddingTop: "10px" }}
+            className={classNames(classes.typography, classes.loginControl)}
+          >
+            {this.props.user.GivenName && this.props.user.Name
+              ? `${this.props.user.GivenName}  ${this.props.user.Name}`
+              : `Please edit your profile`}
+          </Typography>
+        );
+      } else return null;
+    };
     const { classes } = this.props;
     return (
       <>
         <Grid container direction="column" className={classes.wrap}>
           <Grid item>
             <Card className={style.ProfileContainer}>
-              <Avatar
-                alt="Profile photo"
-                src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg"
-                className={classes.avatar}
-              />
+              {this.props.user.Photo ? (
+                <Avatar
+                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                  src={this.props.user.Photo}
+                  className={classes.avatar}
+                />
+              ) : (
+                <Avatar
+                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                  src={img}
+                  className={classes.avatar}
+                />
+              )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
-                  <Typography
-                    variant="headline"
-                    align="justify"
-                    style={{ paddingTop: "10px" }}
-                    className={classNames(
-                      classes.typography,
-                      classes.loginControl
-                    )}
+                  {checkUser()}
+                  <Button
+                    variant="contained"
+                    className={classes.edit}
+                    onClick={this.handleEditDialog}
                   >
-                    dawidpolednik
-                  </Typography>
-                  <Button variant="contained" className={classes.edit} onClick={this.handleEditButton}>
                     Edit profile
+                  </Button>
+                  <Button
+                    variant="contained"
+                    className={classes.delete}
+                    onClick={this.handleDeleteDialog}
+                  >
+                    Delete profile
                   </Button>
                 </div>
                 <Typography
@@ -58,20 +90,29 @@ class UserProfile extends Component {
                   style={{ fontSize: "0.7rem" }}
                   className={classes.typography}
                 >
-                  Posts: <strong>0</strong>
-                </Typography>
-                <Typography className={classes.typography}>
-                  Dawid Pasieka
+                  {this.props.posts && this.props.posts.length > 0
+                    ? `Posts: ${this.props.posts.length}`
+                    : "Posts: 0"}
                 </Typography>
                 <Typography className={classes.typography}>Biogram</Typography>
               </CardContent>
             </Card>
           </Grid>
-          <EditProfile open={this.state.modalEditPageisOpen} />
+          <EditProfile
+            open={this.state.modalEditPageisOpen}
+            handleEditDialog={this.handleEditDialog}
+          />
+          <RemoveProfile
+            open={this.state.modalDeletePageisOpen}
+            handleDeleteDialog={this.handleDeleteDialog}
+          />
           <PostPhoto />
         </Grid>
       </>
     );
   }
 }
-export default withStyles(styles)(UserProfile);
+const mapState = state => ({
+  posts: state.posts
+});
+export default connect(mapState)(withStyles(styles)(UserProfile));
