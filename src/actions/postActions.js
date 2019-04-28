@@ -3,6 +3,14 @@ export const GET_POSTS = "GET_POSTS";
 export const EDIT_POST = "EDIT_POST";
 export const DELETE_POST = "DELETE_POST";
 
+const sortPosts = (a, b) => {
+  const aDate = new Date(a.PublishDate);
+  const bDate = new Date(b.PublishDate);
+  if (aDate > bDate) return -1;
+  if (aDate < bDate) return 1;
+  return 0;
+};
+
 export const addPost = (formData, resp) => ({
   type: ADD_POST,
   payload: {
@@ -20,7 +28,7 @@ export const addPost = (formData, resp) => ({
 export const getPosts = data => ({
   type: GET_POSTS,
   payload: {
-    posts: data
+    posts: data.sort(sortPosts)
   }
 });
 
@@ -74,7 +82,7 @@ export const fetchPostToAPI = (formData, authToken) => {
       body: formData
     })
       .then(r => r.json())
-      .then(resp => dispatch(addPost(formData, resp), console.log(resp)));
+      .then(resp => dispatch(addPost(formData, resp)));
   };
 };
 
@@ -85,9 +93,6 @@ export const getPostsFromAPI = authToken => {
       headers: { "X-ZUMO-AUTH": authToken }
     })
       .then(r => r.json())
-      .then(resp => {
-        console.log(resp);
-        return dispatch(getPosts(resp));
-      });
+      .then(resp => dispatch(getPosts(resp)));
   };
 };

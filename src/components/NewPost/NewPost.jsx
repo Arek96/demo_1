@@ -40,18 +40,21 @@ class NewPost extends Component {
   handleSubmit(event) {
     event.preventDefault();
     let formData = new FormData();
+    // appending photo if there is one
     if (this.state.selectedFile) {
       formData.append("photo", this.state.selectedFile);
     }
-
     formData.append("post", JSON.stringify(this.state.post));
+    //sending edited data to API if there is a bool props edit
     if (this.props.edit) {
       this.props.fetchEditedPostToAPI(
         this.props.postToEdit.Id,
         formData,
         this.props.authToken
       );
-    } else {
+    }
+    //if not, sending new post data to API
+    else {
       this.props.fetchPostToAPI(formData, this.props.authToken);
       this.props.history.push("/home");
     }

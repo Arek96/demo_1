@@ -172,7 +172,7 @@ class Header extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link to="/Home" style={{ textDecoration: "none" }}>
               <h1 className={style.Logo}>Delfinagram</h1>
             </Link>
 
