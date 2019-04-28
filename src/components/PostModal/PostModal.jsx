@@ -12,7 +12,7 @@ class PostModal extends React.Component {
   componentDidUpdate = prevProps => {
     if (this.props.open !== prevProps.open) {
       this.setState({
-        openDialog: this.props.open
+        openModal: this.props.open
       });
     }
   };
@@ -23,10 +23,10 @@ class PostModal extends React.Component {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         open={this.props.open}
-        onClose={this.props.handlePhotoPost}
-        scroll='body'
+        onClose={this.props.changeModal}
+        scroll="body"
       >
-        <ModalCard image={this.props.image} />
+        <ModalCard post={this.props.post} user={this.props.user} />
       </Dialog>
     );
   }

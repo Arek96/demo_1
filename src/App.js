@@ -6,23 +6,25 @@ import Header from "./components/Header/Header";
 import style from "./App.module.scss";
 import LoginPage from "./components/LoginPage/LoginPage";
 import Grid from "@material-ui/core/Grid/Grid";
-import UserProfile from "./components/UserProfile/UserProfile";
+import UserProfile from "./components/UserProfile/UserProfileContainer";
 
 import NotLogged from "./components/NotLogged/NotLogged";
 import { connect } from "react-redux";
 import { fetchUser } from "./actions/userActions";
+import RemoveProfile from "./components/UserProfile/RemoveProfile/RemoveProfile";
+import Home from "./components/Home/Home";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    if (Boolean(this.props.authToken)) {
+    if (this.props.authToken) {
       this.props.fetchUser(this.props.authToken);
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.authToken != this.props.authToken && this.props.authToken) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.authToken !== this.props.authToken && this.props.authToken) {
       this.props.fetchUser(this.props.authToken);
     }
   }
@@ -32,11 +34,13 @@ class App extends Component {
       <Route path="/" component={NotLogged} />
     ) : (
       <React.Fragment>
+        <Route path="/home" component={Home} />
         <Route path="/newPost" component={NewPost} />
         <Route path="/myPosts" component={PostLists} />
         <Route path="/userProfile" component={UserProfile} />
       </React.Fragment>
     );
+
     return (
       <Router>
         <div className={style.App}>
@@ -77,12 +81,12 @@ const mapDispatch = dispatch => {
     fetchUser: authToken => dispatch(fetchUser(authToken))
   };
 };
-const mapState = state => ({
+const mapProps = state => ({
   authToken: state.authToken,
   user: state.user
 });
 
 export default connect(
-  mapState,
+  mapProps,
   mapDispatch
 )(App);
