@@ -4,7 +4,8 @@ import {
   ADD_POST,
   GET_POSTS,
   DELETE_POST,
-  EDIT_POST
+  EDIT_POST,
+  SEARCH_POST
 } from "../actions/postActions";
 const reducer = (state = { authToken: null, posts: [] }, action) => {
   switch (action.type) {
@@ -45,6 +46,18 @@ const reducer = (state = { authToken: null, posts: [] }, action) => {
             ? action.payload.editedPost
             : onePost
         )
+      };
+    case SEARCH_POST:
+      return {
+        ...state,
+        
+        posts: !action.payload.value
+          ? state.allPosts
+          : state.allPost.Title.indexOf(action.payload.value) ||
+                post.Text.indexOf(action.payload.value)
+                ? post
+                : null
+            })
       };
     case UPDATE_USER:
       return {

@@ -94,7 +94,8 @@ class Header extends React.Component {
     super(props);
     this.state = {
       anchorEl: null,
-      mobileMoreAnchorEl: null
+      mobileMoreAnchorEl: null,
+      searchValue: ""
     };
   }
 
@@ -116,9 +117,20 @@ class Header extends React.Component {
       open: !prevState.open
     }));
   };
+  handleInputSearch = event => {
+    this.setState({
+      searchValue: event.target.value
+    });
+    this.props.posts.filter(post => {
+      return post.Title.indexOf(this.state.searchValue) ||
+        post.Text.indexOf(this.state.searchValue)
+        ? console.log(post)
+        : null;
+    });
+  };
 
   render() {
-    const { anchorEl } = this.state;
+    const { anchorEl, searchValue } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     let userMessage = this.props.user ? (
@@ -158,8 +170,8 @@ class Header extends React.Component {
         </Link>
       </IconButton>
     ) : (
-        <Link to="login">Log In</Link>
-      );
+      <Link to="login">Log In</Link>
+    );
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -188,6 +200,8 @@ class Header extends React.Component {
                     root: classes.inputRoot,
                     input: classes.inputInput
                   }}
+                  value={searchValue}
+                  onChange={this.handleInputSearch}
                 />
               </div>
 

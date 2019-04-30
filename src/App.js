@@ -44,7 +44,7 @@ class App extends Component {
     return (
       <Router>
         <div className={style.App}>
-          <Header user={this.props.user} />
+          <Header user={this.props.user} posts={this.props.posts} />
           <main className={style.Main}>
             <Grid
               container
@@ -83,7 +83,8 @@ const mapDispatch = dispatch => {
 };
 const mapProps = state => ({
   authToken: state.authToken,
-  user: state.user
+  user: state.user,
+  posts: state.posts
 });
 
 export default connect(
