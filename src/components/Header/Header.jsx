@@ -99,7 +99,6 @@ class Header extends React.Component {
     this.state = {
       anchorEl: null,
       mobileMoreAnchorEl: null,
-      searchValue: ""
     };
   }
 
@@ -122,25 +121,20 @@ class Header extends React.Component {
     }));
   };
   handleInputSearch = event => {
-    this.setState({
-      searchValue: event.target.value
-    });
-    this.props.searchPost(event.target.value.toLowerCase())
+    let value = event.target.value
+    this.props.searchPost(value.toLowerCase())
   };
-  componentDidUpdate = prevProps => {
-    console.log(this.props.history.location.pathname)
-    console.log(prevProps.history.location.pathname)
-    if (this.props.history.location.pathname !== prevProps.history.location.pathname && this.props.history.location.pathname !== '/home') {
-      this.setState({
-        searchValue: ''
-      })
-    }
-  }
-
-
-
+  // componentDidUpdate = prevProps => {
+  //   console.log(this.props.history.location.pathname)
+  //   console.log(prevProps.history.location.pathname)
+  //   if (this.props.history.location.pathname !== prevProps.history.location.pathname && this.props.history.location.pathname !== '/home') {
+  //     this.setState({
+  //       searchValue: ''
+  //     })
+  //   }
+  // }
   render() {
-    const { anchorEl, searchValue } = this.state;
+    const { anchorEl } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     let userMessage = this.props.user ? (
@@ -210,7 +204,7 @@ class Header extends React.Component {
                     root: classes.inputRoot,
                     input: classes.inputInput
                   }}
-                  value={searchValue}
+
                   onChange={this.handleInputSearch}
                 />
               </div>
