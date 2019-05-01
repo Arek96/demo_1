@@ -58,22 +58,23 @@ class Post extends Component {
   };
   render() {
     const checkPhoto = () =>
-      this.props.user.Photo ? (
-        <Avatar
-          style={{ margin: 10 }}
-          alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-          src={this.props.user.Photo}
-        />
-      ) : (
+      this.props.user ?
+        this.props.user.Photo ? (
           <Avatar
-            style={{ height: 35, margin: 10 }}
+            style={{ margin: 10 }}
             alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-            src={img}
-          >
-            }`}
+            src={this.props.user.Photo}
+          />
+        ) : (
+            <Avatar
+              style={{ height: 35, margin: 10 }}
+              alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+              src={img}
+            >
+              }`}
         </Avatar>
-        )
-
+          )
+        : null
     return (
       <Card className={styles.PostCard}>
         <CardHeader
