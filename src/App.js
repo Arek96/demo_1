@@ -7,12 +7,11 @@ import style from "./App.module.scss";
 import LoginPage from "./components/LoginPage/LoginPage";
 import Grid from "@material-ui/core/Grid/Grid";
 import UserProfile from "./components/UserProfile/UserProfileContainer";
-
 import NotLogged from "./components/NotLogged/NotLogged";
 import { connect } from "react-redux";
 import { fetchUser } from "./actions/userActions";
-import RemoveProfile from "./components/UserProfile/RemoveProfile/RemoveProfile";
 import Home from "./components/Home/Home";
+import { searchPost } from "./actions/postActions";
 
 class App extends Component {
   constructor(props) {
@@ -33,18 +32,18 @@ class App extends Component {
     const authRoutes = !this.props.authToken ? (
       <Route path="/" component={NotLogged} />
     ) : (
-      <React.Fragment>
-        <Route path="/home" component={Home} />
-        <Route path="/newPost" component={NewPost} />
-        <Route path="/myPosts" component={PostLists} />
-        <Route path="/userProfile" component={UserProfile} />
-      </React.Fragment>
-    );
+        <React.Fragment>
+          <Route path="/home" component={Home} />
+          <Route path="/newPost" component={NewPost} />
+          <Route path="/myPosts" component={PostLists} />
+          <Route path="/userProfile" component={UserProfile} />
+        </React.Fragment>
+      );
 
     return (
       <Router>
         <div className={style.App}>
-          <Header user={this.props.user} posts={this.props.posts} />
+          <Header user={this.props.user} />
           <main className={style.Main}>
             <Grid
               container
@@ -78,15 +77,14 @@ class App extends Component {
 }
 const mapDispatch = dispatch => {
   return {
-    fetchUser: authToken => dispatch(fetchUser(authToken))
+    fetchUser: authToken => dispatch(fetchUser(authToken)),
   };
 };
 const mapProps = state => ({
   authToken: state.authToken,
   user: state.user,
-  posts: state.posts
+  posts: state.posts,
 });
-
 export default connect(
   mapProps,
   mapDispatch

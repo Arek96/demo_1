@@ -8,7 +8,6 @@ import { Grid, Typography } from "@material-ui/core";
 class Home extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.props.getPostsFromAPI(this.props.authToken);
   }
   componentDidUpdate(prevProps) {
@@ -16,7 +15,6 @@ class Home extends Component {
     }
   }
   render() {
-    console.log(this.props.posts);
     return (
       <Grid item style={{ width: "100%" }} sm={8} xxl={7}>
         {this.props.posts && this.props.posts.length > 0 ? (
@@ -24,8 +22,8 @@ class Home extends Component {
             return <Post key={post.Id} post={post} user={this.props.user} />;
           })
         ) : (
-          <Typography variant="h5">You don't have any posts yet. </Typography>
-        )}
+            <Typography variant="h5">You don't have any posts yet. </Typography>
+          )}
       </Grid>
     );
   }

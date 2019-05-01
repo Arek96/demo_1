@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -14,6 +13,11 @@ import style from "./Header.module.scss";
 import SlideMenu from "./SlideMenu/SlideMenu";
 import { Link } from "react-router-dom";
 import img from "../../img/withoutPhoto.PNG";
+import { connect } from "react-redux";
+// import { fetchUser } from "../../actions/userActions";
+import { searchPost } from "../../actions/postActions";
+import { withRouter } from 'react-router-dom'
+
 
 const styles = theme => ({
   root: {
@@ -121,14 +125,17 @@ class Header extends React.Component {
     this.setState({
       searchValue: event.target.value
     });
-    this.props.posts.filter(post => {
-      return post.Title.indexOf(this.state.searchValue) ||
-        post.Text.indexOf(this.state.searchValue)
-        ? console.log(post)
-        : null;
-    });
+    this.props.searchPost(event.target.value.toLowerCase())
   };
-
+  componentDidUpdate(prevProps) {
+    console.log(this.props.history.location.pathname)
+    console.log(prevProps.history.location.pathname)
+    if (this.props.history.location.pathname !== '/home' && this.props.history.location.pathname !== prevProps.history.location.pathname) {
+      this.setState({
+        searchValue: ''
+      })
+    }
+  }
   render() {
     const { anchorEl, searchValue } = this.state;
     const { classes } = this.props;
@@ -158,20 +165,20 @@ class Header extends React.Component {
                 src={this.props.user.Photo}
               />
             ) : (
-              <Avatar
-                style={{ height: 35, margin: 10 }}
-                alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                src={img}
-              >
-                }`}
+                <Avatar
+                  style={{ height: 35, margin: 10 }}
+                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                  src={img}
+                >
+                  }`}
               </Avatar>
-            )}
+              )}
           </div>
         </Link>
       </IconButton>
     ) : (
-      <Link to="login">Log In</Link>
-    );
+        <Link to="login">Log In</Link>
+      );
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -221,8 +228,14 @@ class Header extends React.Component {
     );
   }
 }
-
-Header.propTypes = {
-  classes: PropTypes.object.isRequired
+const mapDispatch = dispatch => {
+  return {
+    searchPost: value => dispatch(searchPost(value))
+  };
 };
-export default withStyles(styles)(Header);
+const mapStateToProps = state => ({
+  authToken: state.authToken,
+  user: state.user,
+  posts: state.posts,
+})
+export default withRouter(connect(mapStateToProps, mapDispatch)(withStyles(styles)(Header)));

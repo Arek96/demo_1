@@ -29,7 +29,8 @@ const reducer = (state = { authToken: null, posts: [] }, action) => {
     case GET_POSTS:
       return {
         ...state,
-        posts: action.payload.posts
+        posts: action.payload.posts,
+        allPosts: action.payload.posts,
       };
     case DELETE_POST:
       return {
@@ -48,17 +49,16 @@ const reducer = (state = { authToken: null, posts: [] }, action) => {
         )
       };
     case SEARCH_POST:
+      console.log(state.posts)
       return {
         ...state,
-        
-        posts: !action.payload.value
-          ? state.allPosts
-          : state.allPost.Title.indexOf(action.payload.value) ||
-                post.Text.indexOf(action.payload.value)
-                ? post
-                : null
-            })
+        posts: action.payload.value && action.payload.value.length > 0
+          ? state.posts.filter(post => {
+            return (post.Title.toLowerCase().includes(action.payload.value) || post.Text.toLowerCase().includes(action.payload.value)) ? post : null
+          })
+          : state.allPosts
       };
+
     case UPDATE_USER:
       return {
         ...state,
