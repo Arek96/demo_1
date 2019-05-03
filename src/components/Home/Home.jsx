@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import styles from "./Home.module.scss";
 import { getPostsFromAPI } from "../../actions/postActions";
+import { getFriendsFromAPI } from "../../actions/friendsActions";
 import Post from "./Post/Post";
 import { Grid, Typography } from "@material-ui/core";
 
@@ -9,6 +9,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.props.getPostsFromAPI(this.props.authToken);
+    this.props.getFriendsFromAPI(this.props.authToken);
   }
   componentDidUpdate(prevProps) {
     if (this.props.posts !== prevProps.posts) {
@@ -34,7 +35,9 @@ const mapProps = state => ({
   user: state.user
 });
 const mapDispatch = dispatch => ({
-  getPostsFromAPI: authToken => dispatch(getPostsFromAPI(authToken))
+  getPostsFromAPI: authToken => dispatch(getPostsFromAPI(authToken)),
+  getFriendsFromAPI: authToken => dispatch(getFriendsFromAPI(authToken))
+
 });
 export default connect(
   mapProps,
