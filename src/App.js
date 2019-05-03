@@ -44,7 +44,7 @@ class App extends Component {
     return (
       <Router>
         <div className={style.App}>
-          <Header user={this.props.user} />
+          <Header />
           <main className={style.Main}>
             <Grid
               container

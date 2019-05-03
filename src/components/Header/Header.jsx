@@ -14,6 +14,8 @@ import style from "./Header.module.scss";
 import SlideMenu from "./SlideMenu/SlideMenu";
 import { Link } from "react-router-dom";
 import img from "../../img/withoutPhoto.PNG";
+import { connect } from "react-redux";
+import { fetchSearchFriend } from "../../actions/friendActions";
 
 const styles = theme => ({
   root: {
@@ -116,7 +118,25 @@ class Header extends React.Component {
       open: !prevState.open
     }));
   };
-
+  handleInputSearch = event => {
+    this.setState({
+      searchValue: event.target.value
+    });
+    if (event.target.value.indexOf("@") === 0) {
+      setTimeout(this.setState({ wantSearchFreind: true }), 1000);
+    }
+  };
+  componentDidUpdate = (prevprops, prevState) => {
+    if (this.state.wantSearchFreind) {
+      this.setState({
+        wantSearchFreind: false
+      });
+      this.props.fetchSearchFriend(
+        this.state.searchValue.slice(1),
+        this.props.authToken
+      );
+    }
+  };
   render() {
     const { anchorEl } = this.state;
     const { classes } = this.props;
@@ -158,8 +178,8 @@ class Header extends React.Component {
         </Link>
       </IconButton>
     ) : (
-        <Link to="login">Log In</Link>
-      );
+      <Link to="login">Log In</Link>
+    );
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -184,6 +204,8 @@ class Header extends React.Component {
                 </div>
                 <InputBase
                   placeholder="Search post..."
+                  value={this.state.searchValue}
+                  onChange={this.handleInputSearch}
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput
@@ -211,4 +233,15 @@ class Header extends React.Component {
 Header.propTypes = {
   classes: PropTypes.object.isRequired
 };
-export default withStyles(styles)(Header);
+const mapProps = state => ({
+  authToken: state.authToken,
+  user: state.user
+});
+const mapDispatch = dispatch => ({
+  fetchSearchFriend: (friendValue, authToken) =>
+    dispatch(fetchSearchFriend(friendValue, authToken))
+});
+export default connect(
+  mapProps,
+  mapDispatch
+)(withStyles(styles)(Header));

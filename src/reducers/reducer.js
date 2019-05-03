@@ -6,6 +6,8 @@ import {
   DELETE_POST,
   EDIT_POST
 } from "../actions/postActions";
+
+import { SEARCH_FRIEND } from "../actions/friendActions";
 const reducer = (state = { authToken: null, posts: [] }, action) => {
   switch (action.type) {
     case LOG_IN:
@@ -54,6 +56,11 @@ const reducer = (state = { authToken: null, posts: [] }, action) => {
     case REMOVE_USER:
       return {
         state: null
+      };
+    case SEARCH_FRIEND:
+      return {
+        ...state,
+        matchingFriends: action.payload.matchingFriends
       };
     default:
       return state;
