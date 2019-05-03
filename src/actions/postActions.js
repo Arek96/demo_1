@@ -11,7 +11,6 @@ const sortPosts = (a, b) => {
   if (aDate < bDate) return 1;
   return 0;
 };
-
 export const addPost = (formData, resp) => ({
   type: ADD_POST,
   payload: {
@@ -25,7 +24,6 @@ export const addPost = (formData, resp) => ({
     }
   }
 });
-
 export const getPosts = data => ({
   type: GET_POSTS,
   payload: {
@@ -45,7 +43,6 @@ export const deletePost = post => ({
     postToDel: post
   }
 });
-
 export const searchPost = value => ({
   type: SEARCH_POST,
   payload: {

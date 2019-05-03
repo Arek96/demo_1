@@ -14,11 +14,8 @@ import SlideMenu from "./SlideMenu/SlideMenu";
 import { Link } from "react-router-dom";
 import img from "../../img/withoutPhoto.PNG";
 import { connect } from "react-redux";
-// import { fetchUser } from "../../actions/userActions";
 import { searchPost } from "../../actions/postActions";
 import { withRouter } from 'react-router-dom'
-
-
 const styles = theme => ({
   root: {
     width: "100%"
@@ -92,7 +89,6 @@ const styles = theme => ({
     }
   }
 });
-
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -102,7 +98,6 @@ class Header extends React.Component {
       query: ''
     };
   }
-
   handleMenuClose = () => {
     this.setState({ anchorEl: null });
     this.handleMobileMenuClose();
@@ -127,7 +122,6 @@ class Header extends React.Component {
     this.setState(() => ({
       query: value
     }))
-
   };
   componentDidUpdate = prevProps => {
     if (this.props.location.pathname !== prevProps.location.pathname) {
@@ -211,7 +205,6 @@ class Header extends React.Component {
                   value={query}
                 />
               </div>
-
               {userMessage}
             </div>
             <div className={classes.sectionMobile}>
