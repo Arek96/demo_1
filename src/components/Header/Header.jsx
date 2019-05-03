@@ -15,7 +15,9 @@ import { Link } from "react-router-dom";
 import img from "../../img/withoutPhoto.PNG";
 import { connect } from "react-redux";
 import { searchPost } from "../../actions/postActions";
-import { withRouter } from 'react-router-dom'
+import { withRouter } from "react-router-dom";
+import { fetchSearchFriend } from "../../actions/friendActions";
+
 const styles = theme => ({
   root: {
     width: "100%"
@@ -95,7 +97,7 @@ class Header extends React.Component {
     this.state = {
       anchorEl: null,
       mobileMoreAnchorEl: null,
-      query: ''
+      query: ""
     };
   }
   handleMenuClose = () => {
@@ -117,19 +119,32 @@ class Header extends React.Component {
     }));
   };
   handleInputSearch = event => {
-    let value = event.target.value
-    this.props.searchPost(value.toLowerCase())
+    let value = event.target.value;
+    this.props.searchPost(value.toLowerCase());
     this.setState(() => ({
-      query: value
-    }))
+      searchValue: value
+    }));
+    if (value.indexOf("@") === 0) {
+      setTimeout(this.setState({ wantSearchFreind: true }), 1000);
+    }
   };
-  componentDidUpdate = prevProps => {
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.state.wantSearchFreind) {
+      this.setState({
+        wantSearchFreind: false
+      });
+      this.props.fetchSearchFriend(
+        this.state.searchValue.slice(1),
+        this.props.authToken
+      );
+    }
     if (this.props.location.pathname !== prevProps.location.pathname) {
       this.setState({
-        query: ''
-      })
+        searchValue: ""
+      });
     }
-  }
+  };
+
   render() {
     const { anchorEl, query } = this.state;
     const { classes } = this.props;
@@ -159,20 +174,20 @@ class Header extends React.Component {
                 src={this.props.user.Photo}
               />
             ) : (
-                <Avatar
-                  style={{ height: 35, margin: 10 }}
-                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                  src={img}
-                >
-                  }`}
+              <Avatar
+                style={{ height: 35, margin: 10 }}
+                alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                src={img}
+              >
+                }`}
               </Avatar>
-              )}
+            )}
           </div>
         </Link>
       </IconButton>
     ) : (
-        <Link to="login">Log In</Link>
-      );
+      <Link to="login">Log In</Link>
+    );
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -197,6 +212,8 @@ class Header extends React.Component {
                 </div>
                 <InputBase
                   placeholder="Search post..."
+                  value={this.state.searchValue}
+                  onChange={this.handleInputSearch}
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput
@@ -221,14 +238,20 @@ class Header extends React.Component {
     );
   }
 }
-const mapDispatch = dispatch => {
-  return {
-    searchPost: value => dispatch(searchPost(value))
-  };
-};
-const mapStateToProps = state => ({
+
+const mapProps = state => ({
   authToken: state.authToken,
   user: state.user,
-  posts: state.posts,
-})
-export default withRouter(connect(mapStateToProps, mapDispatch)(withStyles(styles)(Header)));
+  posts: state.posts
+});
+const mapDispatch = dispatch => ({
+  fetchSearchFriend: (friendValue, authToken) =>
+    dispatch(fetchSearchFriend(friendValue, authToken)),
+  searchPost: value => dispatch(searchPost(value))
+});
+export default withRouter(
+  connect(
+    mapProps,
+    mapDispatch
+  )(withStyles(styles)(Header))
+);

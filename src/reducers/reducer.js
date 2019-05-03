@@ -7,8 +7,15 @@ import {
   EDIT_POST,
   SEARCH_POST
 } from "../actions/postActions";
-import { GET_FRIENDS, ADD_FRIEND } from "../actions/friendsActions";
-const reducer = (state = { authToken: null, posts: [], friends: [] }, action) => {
+import {
+  GET_FRIENDS,
+  ADD_FRIEND,
+  SEARCH_FRIEND
+} from "../actions/friendActions";
+const reducer = (
+  state = { authToken: null, posts: [], friends: [] },
+  action
+) => {
   switch (action.type) {
     case LOG_IN:
       return {
@@ -31,7 +38,7 @@ const reducer = (state = { authToken: null, posts: [], friends: [] }, action) =>
       return {
         ...state,
         posts: action.payload.posts,
-        allPosts: action.payload.posts,
+        allPosts: action.payload.posts
       };
     case DELETE_POST:
       return {
@@ -52,11 +59,16 @@ const reducer = (state = { authToken: null, posts: [], friends: [] }, action) =>
     case SEARCH_POST:
       return {
         ...state,
-        posts: action.payload.value && action.payload.value.length > 0
-          ? state.posts.filter(post => {
-            return (post.Title.toLowerCase().includes(action.payload.value) || post.Text.toLowerCase().includes(action.payload.value)) ? post : null
-          })
-          : state.allPosts
+        posts:
+          action.payload.value && action.payload.value.length > 0
+            ? state.posts.filter(post => {
+                return post.Title.toLowerCase().includes(
+                  action.payload.value
+                ) || post.Text.toLowerCase().includes(action.payload.value)
+                  ? post
+                  : null;
+              })
+            : state.allPosts
       };
 
     case UPDATE_USER:
@@ -72,12 +84,19 @@ const reducer = (state = { authToken: null, posts: [], friends: [] }, action) =>
       return {
         ...state,
         friends: action.payload.friends
-      }
+      };
     case ADD_FRIEND:
       return {
         ...state,
-        friends: [action.payload.friend, ...state.friends],
-      }
+        friends: [action.payload.friend, ...state.friends]
+      };
+
+    case SEARCH_FRIEND:
+      return {
+        ...state,
+        matchingFriends: action.payload.matchingFriends
+      };
+
     default:
       return state;
   }

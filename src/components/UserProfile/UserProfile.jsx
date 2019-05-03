@@ -12,7 +12,7 @@ import EditProfile from "./EditProfile/EditProfile";
 import RemoveProfile from "./RemoveProfile/RemoveProfile";
 import img from "../../img/withoutPhoto.PNG";
 import { connect } from "react-redux";
-import { fetchFriendToApi } from '../../actions/friendsActions';
+import { fetchFriendToApi } from "../../actions/friendActions";
 
 class UserProfile extends Component {
   constructor(props) {
@@ -33,8 +33,11 @@ class UserProfile extends Component {
     }));
   };
   handleAddFriendButton = () => {
-    this.props.fetchFriendToApi(this.props.authToken, "sid:089727645ef4f6a35bb089440b363452")
-  }
+    this.props.fetchFriendToApi(
+      this.props.authToken,
+      "sid:089727645ef4f6a35bb089440b363452"
+    );
+  };
   render() {
     const checkUser = () => {
       if (this.props.user) {
@@ -65,12 +68,12 @@ class UserProfile extends Component {
                   className={classes.avatar}
                 />
               ) : (
-                  <Avatar
-                    alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                    src={img}
-                    className={classes.avatar}
-                  />
-                )}
+                <Avatar
+                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                  src={img}
+                  className={classes.avatar}
+                />
+              )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
                   {checkUser()}
@@ -115,7 +118,7 @@ class UserProfile extends Component {
                   onClick={this.handleAddFriendButton}
                 >
                   Add friend
-                  </Button>
+                </Button>
               </CardContent>
             </Card>
           </Grid>
@@ -134,11 +137,15 @@ class UserProfile extends Component {
   }
 }
 const mapDispatch = dispatch => ({
-  fetchFriendToApi: (authToken, friendID) => dispatch(fetchFriendToApi(authToken, friendID))
-})
+  fetchFriendToApi: (authToken, friendID) =>
+    dispatch(fetchFriendToApi(authToken, friendID))
+});
 const mapState = state => ({
   authToken: state.authToken,
   posts: state.allPosts,
-  friends: state.friends,
+  friends: state.friends
 });
-export default connect(mapState, mapDispatch)(withStyles(styles)(UserProfile));
+export default connect(
+  mapState,
+  mapDispatch
+)(withStyles(styles)(UserProfile));

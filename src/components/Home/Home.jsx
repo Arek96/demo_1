@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getPostsFromAPI } from "../../actions/postActions";
-import { getFriendsFromAPI } from "../../actions/friendsActions";
+import { getFriendsFromAPI } from "../../actions/friendActions";
 import Post from "./Post/Post";
 import { Grid, Typography } from "@material-ui/core";
 
@@ -23,8 +23,8 @@ class Home extends Component {
             return <Post key={post.Id} post={post} user={this.props.user} />;
           })
         ) : (
-            <Typography variant="h5">You don't have any posts yet. </Typography>
-          )}
+          <Typography variant="h5">You don't have any posts yet. </Typography>
+        )}
       </Grid>
     );
   }
@@ -38,7 +38,6 @@ const mapProps = state => ({
 const mapDispatch = dispatch => ({
   getPostsFromAPI: authToken => dispatch(getPostsFromAPI(authToken)),
   getFriendsFromAPI: authToken => dispatch(getFriendsFromAPI(authToken))
-
 });
 export default connect(
   mapProps,
