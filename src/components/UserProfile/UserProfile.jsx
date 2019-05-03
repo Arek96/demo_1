@@ -33,7 +33,7 @@ class UserProfile extends Component {
     }));
   };
   handleAddFriendButton = () => {
-    this.props.fetchFriendToApi(this.props.authToken, "sid:61ee6e94cf4bca0a8ff69898e41b0460")
+    this.props.fetchFriendToApi(this.props.authToken, "sid:089727645ef4f6a35bb089440b363452")
   }
   render() {
     const checkUser = () => {
@@ -98,15 +98,17 @@ class UserProfile extends Component {
                     ? `Posts: ${this.props.posts.length}`
                     : "Posts: 0"}
                 </Typography>
-                <Typography
-                  variant="headline"
-                  style={{ fontSize: "0.7rem" }}
-                  className={classes.typography}
-                >
-                  {this.props.friends && this.props.friends.length > 0
-                    ? `Friends: ${this.props.friends.length}`
-                    : "Friends: 0"}
-                </Typography>
+                <button className={style.TransparentButton}>
+                  <Typography
+                    variant="headline"
+                    style={{ fontSize: "0.7rem" }}
+                    className={classes.typography}
+                  >
+                    {this.props.friends && this.props.friends.length > 0
+                      ? `Friends: ${this.props.friends.length}`
+                      : "Friends: 0"}
+                  </Typography>
+                </button>
                 <Button
                   variant="contained"
                   className={classes.delete}

@@ -32,7 +32,8 @@ class Home extends Component {
 const mapProps = state => ({
   posts: state.posts,
   authToken: state.authToken,
-  user: state.user
+  user: state.user,
+  friends: state.friends
 });
 const mapDispatch = dispatch => ({
   getPostsFromAPI: authToken => dispatch(getPostsFromAPI(authToken)),

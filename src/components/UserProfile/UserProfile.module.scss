@@ -58,3 +58,11 @@ $devices_sizes: (
     }
   }
 }
+.TransparentButton{
+  background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    overflow: hidden; 
+    cursor: pointer;
+    outline:none;       
+}
