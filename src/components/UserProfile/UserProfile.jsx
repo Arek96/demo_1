@@ -12,6 +12,7 @@ import EditProfile from "./EditProfile/EditProfile";
 import RemoveProfile from "./RemoveProfile/RemoveProfile";
 import img from "../../img/withoutPhoto.PNG";
 import { connect } from "react-redux";
+import { fetchFriendToApi } from '../../actions/friendsActions';
 
 class UserProfile extends Component {
   constructor(props) {
@@ -31,6 +32,9 @@ class UserProfile extends Component {
       modalDeletePageisOpen: !prevState.modalDeletePageisOpen
     }));
   };
+  handleAddFriendButton = () => {
+    this.props.fetchFriendToApi(this.props.authToken, "sid:61ee6e94cf4bca0a8ff69898e41b0460")
+  }
   render() {
     const checkUser = () => {
       if (this.props.user) {
@@ -61,12 +65,12 @@ class UserProfile extends Component {
                   className={classes.avatar}
                 />
               ) : (
-                <Avatar
-                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                  src={img}
-                  className={classes.avatar}
-                />
-              )}
+                  <Avatar
+                    alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                    src={img}
+                    className={classes.avatar}
+                  />
+                )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
                   {checkUser()}
@@ -94,7 +98,22 @@ class UserProfile extends Component {
                     ? `Posts: ${this.props.posts.length}`
                     : "Posts: 0"}
                 </Typography>
-                <Typography className={classes.typography}>Biogram</Typography>
+                <Typography
+                  variant="headline"
+                  style={{ fontSize: "0.7rem" }}
+                  className={classes.typography}
+                >
+                  {this.props.friends && this.props.friends.length > 0
+                    ? `Friends: ${this.props.friends.length}`
+                    : "Friends: 0"}
+                </Typography>
+                <Button
+                  variant="contained"
+                  className={classes.delete}
+                  onClick={this.handleAddFriendButton}
+                >
+                  Add friend
+                  </Button>
               </CardContent>
             </Card>
           </Grid>
@@ -112,7 +131,12 @@ class UserProfile extends Component {
     );
   }
 }
+const mapDispatch = dispatch => ({
+  fetchFriendToApi: (authToken, friendID) => dispatch(fetchFriendToApi(authToken, friendID))
+})
 const mapState = state => ({
-  posts: state.posts
+  authToken: state.authToken,
+  posts: state.allPosts,
+  friends: state.friends,
 });
-export default connect(mapState)(withStyles(styles)(UserProfile));
+export default connect(mapState, mapDispatch)(withStyles(styles)(UserProfile));

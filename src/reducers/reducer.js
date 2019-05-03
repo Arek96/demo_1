@@ -7,7 +7,8 @@ import {
   EDIT_POST,
   SEARCH_POST
 } from "../actions/postActions";
-const reducer = (state = { authToken: null, posts: [] }, action) => {
+import { GET_FRIENDS, ADD_FRIEND } from "../actions/friendsActions";
+const reducer = (state = { authToken: null, posts: [], friends: [] }, action) => {
   switch (action.type) {
     case LOG_IN:
       return {
@@ -49,7 +50,6 @@ const reducer = (state = { authToken: null, posts: [] }, action) => {
         )
       };
     case SEARCH_POST:
-      console.log(state.posts)
       return {
         ...state,
         posts: action.payload.value && action.payload.value.length > 0
@@ -68,6 +68,16 @@ const reducer = (state = { authToken: null, posts: [] }, action) => {
       return {
         state: null
       };
+    case GET_FRIENDS:
+      return {
+        ...state,
+        friends: action.payload.friends
+      }
+    case ADD_FRIEND:
+      return {
+        ...state,
+        friends: [action.payload.friend, ...state.friends],
+      }
     default:
       return state;
   }
