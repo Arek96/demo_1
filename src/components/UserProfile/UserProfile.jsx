@@ -13,13 +13,15 @@ import RemoveProfile from "./RemoveProfile/RemoveProfile";
 import img from "../../img/withoutPhoto.PNG";
 import { connect } from "react-redux";
 import { fetchFriendToApi } from '../../actions/friendActions';
+import FriendsList from "./FriendsList/FriendsList";
 
 class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       modalEditPageisOpen: false,
-      modalDeletePageisOpen: false
+      modalDeletePageisOpen: false,
+      modalFriendsList: false
     };
   }
   handleEditDialog = () => {
@@ -34,6 +36,12 @@ class UserProfile extends Component {
   };
   handleAddFriendButton = () => {
     this.props.fetchFriendToApi(this.props.authToken, "sid:089727645ef4f6a35bb089440b363452")
+  }
+  handleOpenFriendsList = () => {
+    this.setState(prevState => ({
+      modalFriendsList: !prevState.modalFriendsList
+    }))
+    console.log(this.state.modalFriendsList)
   }
   render() {
     const checkUser = () => {
@@ -98,7 +106,7 @@ class UserProfile extends Component {
                     ? `Posts: ${this.props.posts.length}`
                     : "Posts: 0"}
                 </Typography>
-                <button className={style.TransparentButton}>
+                <button className={style.TransparentButton} onClick={this.handleOpenFriendsList}>
                   <Typography
                     variant="headline"
                     style={{ fontSize: "0.7rem" }}
@@ -119,6 +127,7 @@ class UserProfile extends Component {
               </CardContent>
             </Card>
           </Grid>
+          <FriendsList open={this.state.modalFriendsList} handleOpenFriendsList={this.handleOpenFriendsList} />
           <EditProfile
             open={this.state.modalEditPageisOpen}
             handleEditDialog={this.handleEditDialog}

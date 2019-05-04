@@ -7,7 +7,7 @@ import {
   EDIT_POST,
   SEARCH_POST
 } from "../actions/postActions";
-import { SEARCH_FRIEND, GET_FRIENDS, ADD_FRIEND } from "../actions/friendActions";
+import { SEARCH_FRIEND, GET_FRIENDS, ADD_FRIEND, DELETE_FRIEND } from "../actions/friendActions";
 const reducer = (state = { authToken: null, posts: [], friends: [] }, action) => {
 
   switch (action.type) {
@@ -84,6 +84,13 @@ const reducer = (state = { authToken: null, posts: [], friends: [] }, action) =>
         ...state,
         matchingFriends: action.payload.matchingFriends
       };
+    case DELETE_FRIEND:
+      return {
+        ...state,
+        friends: state.friends.filter(
+          friend => friend.Id !== action.payload.friendToDel.Id
+        )
+      }
     default:
       return state;
   }

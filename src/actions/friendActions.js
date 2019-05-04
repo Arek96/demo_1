@@ -1,6 +1,7 @@
 export const SEARCH_FRIEND = "SEARCH_FRIEND";
 export const ADD_FRIEND = "ADD_FRIEND";
 export const GET_FRIENDS = "GET_FRIENDS";
+export const DELETE_FRIEND = "DELETE_FRIEND";
 
 export const searchFriend = matchingFriends => ({
   type: SEARCH_FRIEND,
@@ -71,5 +72,22 @@ export const fetchFriendToApi = (authToken, friendID) => {
     })
       .then(r => r.json())
       .then(resp => dispatch(addFriend(resp)))
+  }
+}
+export const deleteFriend = friend => ({
+  type: DELETE_FRIEND,
+  payload: {
+    friendToDel: friend
+  }
+})
+export const deleteFriendFromAPI = (friend, authToken) => {
+  return dispatch => {
+    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${friend.Id}`, {
+      method: "DELETE",
+      headers: {
+        "X-ZUMO-AUTH": authToken
+      }
+    })
+      .then(r => console.log(r))
   }
 }
