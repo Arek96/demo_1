@@ -7,9 +7,9 @@ import {
   EDIT_POST,
   SEARCH_POST
 } from "../actions/postActions";
+import { SEARCH_FRIEND, GET_FRIENDS, ADD_FRIEND } from "../actions/friendActions";
 const reducer = (state = { authToken: null, posts: [], friends: [] }, action) => {
-import { SEARCH_FRIEND } from "../actions/friendActions";
-import { GET_FRIENDS, ADD_FRIEND } from "../actions/friendsActions";
+
   switch (action.type) {
     case LOG_IN:
       return {

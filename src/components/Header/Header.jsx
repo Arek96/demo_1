@@ -16,6 +16,7 @@ import img from "../../img/withoutPhoto.PNG";
 import { withRouter } from 'react-router-dom'
 import { searchPost } from "../../actions/postActions";
 import { fetchSearchFriend } from "../../actions/friendActions";
+import { connect } from "react-redux";
 const styles = theme => ({
   root: {
     width: "100%"
@@ -186,8 +187,8 @@ class Header extends React.Component {
         </Link>
       </IconButton>
     ) : (
-      <Link to="login">Log In</Link>
-    );
+        <Link to="login">Log In</Link>
+      );
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -203,7 +204,6 @@ class Header extends React.Component {
             <Link to="/Home" style={{ textDecoration: "none" }}>
               <h1 className={style.Logo}>Delfinagram</h1>
             </Link>
-
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <div className={classes.search}>
@@ -212,8 +212,6 @@ class Header extends React.Component {
                 </div>
                 <InputBase
                   placeholder="Search post..."
-                  value={this.state.searchValue}
-                  onChange={this.handleInputSearch}
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput
@@ -238,12 +236,9 @@ class Header extends React.Component {
     );
   }
 }
-const mapDispatch = dispatch => {
-  return {
-    searchPost: value => dispatch(searchPost(value))
-  };
-};
+
 const mapDispatch = dispatch => ({
+  searchPost: value => dispatch(searchPost(value)),
   fetchSearchFriend: (friendValue, authToken) =>
     dispatch(fetchSearchFriend(friendValue, authToken))
 });
