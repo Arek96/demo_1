@@ -7,10 +7,11 @@ import {
   EDIT_POST,
   SEARCH_POST
 } from "../actions/postActions";
+
 import {
+  SEARCH_FRIEND,
   GET_FRIENDS,
-  ADD_FRIEND,
-  SEARCH_FRIEND
+  ADD_FRIEND
 } from "../actions/friendActions";
 const reducer = (
   state = { authToken: null, posts: [], friends: [] },
@@ -90,13 +91,11 @@ const reducer = (
         ...state,
         friends: [action.payload.friend, ...state.friends]
       };
-
     case SEARCH_FRIEND:
       return {
         ...state,
         matchingFriends: action.payload.matchingFriends
       };
-
     default:
       return state;
   }
