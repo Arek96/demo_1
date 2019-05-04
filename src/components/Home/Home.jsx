@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getPostsFromAPI } from "../../actions/postActions";
-import { getFriendsFromAPI } from "../../actions/friendsActions";
+import { getFriendsFromAPI } from "../../actions/friendActions";
 import Post from "./Post/Post";
 import { Grid, Typography } from "@material-ui/core";
 

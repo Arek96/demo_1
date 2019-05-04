@@ -12,7 +12,7 @@ import EditProfile from "./EditProfile/EditProfile";
 import RemoveProfile from "./RemoveProfile/RemoveProfile";
 import img from "../../img/withoutPhoto.PNG";
 import { connect } from "react-redux";
-import { fetchFriendToApi } from '../../actions/friendsActions';
+import { fetchFriendToApi } from '../../actions/friendActions';
 
 class UserProfile extends Component {
   constructor(props) {

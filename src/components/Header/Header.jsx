@@ -16,6 +16,7 @@ import img from "../../img/withoutPhoto.PNG";
 import { withRouter } from 'react-router-dom'
 import { searchPost } from "../../actions/postActions";
 import { fetchSearchFriend } from "../../actions/friendActions";
+import { connect } from "react-redux";
 const styles = theme => ({
   root: {
     width: "100%"
@@ -126,7 +127,7 @@ class Header extends React.Component {
       searchValue: event.target.value
     });
     if (event.target.value.indexOf("@") === 0) {
-      setTimeout(this.setState({ wantSearchFreind: true }), 1000);
+      setTimeout(this.setState({ wantSearchFriend: true }), 1000);
     }
   };
   componentDidUpdate = prevProps => {
@@ -135,9 +136,9 @@ class Header extends React.Component {
         query: ''
       })
     }
-    if (this.state.wantSearchFreind) {
+    if (this.state.wantSearchFriend) {
       this.setState({
-        wantSearchFreind: false
+        wantSearchFriend: false
       });
       this.props.fetchSearchFriend(
         this.state.searchValue.slice(1),
@@ -186,8 +187,8 @@ class Header extends React.Component {
         </Link>
       </IconButton>
     ) : (
-      <Link to="login">Log In</Link>
-    );
+        <Link to="login">Log In</Link>
+      );
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -203,7 +204,6 @@ class Header extends React.Component {
             <Link to="/Home" style={{ textDecoration: "none" }}>
               <h1 className={style.Logo}>Delfinagram</h1>
             </Link>
-
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <div className={classes.search}>
@@ -211,9 +211,7 @@ class Header extends React.Component {
                   <SearchIcon />
                 </div>
                 <InputBase
-                  placeholder="Search post..."
-                  value={this.state.searchValue}
-                  onChange={this.handleInputSearch}
+                  placeholder="Search post/users..."
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput
@@ -238,12 +236,9 @@ class Header extends React.Component {
     );
   }
 }
-const mapDispatch = dispatch => {
-  return {
-    searchPost: value => dispatch(searchPost(value))
-  };
-};
+
 const mapDispatch = dispatch => ({
+  searchPost: value => dispatch(searchPost(value)),
   fetchSearchFriend: (friendValue, authToken) =>
     dispatch(fetchSearchFriend(friendValue, authToken))
 });
