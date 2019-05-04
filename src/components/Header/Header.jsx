@@ -13,10 +13,11 @@ import style from "./Header.module.scss";
 import SlideMenu from "./SlideMenu/SlideMenu";
 import { Link } from "react-router-dom";
 import img from "../../img/withoutPhoto.PNG";
-import { connect } from "react-redux";
-import { searchPost } from "../../actions/postActions";
+
 import { withRouter } from "react-router-dom";
+import { searchPost } from "../../actions/postActions";
 import { fetchSearchFriend } from "../../actions/friendActions";
+import { connect } from "react-redux";
 
 const styles = theme => ({
   root: {
@@ -128,7 +129,13 @@ class Header extends React.Component {
       setTimeout(this.setState({ wantSearchFreind: true }), 1000);
     }
   };
-  componentDidUpdate = (prevProps, prevState) => {
+
+  componentDidUpdate = prevProps => {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.setState({
+        query: ""
+      });
+    }
     if (this.state.wantSearchFreind) {
       this.setState({
         wantSearchFreind: false
@@ -144,7 +151,6 @@ class Header extends React.Component {
       });
     }
   };
-
   render() {
     const { anchorEl, query } = this.state;
     const { classes } = this.props;
@@ -203,7 +209,6 @@ class Header extends React.Component {
             <Link to="/Home" style={{ textDecoration: "none" }}>
               <h1 className={style.Logo}>Delfinagram</h1>
             </Link>
-
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <div className={classes.search}>
@@ -212,8 +217,6 @@ class Header extends React.Component {
                 </div>
                 <InputBase
                   placeholder="Search post..."
-                  value={this.state.searchValue}
-                  onChange={this.handleInputSearch}
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput
@@ -239,19 +242,19 @@ class Header extends React.Component {
   }
 }
 
-const mapProps = state => ({
+const mapDispatch = dispatch => ({
+  searchPost: value => dispatch(searchPost(value)),
+  fetchSearchFriend: (friendValue, authToken) =>
+    dispatch(fetchSearchFriend(friendValue, authToken))
+});
+const mapStateToProps = state => ({
   authToken: state.authToken,
   user: state.user,
   posts: state.posts
 });
-const mapDispatch = dispatch => ({
-  fetchSearchFriend: (friendValue, authToken) =>
-    dispatch(fetchSearchFriend(friendValue, authToken)),
-  searchPost: value => dispatch(searchPost(value))
-});
 export default withRouter(
   connect(
-    mapProps,
+    mapStateToProps,
     mapDispatch
   )(withStyles(styles)(Header))
 );

@@ -31,6 +31,7 @@ export const getFriends = data => ({
     friends: data
   }
 });
+
 export const getFriendsFromAPI = authToken => {
   return dispatch => {
     return fetch("https://delfinkitrainingapi.azurewebsites.net/api/friend", {
@@ -56,12 +57,14 @@ export const addFriend = resp => ({
     }
   }
 });
+
 export const fetchFriendToApi = (authToken, friendID) => {
   return dispatch => {
     return fetch("https://delfinkitrainingapi.azurewebsites.net/api/friend", {
       method: "POST",
       headers: {
         "X-ZUMO-AUTH": authToken,
+
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
