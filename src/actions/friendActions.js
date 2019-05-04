@@ -1,4 +1,4 @@
-export const SEARCH_FRIEND = "SEARCH_FRIEND";
+export const SEARCH_FRIEND = "SEARCH_FRINED";
 export const ADD_FRIEND = "ADD_FRIEND";
 export const GET_FRIENDS = "GET_FRIENDS";
 export const DELETE_FRIEND = "DELETE_FRIEND";
@@ -31,20 +31,21 @@ export const getFriends = data => ({
   payload: {
     friends: data
   }
-})
+});
+
 export const getFriendsFromAPI = authToken => {
   return dispatch => {
     return fetch("https://delfinkitrainingapi.azurewebsites.net/api/friend", {
       method: "GET",
       headers: {
         "X-ZUMO-AUTH": authToken,
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       }
     })
       .then(r => r.json())
       .then(resp => dispatch(getFriends(resp)));
-  }
-}
+  };
+};
 export const addFriend = resp => ({
   type: ADD_FRIEND,
   payload: {
@@ -53,41 +54,26 @@ export const addFriend = resp => ({
       GivenName: resp.GivenName,
       Id: resp.Id,
       Photo: resp.Photo,
-      Show: resp.Show,
+      Show: resp.Show
     }
   }
-})
+});
+
 export const fetchFriendToApi = (authToken, friendID) => {
   return dispatch => {
     return fetch("https://delfinkitrainingapi.azurewebsites.net/api/friend", {
       method: "POST",
       headers: {
         "X-ZUMO-AUTH": authToken,
-        'Content-Type': 'application/json'
+
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        "FriendId": friendID,
-        "Show": false,
+        FriendId: friendID,
+        Show: false
       })
     })
       .then(r => r.json())
-      .then(resp => dispatch(addFriend(resp)))
-  }
-}
-export const deleteFriend = friend => ({
-  type: DELETE_FRIEND,
-  payload: {
-    friendToDel: friend
-  }
-})
-export const deleteFriendFromAPI = (friend, authToken) => {
-  return dispatch => {
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${friend.Id}`, {
-      method: "DELETE",
-      headers: {
-        "X-ZUMO-AUTH": authToken
-      }
-    })
-      .then(r => console.log(r))
-  }
-}
+      .then(resp => dispatch(addFriend(resp)));
+  };
+};

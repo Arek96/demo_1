@@ -13,10 +13,12 @@ import style from "./Header.module.scss";
 import SlideMenu from "./SlideMenu/SlideMenu";
 import { Link } from "react-router-dom";
 import img from "../../img/withoutPhoto.PNG";
-import { withRouter } from 'react-router-dom'
+
+import { withRouter } from "react-router-dom";
 import { searchPost } from "../../actions/postActions";
 import { fetchSearchFriend } from "../../actions/friendActions";
 import { connect } from "react-redux";
+
 const styles = theme => ({
   root: {
     width: "100%"
@@ -96,7 +98,7 @@ class Header extends React.Component {
     this.state = {
       anchorEl: null,
       mobileMoreAnchorEl: null,
-      query: ''
+      query: ""
     };
   }
   handleMenuClose = () => {
@@ -118,8 +120,8 @@ class Header extends React.Component {
     }));
   };
   handleInputSearch = event => {
-    let value = event.target.value
-    this.props.searchPost(value.toLowerCase())
+    let value = event.target.value;
+    this.props.searchPost(value.toLowerCase());
     this.setState(() => ({
       query: value
     }))
@@ -130,11 +132,12 @@ class Header extends React.Component {
       setTimeout(this.setState({ wantSearchFriend: true }), 1000);
     }
   };
+
   componentDidUpdate = prevProps => {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       this.setState({
-        query: ''
-      })
+        query: ""
+      });
     }
     if (this.state.wantSearchFriend) {
       this.setState({
@@ -145,7 +148,12 @@ class Header extends React.Component {
         this.props.authToken
       );
     }
-  }
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.setState({
+        searchValue: ""
+      });
+    }
+  };
   render() {
     const { anchorEl, query } = this.state;
     const { classes } = this.props;
@@ -175,20 +183,20 @@ class Header extends React.Component {
                 src={this.props.user.Photo}
               />
             ) : (
-                <Avatar
-                  style={{ height: 35, margin: 10 }}
-                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                  src={img}
-                >
-                  }`}
+              <Avatar
+                style={{ height: 35, margin: 10 }}
+                alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                src={img}
+              >
+                }`}
               </Avatar>
-              )}
+            )}
           </div>
         </Link>
       </IconButton>
     ) : (
-        <Link to="login">Log In</Link>
-      );
+      <Link to="login">Log In</Link>
+    );
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -245,6 +253,11 @@ const mapDispatch = dispatch => ({
 const mapStateToProps = state => ({
   authToken: state.authToken,
   user: state.user,
-  posts: state.posts,
-})
-export default withRouter(connect(mapStateToProps, mapDispatch)(withStyles(styles)(Header)));
+  posts: state.posts
+});
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatch
+  )(withStyles(styles)(Header))
+);

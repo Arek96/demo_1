@@ -23,8 +23,8 @@ class Home extends Component {
             return <Post key={post.Id} post={post} user={this.props.user} />;
           })
         ) : (
-            <Typography variant="h5">You don't have any posts yet. </Typography>
-          )}
+          <Typography variant="h5">You don't have any posts yet. </Typography>
+        )}
       </Grid>
     );
   }
@@ -38,7 +38,6 @@ const mapProps = state => ({
 const mapDispatch = dispatch => ({
   getPostsFromAPI: authToken => dispatch(getPostsFromAPI(authToken)),
   getFriendsFromAPI: authToken => dispatch(getFriendsFromAPI(authToken))
-
 });
 export default connect(
   mapProps,

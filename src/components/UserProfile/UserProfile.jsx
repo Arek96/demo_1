@@ -73,12 +73,12 @@ class UserProfile extends Component {
                   className={classes.avatar}
                 />
               ) : (
-                  <Avatar
-                    alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                    src={img}
-                    className={classes.avatar}
-                  />
-                )}
+                <Avatar
+                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                  src={img}
+                  className={classes.avatar}
+                />
+              )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
                   {checkUser()}
@@ -123,7 +123,7 @@ class UserProfile extends Component {
                   onClick={this.handleAddFriendButton}
                 >
                   Add friend
-                  </Button>
+                </Button>
               </CardContent>
             </Card>
           </Grid>
@@ -143,11 +143,15 @@ class UserProfile extends Component {
   }
 }
 const mapDispatch = dispatch => ({
-  fetchFriendToApi: (authToken, friendID) => dispatch(fetchFriendToApi(authToken, friendID))
-})
+  fetchFriendToApi: (authToken, friendID) =>
+    dispatch(fetchFriendToApi(authToken, friendID))
+});
 const mapState = state => ({
   authToken: state.authToken,
   posts: state.allPosts,
-  friends: state.friends,
+  friends: state.friends
 });
-export default connect(mapState, mapDispatch)(withStyles(styles)(UserProfile));
+export default connect(
+  mapState,
+  mapDispatch
+)(withStyles(styles)(UserProfile));
