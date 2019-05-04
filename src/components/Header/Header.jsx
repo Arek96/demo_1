@@ -13,9 +13,9 @@ import style from "./Header.module.scss";
 import SlideMenu from "./SlideMenu/SlideMenu";
 import { Link } from "react-router-dom";
 import img from "../../img/withoutPhoto.PNG";
-import { connect } from "react-redux";
-import { searchPost } from "../../actions/postActions";
 import { withRouter } from 'react-router-dom'
+import { searchPost } from "../../actions/postActions";
+import { fetchSearchFriend } from "../../actions/friendActions";
 const styles = theme => ({
   root: {
     width: "100%"
@@ -122,12 +122,27 @@ class Header extends React.Component {
     this.setState(() => ({
       query: value
     }))
+    this.setState({
+      searchValue: event.target.value
+    });
+    if (event.target.value.indexOf("@") === 0) {
+      setTimeout(this.setState({ wantSearchFreind: true }), 1000);
+    }
   };
   componentDidUpdate = prevProps => {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       this.setState({
         query: ''
       })
+    }
+    if (this.state.wantSearchFreind) {
+      this.setState({
+        wantSearchFreind: false
+      });
+      this.props.fetchSearchFriend(
+        this.state.searchValue.slice(1),
+        this.props.authToken
+      );
     }
   }
   render() {
@@ -171,8 +186,8 @@ class Header extends React.Component {
         </Link>
       </IconButton>
     ) : (
-        <Link to="login">Log In</Link>
-      );
+      <Link to="login">Log In</Link>
+    );
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -197,6 +212,8 @@ class Header extends React.Component {
                 </div>
                 <InputBase
                   placeholder="Search post..."
+                  value={this.state.searchValue}
+                  onChange={this.handleInputSearch}
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput
@@ -226,6 +243,10 @@ const mapDispatch = dispatch => {
     searchPost: value => dispatch(searchPost(value))
   };
 };
+const mapDispatch = dispatch => ({
+  fetchSearchFriend: (friendValue, authToken) =>
+    dispatch(fetchSearchFriend(friendValue, authToken))
+});
 const mapStateToProps = state => ({
   authToken: state.authToken,
   user: state.user,
