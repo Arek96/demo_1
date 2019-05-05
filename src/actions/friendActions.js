@@ -77,3 +77,21 @@ export const fetchFriendToApi = (authToken, friendID) => {
       .then(resp => dispatch(addFriend(resp)));
   };
 };
+export const deleteFriend = friend => ({
+  type: DELETE_FRIEND,
+  payload: {
+    friendToDel: friend
+  }
+})
+export const deleteFriendFromAPI = (friend, authToken) => {
+  return dispatch => {
+    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/friend/${friend.Id}`, {
+      method: "DELETE",
+      headers: {
+        "X-ZUMO-AUTH": authToken
+      }
+    })
+      .then(r => console.log(r))
+      .then(resp => dispatch(deleteFriend(friend)))
+  }
+}

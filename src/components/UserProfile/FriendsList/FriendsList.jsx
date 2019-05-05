@@ -43,7 +43,7 @@ class FriendsList extends Component {
                     <Card>
                         <CardContent >
                             <List dense className={classes.root}>{this.props.friends.map(friend => (
-                                <ListItem key={friend.id}>
+                                <ListItem key={friend.Id}>
                                     <ListItemAvatar>
                                         <Avatar
                                             alt={`Avatar`}
@@ -57,12 +57,13 @@ class FriendsList extends Component {
                                             variant="contained"
                                             color="default"
                                             size="small"
-                                            // onClick={this.props.handleDeleteFriendButton(friend.Id, this.props.authToken)}
+                                            onClick={() => this.props.deleteFriendFromAPI(friend, this.props.authToken)}
                                         >
                                             Remove friend
                                         </Button>
                                     </ListItemSecondaryAction>
                                 </ListItem>
+
 
                             ))}
                             </List>

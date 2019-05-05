@@ -56,24 +56,19 @@ class Post extends Component {
   handleCloseMenu = () => {
     this.setState({ anchorEl: null });
   };
+  renderAvatar = (style, Photo) => {
+    return <Avatar
+      style={style}
+      alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+      src={Photo}
+    />
+  }
   render() {
     const checkPhoto = () =>
       this.props.user ?
-        this.props.user.Photo ? (
-          <Avatar
-            style={{ margin: 10 }}
-            alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-            src={this.props.user.Photo}
-          />
-        ) : (
-            <Avatar
-              style={{ height: 35, margin: 10 }}
-              alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-              src={img}
-            >
-              }`}
-        </Avatar>
-          )
+        this.props.user.Photo ?
+          this.renderAvatar({ margin: 10 }, this.props.user.Photo) :
+          this.renderAvatar({ height: 35, margin: 10 }, img)
         : null
     return (
       <Card className={styles.PostCard}>

@@ -35,13 +35,13 @@ class UserProfile extends Component {
     }));
   };
   handleAddFriendButton = () => {
-    this.props.fetchFriendToApi(this.props.authToken, "sid:089727645ef4f6a35bb089440b363452")
+    this.props.fetchFriendToApi(this.props.authToken, "sid:b3261dd4b67666270ba422f9b5cf867c")
+    console.log(this.props.friends)
   }
   handleOpenFriendsList = () => {
     this.setState(prevState => ({
       modalFriendsList: !prevState.modalFriendsList
     }))
-    console.log(this.state.modalFriendsList)
   }
   render() {
     const checkUser = () => {
@@ -73,12 +73,12 @@ class UserProfile extends Component {
                   className={classes.avatar}
                 />
               ) : (
-                <Avatar
-                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                  src={img}
-                  className={classes.avatar}
-                />
-              )}
+                  <Avatar
+                    alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                    src={img}
+                    className={classes.avatar}
+                  />
+                )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
                   {checkUser()}
