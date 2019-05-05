@@ -117,13 +117,13 @@ class UserProfile extends Component {
                       : "Friends: 0"}
                   </Typography>
                 </button>
-                <Button
+                {/* <Button
                   variant="contained"
                   className={classes.delete}
                   onClick={this.handleAddFriendButton}
                 >
                   Add friend
-                </Button>
+                </Button> */}
               </CardContent>
             </Card>
           </Grid>
