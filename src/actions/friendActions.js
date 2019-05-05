@@ -3,6 +3,13 @@ export const ADD_FRIEND = "ADD_FRIEND";
 export const GET_FRIENDS = "GET_FRIENDS";
 export const DELETE_FRIEND = "DELETE_FRIEND";
 
+const sortFriends = (a, b) => {
+  if (a.Name < b.Name) return -1;
+  if (a.Name > b.Name) return 1;
+  return 0;
+};
+
+
 export const searchFriend = matchingFriends => ({
   type: SEARCH_FRIEND,
   payload: {
@@ -29,7 +36,7 @@ export const fetchSearchFriend = (friendValue, authToken) => {
 export const getFriends = data => ({
   type: GET_FRIENDS,
   payload: {
-    friends: data
+    friends: data.sort(sortFriends)
   }
 });
 

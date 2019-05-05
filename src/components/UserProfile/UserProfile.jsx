@@ -35,7 +35,7 @@ class UserProfile extends Component {
     }));
   };
   handleAddFriendButton = () => {
-    this.props.fetchFriendToApi(this.props.authToken, "sid:b3261dd4b67666270ba422f9b5cf867c")
+    this.props.fetchFriendToApi(this.props.authToken, "sid:61ee6e94cf4bca0a8ff69898e41b0460")
     console.log(this.props.friends)
   }
   handleOpenFriendsList = () => {
