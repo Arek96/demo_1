@@ -2,6 +2,7 @@ export const SEARCH_FRIEND = "SEARCH_FRINED";
 export const ADD_FRIEND = "ADD_FRIEND";
 export const GET_FRIENDS = "GET_FRIENDS";
 export const DELETE_FRIEND = "DELETE_FRIEND";
+export const GET_POSTS_FRIENDS = "GET_POSTS_FRIENDS";
 
 const sortFriends = (a, b) => {
   if (a.Name < b.Name) return -1;
@@ -87,16 +88,40 @@ export const deleteFriend = friend => ({
   payload: {
     friendToDel: friend
   }
-})
+});
 export const deleteFriendFromAPI = (friend, authToken) => {
   return dispatch => {
-    fetch(`https://delfinkitrainingapi.azurewebsites.net/api/friend/${friend.Id}`, {
-      method: "DELETE",
-      headers: {
-        "X-ZUMO-AUTH": authToken
+    fetch(
+      `https://delfinkitrainingapi.azurewebsites.net/api/friend/${friend.Id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "X-ZUMO-AUTH": authToken
+        }
       }
-    })
+    )
       .then(r => console.log(r))
-      .then(resp => dispatch(deleteFriend(friend)))
+      .then(resp => dispatch(deleteFriend(friend)));
+  };
+};
+
+export const getFriendsPosts = data => ({
+  type: GET_POSTS_FRIENDS,
+  payload: {
+    postsFriends: data
   }
-}
+});
+
+export const getFriendsPostsFromAPI = authToken => {
+  return dispatch => {
+    return fetch(
+      `https://delfinkitrainingapi.azurewebsites.net/api/post/friend`,
+      {
+        method: "GET",
+        headers: { "X-ZUMO-AUTH": authToken }
+      }
+    )
+      .then(r => r.json())
+      .then(resp => dispatch(getFriendsPosts(resp)));
+  };
+};
