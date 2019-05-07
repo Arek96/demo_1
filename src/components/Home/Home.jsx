@@ -15,41 +15,31 @@ class Home extends Component {
     this.props.getFriendsFromAPI(this.props.authToken);
     this.props.getFriendsPostsFromAPI(this.props.authToken);
   }
-  componentDidUpdate(prevProps) {
-    if (this.props.posts !== prevProps.posts) {
-    }
-  }
   render() {
-    let friendsPosts = this.props.postsFriends
-      ? this.props.postsFriends.map(element => {
-          return element.Posts;
-        })
+    const { user, posts, postsFriends } = this.props;
+    const arrayOfPostsFriends = postsFriends
+      ? postsFriends.map(element =>
+          element.Posts.map(post => {
+            post.Friend = element.Friend;
+            return post;
+          })
+        )
       : null;
-    let friends = this.props.postsFriends
-      ? this.props.postsFriends.map(element => {
+    const friends = postsFriends
+      ? postsFriends.map(element => {
           return element.Friend;
         })
       : null;
-    let allPosts = this.props.postsFriends
-      ? this.props.posts.concat(...friendsPosts)
-      : this.props.posts;
+    const allPosts = postsFriends
+      ? posts.concat(...arrayOfPostsFriends)
+      : posts;
     console.log(allPosts);
     return (
       <Grid item style={{ width: "100%" }} sm={8} xxl={7}>
         {allPosts && allPosts.length > 0 ? (
           allPosts.sort(sortPosts).map(post => {
             return (
-              <Post
-                key={post.Id}
-                post={post}
-                user={
-                  post.UserID
-                    ? friends.filter(element =>
-                        element.UserId === post.UserId ? element : null
-                      )
-                    : this.props.user
-                }
-              />
+              <Post key={post.Id} post={post} user={post.Friend || user} />
             );
           })
         ) : (

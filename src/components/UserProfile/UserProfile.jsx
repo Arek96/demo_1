@@ -12,7 +12,7 @@ import EditProfile from "./EditProfile/EditProfile";
 import RemoveProfile from "./RemoveProfile/RemoveProfile";
 import img from "../../img/withoutPhoto.PNG";
 import { connect } from "react-redux";
-import { fetchFriendToApi } from '../../actions/friendActions';
+import { fetchFriendToApi } from "../../actions/friendActions";
 import FriendsList from "./FriendsList/FriendsList";
 
 class UserProfile extends Component {
@@ -35,14 +35,17 @@ class UserProfile extends Component {
     }));
   };
   handleAddFriendButton = () => {
-    this.props.fetchFriendToApi(this.props.authToken, "sid:61ee6e94cf4bca0a8ff69898e41b0460")
-    console.log(this.props.friends)
-  }
+    this.props.fetchFriendToApi(
+      this.props.authToken,
+      "sid:61ee6e94cf4bca0a8ff69898e41b0460"
+    );
+    console.log(this.props.friends);
+  };
   handleOpenFriendsList = () => {
     this.setState(prevState => ({
       modalFriendsList: !prevState.modalFriendsList
-    }))
-  }
+    }));
+  };
   render() {
     const checkUser = () => {
       if (this.props.user) {
@@ -73,12 +76,12 @@ class UserProfile extends Component {
                   className={classes.avatar}
                 />
               ) : (
-                  <Avatar
-                    alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                    src={img}
-                    className={classes.avatar}
-                  />
-                )}
+                <Avatar
+                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                  src={img}
+                  className={classes.avatar}
+                />
+              )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
                   {checkUser()}
@@ -106,7 +109,10 @@ class UserProfile extends Component {
                     ? `Posts: ${this.props.posts.length}`
                     : "Posts: 0"}
                 </Typography>
-                <button className={style.TransparentButton} onClick={this.handleOpenFriendsList}>
+                <button
+                  className={style.TransparentButton}
+                  onClick={this.handleOpenFriendsList}
+                >
                   <Typography
                     variant="headline"
                     style={{ fontSize: "0.7rem" }}
@@ -117,17 +123,13 @@ class UserProfile extends Component {
                       : "Friends: 0"}
                   </Typography>
                 </button>
-                {/* <Button
-                  variant="contained"
-                  className={classes.delete}
-                  onClick={this.handleAddFriendButton}
-                >
-                  Add friend
-                </Button> */}
               </CardContent>
             </Card>
           </Grid>
-          <FriendsList open={this.state.modalFriendsList} handleOpenFriendsList={this.handleOpenFriendsList} />
+          <FriendsList
+            open={this.state.modalFriendsList}
+            handleOpenFriendsList={this.handleOpenFriendsList}
+          />
           <EditProfile
             open={this.state.modalEditPageisOpen}
             handleEditDialog={this.handleEditDialog}

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -12,8 +13,16 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import PostMenu from "./PostMenu/PostMenu";
-import styles from "./Post.module.scss";
+import style from "./Post.module.scss";
 import img from "../../../img/withoutPhoto.PNG";
+
+const styles = theme => ({
+  userAvatar: {
+    margin: "10px 70px 10px 20px",
+    width: 45,
+    height: 45
+  }
+});
 
 class Post extends Component {
   constructor(props) {
@@ -42,7 +51,7 @@ class Post extends Component {
 
     return `${date.getDate()} ${
       month[date.getMonth()]
-      }, ${date.getFullYear()} `;
+    }, ${date.getFullYear()} `;
   };
   handleExpandClick = () => {
     this.setState({
@@ -56,26 +65,43 @@ class Post extends Component {
   handleCloseMenu = () => {
     this.setState({ anchorEl: null });
   };
-  renderAvatar = (style, Photo) => {
-    return <Avatar
-      style={style}
-      alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-      src={Photo}
-    />
-  }
+  renderAvatar = (GivenName, Name, style, Photo) => (
+    <>
+      <Avatar
+        style={style}
+        alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+        src={Photo}
+        className={this.props.classes.userAvatar}
+      />
+      {this.props.post.Friend ? (
+        <Typography>{`${GivenName} ${Name} `}</Typography>
+      ) : (
+        <Typography>{`${GivenName} ${Name} `} </Typography>
+      )}
+    </>
+  );
   render() {
+    const { classes } = this.props;
     const checkPhoto = () =>
-      this.props.user ?
-        this.props.user.Photo ?
-          this.renderAvatar({ margin: 10 }, this.props.user.Photo) :
-          this.renderAvatar({ height: 35, margin: 10 }, img)
-        : null
+      this.props.user
+        ? this.props.user.Photo
+          ? this.renderAvatar(
+              this.props.user.GivenName,
+              this.props.user.Name,
+              { margin: 10 },
+              this.props.user.Photo
+            )
+          : this.renderAvatar(
+              this.props.user.GivenName,
+              this.props.user.Name,
+              { height: 35, margin: 10 },
+              img
+            )
+        : null;
     return (
-      <Card className={styles.PostCard}>
+      <Card className={style.PostCard}>
         <CardHeader
-          avatar={
-            checkPhoto()
-          }
+          avatar={checkPhoto()}
           action={
             <IconButton>
               <MoreVertIcon
@@ -94,7 +120,7 @@ class Post extends Component {
           post={this.props.post}
         />
         <CardMedia
-          className={styles.PostImage}
+          className={style.PostImage}
           image={this.props.post.ThumbnailPhoto}
         />
         <Collapse
@@ -107,19 +133,22 @@ class Post extends Component {
               {this.state.expanded
                 ? this.props.post.Text
                 : this.props.post.Text.length < 100
-                  ? this.props.post.Text
-                  : `${this.props.post.Text.substr(0, 100)}...`}
+                ? this.props.post.Text
+                : `${this.props.post.Text.substr(0, 100)}...`}
             </Typography>
           </CardContent>
         </Collapse>
 
-        <CardActions disableActionSpacing className={styles.PostActions}>
-          <IconButton aria-label="Add to favorites">
-            <FavoriteIcon />
-          </IconButton>
+        <CardActions disableActionSpacing className={style.PostActions}>
+          {this.props.post.Friend ? null : (
+            <i
+              style={{ fontSize: "40px", paddingLeft: "10px" }}
+              class="fas fa-user-circle"
+            />
+          )}
 
           <IconButton
-            className={this.state.expanded ? styles.ExpandButton : null}
+            className={this.state.expanded ? style.ExpandButton : null}
             onClick={this.handleExpandClick}
             aria-expanded={this.state.expanded}
             aria-label="Show more"
@@ -131,4 +160,4 @@ class Post extends Component {
     );
   }
 }
-export default Post;
+export default withStyles(styles)(Post);
