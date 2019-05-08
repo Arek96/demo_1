@@ -21,10 +21,14 @@ import { connect } from "react-redux";
 import style from "../FriendsList/FriendsList.module.scss";
 
 const styles = theme => ({
-  root: {
+  List: {
     width: "100%",
     maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
+    margin: '0 auto'
+  },
+  ListItemUser: {
+    marginTop: '0.6rem'
   },
   removeFriendButton: {
     color: "white",
@@ -47,19 +51,19 @@ class FriendsList extends Component {
   };
   render() {
     const { open } = this.state;
-    const { classes } = this.props;
+    const { classes, handleOpenFriendsList, authToken } = this.props;
     return (
       <Grid container xs={10} justify="center" alignContent="center">
         <Dialog
           open={open}
           scroll="body"
-          onClose={this.props.handleOpenFriendsList}
+          onClose={handleOpenFriendsList}
         >
           <Card>
             <CardContent>
-              <List dense className={classes.root}>
+              <List dense className={classes.List}>
                 {this.props.friends.map(friend => (
-                  <ListItem key={friend.Id}>
+                  <ListItem key={friend.Id} className={classes.ListItemUser}>
                     <ListItemAvatar>
                       <Avatar alt={`Avatar`} src={friend.Photo} />
                     </ListItemAvatar>
@@ -75,7 +79,7 @@ class FriendsList extends Component {
                         onClick={() =>
                           this.props.deleteFriendFromAPI(
                             friend,
-                            this.props.authToken
+                            authToken
                           )
                         }
                       >

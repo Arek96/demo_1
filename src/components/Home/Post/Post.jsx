@@ -8,7 +8,6 @@ import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
@@ -19,8 +18,11 @@ import img from "../../../img/withoutPhoto.PNG";
 const styles = theme => ({
   userAvatar: {
     margin: "10px 70px 10px 20px",
-    width: 45,
-    height: 45
+    width: 70,
+    height: 70,
+    margin: '0 auto'
+  }, title: {
+    
   }
 });
 
@@ -51,7 +53,7 @@ class Post extends Component {
 
     return `${date.getDate()} ${
       month[date.getMonth()]
-    }, ${date.getFullYear()} `;
+      }, ${date.getFullYear()} `;
   };
   handleExpandClick = () => {
     this.setState({
@@ -73,36 +75,34 @@ class Post extends Component {
         src={Photo}
         className={this.props.classes.userAvatar}
       />
-      {this.props.post.Friend ? (
-        <Typography>{`${GivenName} ${Name} `}</Typography>
-      ) : (
-        <Typography>{`${GivenName} ${Name} `} </Typography>
-      )}
+      <Typography>{`${GivenName} ${Name} `}</Typography>
+
     </>
   );
   render() {
-    const { classes } = this.props;
+    const { user, post, classes } = this.props
     const checkPhoto = () =>
-      this.props.user
-        ? this.props.user.Photo
+      user
+        ? user.Photo
           ? this.renderAvatar(
-              this.props.user.GivenName,
-              this.props.user.Name,
-              { margin: 10 },
-              this.props.user.Photo
-            )
+            user.GivenName,
+            user.Name,
+            { margin: 10 },
+            user.Photo
+          )
           : this.renderAvatar(
-              this.props.user.GivenName,
-              this.props.user.Name,
-              { height: 35, margin: 10 },
-              img
-            )
+            user.GivenName,
+            user.Name,
+            { height: 35, margin: 10 },
+            img
+          )
         : null;
     return (
       <Card className={style.PostCard}>
         <CardHeader
+          className={classes.title}
           avatar={checkPhoto()}
-          action={
+          action={!post.Friend ?
             <IconButton>
               <MoreVertIcon
                 aria-owns={this.state.anchorEl ? "postMenu" : undefined}
@@ -110,14 +110,13 @@ class Post extends Component {
                 onClick={this.handleClickMenu}
               />
             </IconButton>
+            : null
           }
-          title={this.props.post.Title}
-          subheader={this.publishDate()}
         />
         <PostMenu
           anchorEl={this.state.anchorEl}
           handleCloseMenu={this.handleCloseMenu}
-          post={this.props.post}
+          post={post}
         />
         <CardMedia
           className={style.PostImage}
@@ -126,21 +125,23 @@ class Post extends Component {
         <Collapse
           in={this.state.expanded}
           timeout="auto"
-          collapsedHeight="50px"
+          collapsedHeight="90px"
         >
-          <CardContent>
-            <Typography component="p">
+          <CardContent className={style.PostProperties}>
+            <Typography className={style.TextPost} variant='title'>{post.Title}</Typography>
+            <Typography className={style.TextPost} variant='caption'>{this.publishDate()}</Typography>
+            <Typography className={style.TextPost} component="p">
               {this.state.expanded
-                ? this.props.post.Text
-                : this.props.post.Text.length < 100
-                ? this.props.post.Text
-                : `${this.props.post.Text.substr(0, 100)}...`}
+                ? post.Text
+                : post.Text.length < 100
+                  ? post.Text
+                  : `${post.Text.substr(0, 100)}...`}
             </Typography>
           </CardContent>
         </Collapse>
 
         <CardActions disableActionSpacing className={style.PostActions}>
-          {this.props.post.Friend ? null : (
+          {post.Friend ? null : (
             <i
               style={{ fontSize: "40px", paddingLeft: "10px" }}
               class="fas fa-user-circle"

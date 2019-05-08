@@ -19,21 +19,15 @@ class Home extends Component {
     const { user, posts, postsFriends } = this.props;
     const arrayOfPostsFriends = postsFriends
       ? postsFriends.map(element =>
-          element.Posts.map(post => {
-            post.Friend = element.Friend;
-            return post;
-          })
-        )
-      : null;
-    const friends = postsFriends
-      ? postsFriends.map(element => {
-          return element.Friend;
+        element.Posts.map(post => {
+          post.Friend = element.Friend;
+          return post;
         })
+      )
       : null;
     const allPosts = postsFriends
       ? posts.concat(...arrayOfPostsFriends)
       : posts;
-    console.log(allPosts);
     return (
       <Grid item style={{ width: "100%" }} sm={8} xxl={7}>
         {allPosts && allPosts.length > 0 ? (
@@ -43,8 +37,8 @@ class Home extends Component {
             );
           })
         ) : (
-          <Typography variant="h5">You don't have any posts yet. </Typography>
-        )}
+            <Typography variant="h5">You don't have any posts yet. </Typography>
+          )}
       </Grid>
     );
   }

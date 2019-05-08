@@ -18,11 +18,23 @@ $devices_sizes: (
 .PostCard {
   margin-bottom: 20px;
 }
+.MuiCardHeader-avatar-275{
+  margin: 0 auto;
+}
 .PostImage {
   height: 500px;
   width: 100%;
   background-size: "cover";
 }
+.PostProperties{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .TextPost{
+    margin-bottom: 7px;
+  }
+}
+
 .PostActions {
   width: 100%;
   display: flex;
