@@ -12,7 +12,7 @@ import {
   ListItemSecondaryAction,
   ListItemAvatar,
   Button,
-  InputBase,
+  InputBase
 } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import {
@@ -28,10 +28,10 @@ const styles = theme => ({
     width: "100%",
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
-    margin: '0 auto'
+    margin: "0 auto"
   },
   ListItemUser: {
-    marginTop: '0.6rem'
+    marginTop: "0.6rem"
   },
   removeFriendButton: {
     color: "white",
@@ -39,9 +39,9 @@ const styles = theme => ({
   },
   search: {
     display: "flex",
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignIitems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignIitems: "center",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
@@ -60,7 +60,7 @@ const styles = theme => ({
     width: "100%"
   },
   inputInput: {
-    margin: '0 auto',
+    margin: "0 auto",
     paddingTop: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
@@ -70,40 +70,49 @@ const styles = theme => ({
     [theme.breakpoints.up("md")]: {
       width: 200
     }
-  },
+  }
 });
 class FriendsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
-      query: ''
+      query: "",
+      friends: this.props.allFriends
     };
   }
+  areArraysEqual = (array1, array2) => {
+    if (array1.length !== array2.length) return false;
+    for (let i = 0; i < array1.length; i++) {
+      if (array2.indexOf(array1[i]) === -1) return false;
+    }
+    return true;
+  };
   componentDidUpdate = prevProps => {
     if (this.props.open !== prevProps.open) {
       this.setState({
         open: this.props.open
       });
     }
-  }
+    if (!this.areArraysEqual(this.state.friends, this.props.allFriends)) {
+      this.setState({
+        friends: this.props.allFriends
+      });
+    }
+  };
   handleInputFriendSearch = event => {
     let value = event.target.value;
-    this.props.searchInFriends(value.toLowerCase());
     this.setState({
       query: value
-    })
-  }
+    });
+  };
   render() {
-    const { open, query } = this.state;
+    const { open, query, friends } = this.state;
+    console.log(friends);
     const { classes, handleOpenFriendsList, authToken } = this.props;
     return (
       <Grid container xs={10} justify="center" alignContent="center">
-        <Dialog
-          open={open}
-          scroll="body"
-          onClose={handleOpenFriendsList}
-        >
+        <Dialog open={open} scroll="body" onClose={handleOpenFriendsList}>
           <Card>
             <CardContent>
               <div className={classes.search}>
@@ -118,33 +127,46 @@ class FriendsList extends Component {
                 />
               </div>
               <List dense className={classes.List}>
-                {this.props.friends.map(friend => (
-                  <ListItem key={friend.Id} className={classes.ListItemUser}>
-                    <ListItemAvatar>
-                      <Avatar alt={`Avatar`} src={friend.Photo} />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={`${friend.Name} ${friend.GivenName}`}
-                    />
-                    <ListItemSecondaryAction>
-                      <Button
-                        className={classes.removeFriendButton}
-                        variant="contained"
-                        color="default"
-                        size="small"
-                        onClick={() =>
-                          this.props.deleteFriendFromAPI(
-                            friend,
-                            authToken
-                          )
-
-                        }
-                      >
-                        Remove friend
-                      </Button>
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                ))}
+                {friends
+                  ? friends
+                      .filter(friend => {
+                        return friend.GivenName.toLowerCase().includes(query)
+                          ? friend
+                          : null;
+                      })
+                      .map(friend => (
+                        <ListItem
+                          key={friend.Id}
+                          className={classes.ListItemUser}
+                        >
+                          <ListItemAvatar>
+                            <Avatar alt={`Avatar`} src={friend.Photo} />
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={`${friend.Name} ${friend.GivenName}`}
+                          />
+                          <ListItemSecondaryAction>
+                            <Button
+                              className={classes.removeFriendButton}
+                              variant="contained"
+                              color="default"
+                              size="small"
+                              onClick={() => {
+                                this.props.deleteFriendFromAPI(
+                                  friend,
+                                  authToken
+                                );
+                                this.setState({
+                                  query: ""
+                                });
+                              }}
+                            >
+                              Remove friend
+                            </Button>
+                          </ListItemSecondaryAction>
+                        </ListItem>
+                      ))
+                  : null}
               </List>
             </CardContent>
           </Card>
@@ -158,12 +180,12 @@ const mapDispatch = dispatch => {
     getFriendsFromAPI: authToken => dispatch(getFriendsFromAPI(authToken)),
     deleteFriendFromAPI: (friend, authToken) =>
       dispatch(deleteFriendFromAPI(friend, authToken)),
-    searchInFriends: value => dispatch(searchInFriends(value)),
+    searchInFriends: value => dispatch(searchInFriends(value))
   };
 };
 const mapState = state => ({
   authToken: state.authToken,
-  friends: state.friends
+  allFriends: state.allFriends
 });
 export default connect(
   mapState,

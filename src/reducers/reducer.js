@@ -65,23 +65,14 @@ const reducer = (
         posts:
           action.payload.value && action.payload.value.length > 0
             ? state.posts.filter(post => {
-              return post.Title.toLowerCase().includes(
-                action.payload.value
-              ) || post.Text.toLowerCase().includes(action.payload.value)
-                ? post
-                : null;
-            })
+                return post.Title.toLowerCase().includes(
+                  action.payload.value
+                ) || post.Text.toLowerCase().includes(action.payload.value)
+                  ? post
+                  : null;
+              })
             : state.allPosts
       };
-    case SEARCH_IN_FRIENDS:
-      return {
-        ...state,
-        friends:
-          action.payload.value && action.payload.value.length > 0 ? state.friends.filter(friend => {
-            return friend.GivenName.toLowerCase().includes(action.payload.value) || friend.Name.toLowerCase().includes(action.payload.value) ? friend : null;
-          }) : state.allFriends
-
-      }
     case UPDATE_USER:
       return {
         ...state,
@@ -94,13 +85,12 @@ const reducer = (
     case GET_FRIENDS:
       return {
         ...state,
-        friends: action.payload.friends,
         allFriends: action.payload.friends
       };
     case ADD_FRIEND:
       return {
         ...state,
-        friends: [action.payload.friend, ...state.friends]
+        allFriends: [action.payload.friend, ...state.allFriends]
       };
     case SEARCH_FRIEND:
       return {
@@ -110,7 +100,7 @@ const reducer = (
     case DELETE_FRIEND:
       return {
         ...state,
-        friends: state.friends.filter(
+        allFriends: state.allFriends.filter(
           friend => friend.Id !== action.payload.friendToDel.Id
         )
       };
