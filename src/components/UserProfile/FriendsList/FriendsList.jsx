@@ -12,7 +12,8 @@ import {
   ListItemSecondaryAction,
   ListItemAvatar,
   Button,
-  InputBase
+  InputBase,
+  Typography
 } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import {
@@ -115,20 +116,21 @@ class FriendsList extends Component {
         <Dialog open={open} scroll="body" onClose={handleOpenFriendsList}>
           <Card>
             <CardContent>
-              <div className={classes.search}>
-                <InputBase
-                  placeholder="Find a specific friend..."
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput
-                  }}
-                  onChange={this.handleInputFriendSearch}
-                  value={query}
-                />
-              </div>
               <List dense className={classes.List}>
-                {friends
-                  ? friends
+                {friends && friends.length > 0 ? (
+                  <>
+                    <div className={classes.search}>
+                      <InputBase
+                        placeholder="Find a specific friend..."
+                        classes={{
+                          root: classes.inputRoot,
+                          input: classes.inputInput
+                        }}
+                        onChange={this.handleInputFriendSearch}
+                        value={query}
+                      />
+                    </div>
+                    {friends
                       .filter(friend => {
                         return friend.GivenName.toLowerCase().includes(query)
                           ? friend
@@ -165,8 +167,11 @@ class FriendsList extends Component {
                             </Button>
                           </ListItemSecondaryAction>
                         </ListItem>
-                      ))
-                  : null}
+                      ))}
+                  </>
+                ) : (
+                  <Typography>You don't have any friends.</Typography>
+                )}
               </List>
             </CardContent>
           </Card>

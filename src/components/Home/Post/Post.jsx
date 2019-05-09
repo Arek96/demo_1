@@ -19,14 +19,14 @@ const styles = theme => ({
   userAvatar: {
     margin: "10px 70px 10px 20px",
     width: 50,
-    height: 50,
-  }, avatar: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
+    height: 50
+  },
+  avatar: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
-
 class Post extends Component {
   constructor(props) {
     super(props);
@@ -35,7 +35,6 @@ class Post extends Component {
       anchorEl: null
     };
   }
-
   publishDate = () => {
     let date = new Date(this.props.post.PublishDate);
     let month = [];
@@ -54,7 +53,7 @@ class Post extends Component {
 
     return `${date.getDate()} ${
       month[date.getMonth()]
-      }, ${date.getFullYear()} `;
+    }, ${date.getFullYear()} `;
   };
   handleExpandClick = () => {
     this.setState({
@@ -76,26 +75,26 @@ class Post extends Component {
         src={Photo}
         className={this.props.classes.userAvatar}
       />
-      <Typography variant='inherit'>{`${GivenName} ${Name} `}</Typography>
+      <Typography variant="inherit">{`${GivenName} ${Name} `}</Typography>
     </>
   );
   render() {
-    const { user, post, classes } = this.props
+    const { user, post, classes } = this.props;
     const checkPhoto = () =>
       user
         ? user.Photo
           ? this.renderAvatar(
-            user.GivenName,
-            user.Name,
-            { margin: 10 },
-            user.Photo
-          )
+              user.GivenName,
+              user.Name,
+              { margin: 10 },
+              user.Photo
+            )
           : this.renderAvatar(
-            user.GivenName,
-            user.Name,
-            { height: 35, margin: 10 },
-            img
-          )
+              user.GivenName,
+              user.Name,
+              { height: 35, margin: 10 },
+              img
+            )
         : null;
     return (
       <Card className={style.PostCard}>
@@ -103,15 +102,16 @@ class Post extends Component {
           classes={{ avatar: classes.avatar }}
           avatar={checkPhoto()}
           content={null}
-          action={!post.Friend ?
-            <IconButton>
-              <MoreVertIcon
-                aria-owns={this.state.anchorEl ? "postMenu" : undefined}
-                aria-haspopup="true"
-                onClick={this.handleClickMenu}
-              />
-            </IconButton>
-            : null
+          action={
+            !post.Friend ? (
+              <IconButton>
+                <MoreVertIcon
+                  aria-owns={this.state.anchorEl ? "postMenu" : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleClickMenu}
+                />
+              </IconButton>
+            ) : null
           }
         />
         <PostMenu
@@ -129,14 +129,18 @@ class Post extends Component {
           collapsedHeight="90px"
         >
           <CardContent className={style.PostProperties}>
-            <Typography className={style.TextPost} variant='title'>{post.Title}</Typography>
-            <Typography className={style.TextPost} variant='caption'>{this.publishDate()}</Typography>
+            <Typography className={style.TextPost} variant="title">
+              {post.Title}
+            </Typography>
+            <Typography className={style.TextPost} variant="caption">
+              {this.publishDate()}
+            </Typography>
             <Typography className={style.TextPost} component="p">
               {this.state.expanded
                 ? post.Text
                 : post.Text.length < 100
-                  ? post.Text
-                  : `${post.Text.substr(0, 100)}...`}
+                ? post.Text
+                : `${post.Text.substr(0, 100)}...`}
             </Typography>
           </CardContent>
         </Collapse>

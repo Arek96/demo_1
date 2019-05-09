@@ -12,8 +12,7 @@ import {
   GET_FRIENDS,
   ADD_FRIEND,
   DELETE_FRIEND,
-  GET_POSTS_FRIENDS,
-  SEARCH_IN_FRIENDS
+  GET_POSTS_FRIENDS
 } from "../actions/friendActions";
 const reducer = (
   state = { authToken: null, posts: [], friends: [] },

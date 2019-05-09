@@ -57,25 +57,25 @@ class UserProfile extends Component {
         );
       } else return null;
     };
-    const { classes } = this.props;
+    const { classes, allFriends, user, posts } = this.props;
     return (
       <>
         <Grid container direction="column" className={classes.wrap}>
           <Grid item>
             <Card className={style.ProfileContainer}>
-              {this.props.user.Photo ? (
+              {user.Photo ? (
                 <Avatar
-                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                  src={this.props.user.Photo}
+                  alt={`${user.GivenName}${user.Name}`}
+                  src={user.Photo}
                   className={classes.avatar}
                 />
               ) : (
-                  <Avatar
-                    alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                    src={img}
-                    className={classes.avatar}
-                  />
-                )}
+                <Avatar
+                  alt={`${user.GivenName}${user.Name}`}
+                  src={img}
+                  className={classes.avatar}
+                />
+              )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
                   {checkUser()}
@@ -99,8 +99,8 @@ class UserProfile extends Component {
                   style={{ fontSize: "0.7rem" }}
                   className={classes.typography}
                 >
-                  {this.props.posts && this.props.posts.length > 0
-                    ? `Posts: ${this.props.posts.length}`
+                  {posts && posts.length > 0
+                    ? `Posts: ${posts.length}`
                     : "Posts: 0"}
                 </Typography>
                 <button
@@ -112,8 +112,8 @@ class UserProfile extends Component {
                     style={{ fontSize: "0.7rem" }}
                     className={classes.typography}
                   >
-                    {this.props.friends && this.props.friends.length > 0
-                      ? `Friends: ${this.props.friends.length}`
+                    {allFriends && allFriends.length > 0
+                      ? `Friends: ${allFriends.length}`
                       : "Friends: 0"}
                   </Typography>
                 </button>
@@ -145,7 +145,7 @@ const mapDispatch = dispatch => ({
 const mapState = state => ({
   authToken: state.authToken,
   posts: state.allPosts,
-  friends: state.allFriends
+  allFriends: state.allFriends
 });
 export default connect(
   mapState,
