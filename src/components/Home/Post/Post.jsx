@@ -18,11 +18,14 @@ import img from "../../../img/withoutPhoto.PNG";
 const styles = theme => ({
   userAvatar: {
     margin: "10px 70px 10px 20px",
-    width: 70,
-    height: 70,
-    margin: '0 auto'
-  }, title: {
-    
+    width: 50,
+    height: 50,
+  }, CardHeader: {
+    display: 'flex',
+  }, avatar: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
@@ -75,8 +78,7 @@ class Post extends Component {
         src={Photo}
         className={this.props.classes.userAvatar}
       />
-      <Typography>{`${GivenName} ${Name} `}</Typography>
-
+      <Typography variant='inherit'>{`${GivenName} ${Name} `}</Typography>
     </>
   );
   render() {
@@ -100,8 +102,10 @@ class Post extends Component {
     return (
       <Card className={style.PostCard}>
         <CardHeader
-          className={classes.title}
+          className={classes.CardHeader}
+          classes={{ avatar: classes.avatar }}
           avatar={checkPhoto()}
+          content={null}
           action={!post.Friend ?
             <IconButton>
               <MoreVertIcon
@@ -143,11 +147,10 @@ class Post extends Component {
         <CardActions disableActionSpacing className={style.PostActions}>
           {post.Friend ? null : (
             <i
-              style={{ fontSize: "40px", paddingLeft: "10px" }}
+              style={{ fontSize: "50px", paddingLeft: "20px" }}
               class="fas fa-user-circle"
             />
           )}
-
           <IconButton
             className={this.state.expanded ? style.ExpandButton : null}
             onClick={this.handleExpandClick}

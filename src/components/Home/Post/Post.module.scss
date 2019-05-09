@@ -18,8 +18,13 @@ $devices_sizes: (
 .PostCard {
   margin-bottom: 20px;
 }
-.MuiCardHeader-avatar-275{
-  margin: 0 auto;
+.CardHeader {
+  align-items: center;
+}
+.CardHeaderContainer{
+  display: flex;
+  flex-direction: row;
+  
 }
 .PostImage {
   height: 500px;
