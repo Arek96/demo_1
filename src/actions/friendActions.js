@@ -1,8 +1,9 @@
-export const SEARCH_FRIEND = "SEARCH_FRINED";
+export const SEARCH_FRIEND = "SEARCH_FRIEND";
 export const ADD_FRIEND = "ADD_FRIEND";
 export const GET_FRIENDS = "GET_FRIENDS";
 export const DELETE_FRIEND = "DELETE_FRIEND";
 export const GET_POSTS_FRIENDS = "GET_POSTS_FRIENDS";
+export const SEARCH_IN_FRIENDS = "SEARCH_IN_FRIENDS";
 
 const sortFriends = (a, b) => {
   if (a.Name < b.Name) return -1;
@@ -38,6 +39,13 @@ export const getFriends = data => ({
     friends: data.sort(sortFriends)
   }
 });
+
+export const searchInFriends = value => ({
+  type: SEARCH_IN_FRIENDS,
+  payload:{
+    value
+  }
+})
 
 export const getFriendsFromAPI = authToken => {
   return dispatch => {

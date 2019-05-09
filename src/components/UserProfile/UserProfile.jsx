@@ -34,13 +34,7 @@ class UserProfile extends Component {
       modalDeletePageisOpen: !prevState.modalDeletePageisOpen
     }));
   };
-  handleAddFriendButton = () => {
-    this.props.fetchFriendToApi(
-      this.props.authToken,
-      "sid:61ee6e94cf4bca0a8ff69898e41b0460"
-    );
-    console.log(this.props.friends);
-  };
+
   handleOpenFriendsList = () => {
     this.setState(prevState => ({
       modalFriendsList: !prevState.modalFriendsList
@@ -76,12 +70,12 @@ class UserProfile extends Component {
                   className={classes.avatar}
                 />
               ) : (
-                <Avatar
-                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                  src={img}
-                  className={classes.avatar}
-                />
-              )}
+                  <Avatar
+                    alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                    src={img}
+                    className={classes.avatar}
+                  />
+                )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
                   {checkUser()}
@@ -151,7 +145,7 @@ const mapDispatch = dispatch => ({
 const mapState = state => ({
   authToken: state.authToken,
   posts: state.allPosts,
-  friends: state.friends
+  friends: state.allFriends
 });
 export default connect(
   mapState,

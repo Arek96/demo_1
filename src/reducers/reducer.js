@@ -12,7 +12,8 @@ import {
   GET_FRIENDS,
   ADD_FRIEND,
   DELETE_FRIEND,
-  GET_POSTS_FRIENDS
+  GET_POSTS_FRIENDS,
+  SEARCH_IN_FRIENDS
 } from "../actions/friendActions";
 const reducer = (
   state = { authToken: null, posts: [], friends: [] },
@@ -64,15 +65,23 @@ const reducer = (
         posts:
           action.payload.value && action.payload.value.length > 0
             ? state.posts.filter(post => {
-                return post.Title.toLowerCase().includes(
-                  action.payload.value
-                ) || post.Text.toLowerCase().includes(action.payload.value)
-                  ? post
-                  : null;
-              })
+              return post.Title.toLowerCase().includes(
+                action.payload.value
+              ) || post.Text.toLowerCase().includes(action.payload.value)
+                ? post
+                : null;
+            })
             : state.allPosts
       };
+    case SEARCH_IN_FRIENDS:
+      return {
+        ...state,
+        friends:
+          action.payload.value && action.payload.value.length > 0 ? state.friends.filter(friend => {
+            return friend.GivenName.toLowerCase().includes(action.payload.value) || friend.Name.toLowerCase().includes(action.payload.value) ? friend : null;
+          }) : state.allFriends
 
+      }
     case UPDATE_USER:
       return {
         ...state,
@@ -85,7 +94,8 @@ const reducer = (
     case GET_FRIENDS:
       return {
         ...state,
-        friends: action.payload.friends
+        friends: action.payload.friends,
+        allFriends: action.payload.friends
       };
     case ADD_FRIEND:
       return {

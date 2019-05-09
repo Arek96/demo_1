@@ -11,11 +11,14 @@ import {
   ListItem,
   ListItemSecondaryAction,
   ListItemAvatar,
-  Button
+  Button,
+  InputBase,
 } from "@material-ui/core";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import {
   getFriendsFromAPI,
-  deleteFriendFromAPI
+  deleteFriendFromAPI,
+  searchInFriends
 } from "../../../actions/friendActions";
 import { connect } from "react-redux";
 import style from "../FriendsList/FriendsList.module.scss";
@@ -33,13 +36,48 @@ const styles = theme => ({
   removeFriendButton: {
     color: "white",
     backgroundColor: "#E89274"
-  }
+  },
+  search: {
+    display: "flex",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignIitems: 'center',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.25)
+    },
+    marginRight: theme.spacing.unit * 3,
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing.unit * 3,
+      width: "auto"
+    }
+  },
+  inputRoot: {
+    color: "inherit",
+    width: "100%"
+  },
+  inputInput: {
+    margin: '0 auto',
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: 200
+    }
+  },
 });
 class FriendsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      query: ''
     };
   }
   componentDidUpdate = prevProps => {
@@ -48,9 +86,16 @@ class FriendsList extends Component {
         open: this.props.open
       });
     }
-  };
+  }
+  handleInputFriendSearch = event => {
+    let value = event.target.value;
+    this.props.searchInFriends(value.toLowerCase());
+    this.setState({
+      query: value
+    })
+  }
   render() {
-    const { open } = this.state;
+    const { open, query } = this.state;
     const { classes, handleOpenFriendsList, authToken } = this.props;
     return (
       <Grid container xs={10} justify="center" alignContent="center">
@@ -61,6 +106,17 @@ class FriendsList extends Component {
         >
           <Card>
             <CardContent>
+              <div className={classes.search}>
+                <InputBase
+                  placeholder="Find a specific friend..."
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput
+                  }}
+                  onChange={this.handleInputFriendSearch}
+                  value={query}
+                />
+              </div>
               <List dense className={classes.List}>
                 {this.props.friends.map(friend => (
                   <ListItem key={friend.Id} className={classes.ListItemUser}>
@@ -81,6 +137,7 @@ class FriendsList extends Component {
                             friend,
                             authToken
                           )
+
                         }
                       >
                         Remove friend
@@ -100,7 +157,8 @@ const mapDispatch = dispatch => {
   return {
     getFriendsFromAPI: authToken => dispatch(getFriendsFromAPI(authToken)),
     deleteFriendFromAPI: (friend, authToken) =>
-      dispatch(deleteFriendFromAPI(friend, authToken))
+      dispatch(deleteFriendFromAPI(friend, authToken)),
+    searchInFriends: value => dispatch(searchInFriends(value)),
   };
 };
 const mapState = state => ({
