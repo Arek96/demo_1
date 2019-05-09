@@ -20,8 +20,6 @@ const styles = theme => ({
     margin: "10px 70px 10px 20px",
     width: 50,
     height: 50,
-  }, CardHeader: {
-    display: 'flex',
   }, avatar: {
     display: 'flex',
     justifyContent: 'center',
@@ -102,7 +100,6 @@ class Post extends Component {
     return (
       <Card className={style.PostCard}>
         <CardHeader
-          className={classes.CardHeader}
           classes={{ avatar: classes.avatar }}
           avatar={checkPhoto()}
           content={null}

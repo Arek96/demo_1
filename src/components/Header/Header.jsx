@@ -183,57 +183,55 @@ class Header extends React.Component {
                 src={this.props.user.Photo}
               />
             ) : (
-              <Avatar
-                style={{ height: 35, margin: 10 }}
-                alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                src={img}
-              >
-                }`}
+                <Avatar
+                  style={{ height: 35, margin: 10 }}
+                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                  src={img}
+                >
+                  }`}
               </Avatar>
-            )}
+              )}
           </div>
         </Link>
       </IconButton>
-    ) : (
-      <Link to="login">Log In</Link>
-    );
+    ) : null;
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
-          <Toolbar>
-            <IconButton
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={this.handleClickMenu}
-            >
-              <MenuIcon />
-            </IconButton>
+          <Toolbar><IconButton
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="Open drawer"
+            onClick={this.handleClickMenu}
+          >
+            <MenuIcon />
+          </IconButton>
             <Link to="/Home" style={{ textDecoration: "none" }}>
               <h1 className={style.Logo}>Delfinagram</h1>
             </Link>
             <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
+            {this.props.user ? <>
+              <div className={classes.sectionDesktop}>
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
+                    placeholder="Search post/users..."
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput
+                    }}
+                    onChange={this.handleInputSearch}
+                    value={query}
+                  />
                 </div>
-                <InputBase
-                  placeholder="Search post/users..."
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput
-                  }}
-                  onChange={this.handleInputSearch}
-                  value={query}
-                />
+                {userMessage}
               </div>
-              {userMessage}
-            </div>
-            <div className={classes.sectionMobile}>
-              <SearchIcon />
-            </div>
-          </Toolbar>
+              <div className={classes.sectionMobile}>
+                <SearchIcon />
+              </div> </> : null} </Toolbar>
+
         </AppBar>
         <SlideMenu
           open={this.state.open}
