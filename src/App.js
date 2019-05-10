@@ -11,7 +11,6 @@ import NotLogged from "./components/NotLogged/NotLogged";
 import { connect } from "react-redux";
 import { fetchUser } from "./actions/userActions";
 import Home from "./components/Home/Home";
-import { searchPost } from "./actions/postActions";
 
 class App extends Component {
   constructor(props) {

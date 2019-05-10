@@ -12,16 +12,24 @@ import EditProfile from "./EditProfile/EditProfile";
 import RemoveProfile from "./RemoveProfile/RemoveProfile";
 import img from "../../img/withoutPhoto.PNG";
 import { connect } from "react-redux";
-import { fetchFriendToApi } from "../../actions/friendActions";
+import {
+  fetchFriendToApi,
+  getFriendsFromAPI
+} from "../../actions/friendActions";
+import FriendsList from "./FriendsList/FriendsList";
 
 class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       modalEditPageisOpen: false,
-      modalDeletePageisOpen: false
+      modalDeletePageisOpen: false,
+      modalFriendsList: false
     };
   }
+  componentDidMount = () => {
+    this.props.getFriendsFromAPI(this.props.authToken);
+  };
   handleEditDialog = () => {
     this.setState(prevState => ({
       modalEditPageisOpen: !prevState.modalEditPageisOpen
@@ -32,12 +40,13 @@ class UserProfile extends Component {
       modalDeletePageisOpen: !prevState.modalDeletePageisOpen
     }));
   };
-  handleAddFriendButton = () => {
-    this.props.fetchFriendToApi(
-      this.props.authToken,
-      "sid:089727645ef4f6a35bb089440b363452"
-    );
+
+  handleOpenFriendsList = () => {
+    this.setState(prevState => ({
+      modalFriendsList: !prevState.modalFriendsList
+    }));
   };
+
   render() {
     const checkUser = () => {
       if (this.props.user) {
@@ -55,21 +64,21 @@ class UserProfile extends Component {
         );
       } else return null;
     };
-    const { classes } = this.props;
+    const { classes, allFriends, user, posts } = this.props;
     return (
       <>
         <Grid container direction="column" className={classes.wrap}>
           <Grid item>
             <Card className={style.ProfileContainer}>
-              {this.props.user.Photo ? (
+              {user.Photo ? (
                 <Avatar
-                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                  src={this.props.user.Photo}
+                  alt={`${user.GivenName}${user.Name}`}
+                  src={user.Photo}
                   className={classes.avatar}
                 />
               ) : (
                 <Avatar
-                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                  alt={`${user.GivenName}${user.Name}`}
                   src={img}
                   className={classes.avatar}
                 />
@@ -97,31 +106,31 @@ class UserProfile extends Component {
                   style={{ fontSize: "0.7rem" }}
                   className={classes.typography}
                 >
-                  {this.props.posts && this.props.posts.length > 0
-                    ? `Posts: ${this.props.posts.length}`
+                  {posts && posts.length > 0
+                    ? `Posts: ${posts.length}`
                     : "Posts: 0"}
                 </Typography>
-                <button className={style.TransparentButton}>
+                <button
+                  className={style.TransparentButton}
+                  onClick={this.handleOpenFriendsList}
+                >
                   <Typography
                     variant="headline"
                     style={{ fontSize: "0.7rem" }}
                     className={classes.typography}
                   >
-                    {this.props.friends && this.props.friends.length > 0
-                      ? `Friends: ${this.props.friends.length}`
+                    {allFriends && allFriends.length > 0
+                      ? `Friends: ${allFriends.length}`
                       : "Friends: 0"}
                   </Typography>
                 </button>
-                <Button
-                  variant="contained"
-                  className={classes.delete}
-                  onClick={this.handleAddFriendButton}
-                >
-                  Add friend
-                </Button>
               </CardContent>
             </Card>
           </Grid>
+          <FriendsList
+            open={this.state.modalFriendsList}
+            handleOpenFriendsList={this.handleOpenFriendsList}
+          />
           <EditProfile
             open={this.state.modalEditPageisOpen}
             handleEditDialog={this.handleEditDialog}
@@ -138,12 +147,13 @@ class UserProfile extends Component {
 }
 const mapDispatch = dispatch => ({
   fetchFriendToApi: (authToken, friendID) =>
-    dispatch(fetchFriendToApi(authToken, friendID))
+    dispatch(fetchFriendToApi(authToken, friendID)),
+  getFriendsFromAPI: authToken => dispatch(getFriendsFromAPI(authToken))
 });
 const mapState = state => ({
   authToken: state.authToken,
   posts: state.allPosts,
-  friends: state.friends
+  allFriends: state.allFriends
 });
 export default connect(
   mapState,

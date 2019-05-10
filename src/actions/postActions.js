@@ -4,7 +4,7 @@ export const EDIT_POST = "EDIT_POST";
 export const DELETE_POST = "DELETE_POST";
 export const SEARCH_POST = "SEARCH_POST";
 
-const sortPosts = (a, b) => {
+export const sortPosts = (a, b) => {
   const aDate = new Date(a.PublishDate);
   const bDate = new Date(b.PublishDate);
   if (aDate > bDate) return -1;

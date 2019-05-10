@@ -122,11 +122,11 @@ class Header extends React.Component {
   handleInputSearch = event => {
     let value = event.target.value;
     this.props.searchPost(value.toLowerCase());
-    this.setState(() => ({
-      searchValue: value
-    }));
-    if (value.indexOf("@") === 0) {
-      setTimeout(this.setState({ wantSearchFreind: true }), 1000);
+    this.setState({
+      searchValue: event.target.value
+    });
+    if (event.target.value.indexOf("@") === 0) {
+      setTimeout(this.setState({ wantSearchFriend: true }), 1000);
     }
   };
 
@@ -138,7 +138,7 @@ class Header extends React.Component {
     }
     if (this.state.wantSearchFreind) {
       this.setState({
-        wantSearchFreind: false
+        wantSearchFriend: false
       });
       this.props.fetchSearchFriend(
         this.state.searchValue.slice(1),
@@ -194,6 +194,7 @@ class Header extends React.Component {
     ) : (
       <Link to="login">Log In</Link>
     );
+
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -210,26 +211,30 @@ class Header extends React.Component {
               <h1 className={style.Logo}>Delfinagram</h1>
             </Link>
             <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
+            {this.props.user ? (
+              <>
+                <div className={classes.sectionDesktop}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <SearchIcon />
+                    </div>
+                    <InputBase
+                      placeholder="Search post/users..."
+                      classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput
+                      }}
+                      onChange={this.handleInputSearch}
+                      value={query}
+                    />
+                  </div>
+                  {userMessage}
                 </div>
-                <InputBase
-                  placeholder="Search post..."
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput
-                  }}
-                  onChange={this.handleInputSearch}
-                  value={this.state.searchValue}
-                />
-              </div>
-              {userMessage}
-            </div>
-            <div className={classes.sectionMobile}>
-              <SearchIcon />
-            </div>
+                <div className={classes.sectionMobile}>
+                  <SearchIcon />
+                </div>{" "}
+              </>
+            ) : null}{" "}
           </Toolbar>
         </AppBar>
         <SlideMenu

@@ -39,6 +39,7 @@ class PostMenu extends Component {
     this.setState({ openEditDialog: false });
   };
   render() {
+
     const { authToken, anchorEl, handleCloseMenu, post } = this.props;
     const editDialog = (
       <Dialog

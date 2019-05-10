@@ -88,12 +88,12 @@ class EditProfile extends Component {
                     className={classes.avatar}
                   />
                 ) : (
-                  <Avatar
-                    alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                    src={img}
-                    className={classes.avatar}
-                  />
-                )}
+                    <Avatar
+                      alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                      src={img}
+                      className={classes.avatar}
+                    />
+                  )}
                 <div className={style.ButtonsAvatarContainer}>
                   <Button
                     variant="contained"

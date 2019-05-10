@@ -7,11 +7,12 @@ import {
   EDIT_POST,
   SEARCH_POST
 } from "../actions/postActions";
-
 import {
   SEARCH_FRIEND,
   GET_FRIENDS,
-  ADD_FRIEND
+  ADD_FRIEND,
+  DELETE_FRIEND,
+  GET_POSTS_FRIENDS
 } from "../actions/friendActions";
 const reducer = (
   state = { authToken: null, posts: [], friends: [] },
@@ -71,7 +72,6 @@ const reducer = (
               })
             : state.allPosts
       };
-
     case UPDATE_USER:
       return {
         ...state,
@@ -84,17 +84,30 @@ const reducer = (
     case GET_FRIENDS:
       return {
         ...state,
-        friends: action.payload.friends
+        allFriends: action.payload.friends
       };
     case ADD_FRIEND:
       return {
         ...state,
-        friends: [action.payload.friend, ...state.friends]
+        allFriends: [action.payload.friend, ...state.allFriends]
       };
     case SEARCH_FRIEND:
       return {
         ...state,
         matchingFriends: action.payload.matchingFriends
+      };
+
+    case DELETE_FRIEND:
+      return {
+        ...state,
+        allFriends: state.allFriends.filter(
+          friend => friend.Id !== action.payload.friendToDel.Id
+        )
+      };
+    case GET_POSTS_FRIENDS:
+      return {
+        ...state,
+        postsFriends: action.payload.postsFriends
       };
     default:
       return state;
