@@ -104,7 +104,7 @@ class FriendsList extends Component {
       });
       if (!this.state.open) {
         this.setState({
-          value: ''
+          query: ''
         })
       }
     }
@@ -157,7 +157,7 @@ class FriendsList extends Component {
                           <ListItemAvatar>
                             <Avatar alt={`Avatar`} src={friend.Photo} />
                           </ListItemAvatar>
-                          <Link to={`/user/${friend.Id}`}><ListItemText
+                          <Link><ListItemText
                             primary={`${friend.Name} ${friend.GivenName}`}
                           /></Link>
                           <ListItemSecondaryAction>

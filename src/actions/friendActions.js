@@ -40,13 +40,6 @@ export const getFriends = data => ({
   }
 });
 
-export const searchInFriends = value => ({
-  type: SEARCH_IN_FRIENDS,
-  payload:{
-    value
-  }
-})
-
 export const getFriendsFromAPI = authToken => {
   return dispatch => {
     return fetch("https://delfinkitrainingapi.azurewebsites.net/api/friend", {
@@ -112,7 +105,6 @@ export const deleteFriendFromAPI = (friend, authToken) => {
       .then(resp => dispatch(deleteFriend(friend)));
   };
 };
-
 export const getFriendsPosts = data => ({
   type: GET_POSTS_FRIENDS,
   payload: {

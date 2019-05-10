@@ -45,6 +45,7 @@ class UserProfile extends Component {
   };
 
   render() {
+    const { classes, allFriends, user, posts } = this.props;
     const checkUser = () => {
       if (this.props.user) {
         return (
@@ -54,14 +55,13 @@ class UserProfile extends Component {
             style={{ paddingTop: "10px" }}
             className={classNames(classes.typography, classes.loginControl)}
           >
-            {this.props.user.GivenName && this.props.user.Name
-              ? `${this.props.user.GivenName}  ${this.props.user.Name}`
+            {user.GivenName && user.Name
+              ? `${user.GivenName}  ${user.Name}`
               : `Please edit your profile`}
           </Typography>
         );
       } else return null;
     };
-    const { classes, allFriends, user, posts } = this.props;
     return (
       <>
         <Grid container direction="column" className={classes.wrap}>
