@@ -21,7 +21,7 @@ import {
   deleteFriendFromAPI,
 } from "../../../actions/friendActions";
 import { connect } from "react-redux";
-import style from "../FriendsList/FriendsList.module.scss";
+// import style from "../FriendsList/FriendsList.module.scss";
 import { Link } from 'react-router-dom'
 
 const styles = theme => ({

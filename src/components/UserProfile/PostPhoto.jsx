@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from 'react';
 import { Grid } from "@material-ui/core";
 import style from "../UserProfile/UserProfile.module.scss";
 import PostModal from "../PostModal/PostModal";
@@ -35,26 +35,26 @@ class PostPhoto extends React.Component {
         >
           {this.props.posts && this.props.posts.length > 0
             ? this.props.posts.map(post => {
-                return (
-                  <Grid
-                    item
-                    key={post.Id}
-                    xs={10}
-                    sm={8}
-                    md={6}
-                    lg={4}
-                    xl={4}
-                    className={style.postImage}
-                  >
-                    <button
-                      style={{
-                        backgroundImage: `url(${post.ThumbnailPhoto})`
-                      }}
-                      onClick={() => this.setOpenModal(post)}
-                    />
-                  </Grid>
-                );
-              })
+              return (
+                <Grid
+                  item
+                  key={post.Id}
+                  xs={10}
+                  sm={8}
+                  md={6}
+                  lg={4}
+                  xl={4}
+                  className={style.postImage}
+                >
+                  <button
+                    style={{
+                      backgroundImage: `url(${post.ThumbnailPhoto})`
+                    }}
+                    onClick={() => this.setOpenModal(post)}
+                  />
+                </Grid>
+              );
+            })
             : null}
         </Grid>
         <PostModal
