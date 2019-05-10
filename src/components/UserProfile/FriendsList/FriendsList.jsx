@@ -71,6 +71,11 @@ const styles = theme => ({
     [theme.breakpoints.up("md")]: {
       width: 200
     }
+  },
+  NoFriendsInfo: {
+    margin: "0 auto",
+    textAlign: 'center',
+    fontSize: '1.5rem'
   }
 });
 class FriendsList extends Component {
@@ -134,7 +139,7 @@ class FriendsList extends Component {
                       .filter(friend => {
                         return friend.GivenName.toLowerCase().includes(query)
                           ? friend
-                          : null;
+                          : null || friend.Name.toLowerCase().includes(query)
                       })
                       .map(friend => (
                         <ListItem
@@ -170,8 +175,8 @@ class FriendsList extends Component {
                       ))}
                   </>
                 ) : (
-                  <Typography>You don't have any friends.</Typography>
-                )}
+                    <Typography variant="inherit" className={classes.NoFriendsInfo}>Sorry. You don't have any friends.</Typography>
+                  )}
               </List>
             </CardContent>
           </Card>
