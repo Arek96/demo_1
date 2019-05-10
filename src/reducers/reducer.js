@@ -15,7 +15,7 @@ import {
   GET_POSTS_FRIENDS
 } from "../actions/friendActions";
 const reducer = (
-  state = { authToken: null, posts: [], friends: [] },
+  state = { authToken: null, posts: [], allFriends: [] },
   action
 ) => {
   switch (action.type) {
@@ -64,12 +64,12 @@ const reducer = (
         posts:
           action.payload.value && action.payload.value.length > 0
             ? state.posts.filter(post => {
-                return post.Title.toLowerCase().includes(
-                  action.payload.value
-                ) || post.Text.toLowerCase().includes(action.payload.value)
-                  ? post
-                  : null;
-              })
+              return post.Title.toLowerCase().includes(
+                action.payload.value
+              ) || post.Text.toLowerCase().includes(action.payload.value)
+                ? post
+                : null;
+            })
             : state.allPosts
       };
     case UPDATE_USER:
