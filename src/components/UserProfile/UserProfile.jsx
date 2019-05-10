@@ -12,7 +12,7 @@ import EditProfile from "./EditProfile/EditProfile";
 import RemoveProfile from "./RemoveProfile/RemoveProfile";
 import img from "../../img/withoutPhoto.PNG";
 import { connect } from "react-redux";
-import { fetchFriendToApi } from "../../actions/friendActions";
+import { fetchFriendToApi, getFriendsFromAPI } from "../../actions/friendActions";
 import FriendsList from "./FriendsList/FriendsList";
 
 class UserProfile extends Component {
@@ -23,6 +23,9 @@ class UserProfile extends Component {
       modalDeletePageisOpen: false,
       modalFriendsList: false
     };
+  }
+  componentDidMount = () => {
+    this.props.getFriendsFromAPI(this.props.authToken)
   }
   handleEditDialog = () => {
     this.setState(prevState => ({
@@ -40,6 +43,7 @@ class UserProfile extends Component {
       modalFriendsList: !prevState.modalFriendsList
     }));
   };
+
   render() {
     const checkUser = () => {
       if (this.props.user) {
@@ -70,12 +74,12 @@ class UserProfile extends Component {
                   className={classes.avatar}
                 />
               ) : (
-                <Avatar
-                  alt={`${user.GivenName}${user.Name}`}
-                  src={img}
-                  className={classes.avatar}
-                />
-              )}
+                  <Avatar
+                    alt={`${user.GivenName}${user.Name}`}
+                    src={img}
+                    className={classes.avatar}
+                  />
+                )}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
                   {checkUser()}
@@ -140,7 +144,8 @@ class UserProfile extends Component {
 }
 const mapDispatch = dispatch => ({
   fetchFriendToApi: (authToken, friendID) =>
-    dispatch(fetchFriendToApi(authToken, friendID))
+    dispatch(fetchFriendToApi(authToken, friendID)),
+  getFriendsFromAPI: authToken => dispatch(getFriendsFromAPI(authToken)),
 });
 const mapState = state => ({
   authToken: state.authToken,

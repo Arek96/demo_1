@@ -9,10 +9,9 @@ import Post from "./Post/Post";
 import { Grid, Typography } from "@material-ui/core";
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
+
+  componentDidMount = () => {
     this.props.getPostsFromAPI(this.props.authToken);
-    this.props.getFriendsFromAPI(this.props.authToken);
     this.props.getFriendsPostsFromAPI(this.props.authToken);
   }
   render() {
@@ -47,7 +46,6 @@ const mapProps = state => ({
   posts: state.posts,
   authToken: state.authToken,
   user: state.user,
-  friends: state.friends,
   postsFriends: state.postsFriends
 });
 const mapDispatch = dispatch => ({

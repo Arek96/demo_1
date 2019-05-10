@@ -88,17 +88,25 @@ class FriendsList extends Component {
     };
   }
   areArraysEqual = (array1, array2) => {
-    if (array1.length !== array2.length) return false;
-    for (let i = 0; i < array1.length; i++) {
-      if (array2.indexOf(array1[i]) === -1) return false;
-    }
-    return true;
-  };
+    if (array1 && array2) {
+      if (array1.length !== array2.length) return false;
+      for (let i = 0; i < array1.length; i++) {
+        if (array2.indexOf(array1[i]) === -1) return false;
+      }
+      return true;
+    };
+  }
+
   componentDidUpdate = prevProps => {
     if (this.props.open !== prevProps.open) {
       this.setState({
         open: this.props.open
       });
+      if (!this.state.open) {
+        this.setState({
+          value: ''
+        })
+      }
     }
     if (!this.areArraysEqual(this.state.friends, this.props.allFriends)) {
       this.setState({
@@ -106,6 +114,7 @@ class FriendsList extends Component {
       });
     }
   };
+
   handleInputFriendSearch = event => {
     let value = event.target.value;
     this.setState({
@@ -114,7 +123,6 @@ class FriendsList extends Component {
   };
   render() {
     const { open, query, friends } = this.state;
-    console.log(friends);
     const { classes, handleOpenFriendsList, authToken } = this.props;
     return (
       <Grid container xs={10} justify="center" alignContent="center">
@@ -190,7 +198,7 @@ const mapDispatch = dispatch => {
     getFriendsFromAPI: authToken => dispatch(getFriendsFromAPI(authToken)),
     deleteFriendFromAPI: (friend, authToken) =>
       dispatch(deleteFriendFromAPI(friend, authToken)),
-    searchInFriends: value => dispatch(searchInFriends(value))
+
   };
 };
 const mapState = state => ({
