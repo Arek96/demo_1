@@ -143,7 +143,6 @@ export const deleteFriendFromAPI = (friend, authToken) => {
         }
       }
     )
-      .then(r => console.log(r))
       .then(resp => dispatch(deleteFriend(friend)));
   };
 };

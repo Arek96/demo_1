@@ -117,7 +117,7 @@ class FriendsList extends Component {
   };
 
   handleInputFriendSearch = event => {
-    let value = event.target.value;
+    let value = event.target.value
     this.setState({
       query: value
     });
@@ -146,9 +146,9 @@ class FriendsList extends Component {
                     </div>
                     {friends
                       .filter(friend => {
-                        return friend.GivenName.toLowerCase().includes(query)
+                        return friend.GivenName.toLowerCase().includes(query.toLowerCase()) || friend.Name.toLowerCase().includes(query.toLowerCase())
                           ? friend
-                          : null || friend.Name.toLowerCase().includes(query);
+                          : null
                       })
                       .map(friend => (
                         <ListItem
