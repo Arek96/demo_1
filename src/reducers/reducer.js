@@ -12,7 +12,9 @@ import {
   GET_FRIENDS,
   ADD_FRIEND,
   DELETE_FRIEND,
-  GET_POSTS_FRIENDS
+  GET_POSTS_FRIENDS,
+  SET_USER_PROFILE_INFO,
+  GET_OTHER_USER_POSTS
 } from "../actions/friendActions";
 const reducer = (
   state = { authToken: null, posts: [], allFriends: [] },
@@ -64,12 +66,12 @@ const reducer = (
         posts:
           action.payload.value && action.payload.value.length > 0
             ? state.posts.filter(post => {
-              return post.Title.toLowerCase().includes(
-                action.payload.value
-              ) || post.Text.toLowerCase().includes(action.payload.value)
-                ? post
-                : null;
-            })
+                return post.Title.toLowerCase().includes(
+                  action.payload.value
+                ) || post.Text.toLowerCase().includes(action.payload.value)
+                  ? post
+                  : null;
+              })
             : state.allPosts
       };
     case UPDATE_USER:
@@ -108,6 +110,26 @@ const reducer = (
       return {
         ...state,
         postsFriends: action.payload.postsFriends
+      };
+    case GET_FRIENDS:
+      return {
+        ...state,
+        friends: action.payload.friends
+      };
+    case ADD_FRIEND:
+      return {
+        ...state,
+        friends: [action.payload.friend, ...state.friends]
+      };
+    case SET_USER_PROFILE_INFO:
+      return {
+        ...state,
+        userProfileInfo: action.payload.userProfileInfo
+      };
+    case GET_OTHER_USER_POSTS:
+      return {
+        ...state,
+        otherUserPosts: action.payload.otherUserPosts
       };
     default:
       return state;

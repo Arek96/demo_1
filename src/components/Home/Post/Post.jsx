@@ -53,7 +53,7 @@ class Post extends Component {
 
     return `${date.getDate()} ${
       month[date.getMonth()]
-      }, ${date.getFullYear()} `;
+    }, ${date.getFullYear()} `;
   };
   handleExpandClick = () => {
     this.setState({

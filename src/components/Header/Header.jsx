@@ -18,6 +18,7 @@ import { withRouter } from "react-router-dom";
 import { searchPost } from "../../actions/postActions";
 import { fetchSearchFriend } from "../../actions/friendActions";
 import { connect } from "react-redux";
+import SearchMenu from "./SearchMenu/SearchMenu";
 
 const styles = theme => ({
   root: {
@@ -98,7 +99,8 @@ class Header extends React.Component {
     this.state = {
       anchorEl: null,
       mobileMoreAnchorEl: null,
-      query: ""
+      searchValue: "",
+      openSearchMenu: false
     };
   }
   handleMenuClose = () => {
@@ -119,24 +121,33 @@ class Header extends React.Component {
       open: !prevState.open
     }));
   };
-  handleInputSearch = event => {
-    let value = event.target.value;
-    this.props.searchPost(value.toLowerCase());
-    this.setState({
-      searchValue: event.target.value
-    });
-    if (event.target.value.indexOf("@") === 0) {
-      setTimeout(this.setState({ wantSearchFriend: true }), 1000);
-    }
+  handleCloseSearchMenu = event => {
+    this.setState({ openSearchMenu: false });
   };
 
+  handleInputSearch = event => {
+    let value = event.target.value;
+
+    if (value.indexOf("@") !== 0) {
+      this.props.searchPost(value.toLowerCase());
+    }
+    this.setState(() => ({
+      searchValue: value
+    }));
+    if (value.indexOf("@") === 0 && value.length >= 2) {
+      setTimeout(this.setState({ wantSearchFriend: true }), 1000);
+    } else {
+      this.setState({ openSearchMenu: false });
+    }
+  };
   componentDidUpdate = prevProps => {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       this.setState({
-        query: ""
+        searchValue: ""
       });
     }
-    if (this.state.wantSearchFreind) {
+
+    if (this.state.wantSearchFriend) {
       this.setState({
         wantSearchFriend: false
       });
@@ -144,6 +155,11 @@ class Header extends React.Component {
         this.state.searchValue.slice(1),
         this.props.authToken
       );
+      if (this.props.matchingFriends) {
+        this.setState({
+          openSearchMenu: true
+        });
+      }
     }
     if (this.props.location.pathname !== prevProps.location.pathname) {
       this.setState({
@@ -225,16 +241,29 @@ class Header extends React.Component {
                         input: classes.inputInput
                       }}
                       onChange={this.handleInputSearch}
-                      value={query}
+                      value={this.state.searchValue}
+                      aria-owns={
+                        this.state.openSearchMenu ? "SearchMenu" : undefined
+                      }
+                      aria-haspopup="true"
+                      inputRef={event => {
+                        this.inputRef = event;
+                      }}
+                    />
+                    <SearchMenu
+                      className={style.SearchMenu}
+                      open={this.state.openSearchMenu}
+                      handleCloseSearchMenu={this.handleCloseSearchMenu}
+                      inputRef={this.inputRef}
                     />
                   </div>
                   {userMessage}
                 </div>
                 <div className={classes.sectionMobile}>
                   <SearchIcon />
-                </div>{" "}
+                </div>
               </>
-            ) : null}{" "}
+            ) : null}
           </Toolbar>
         </AppBar>
         <SlideMenu
@@ -252,10 +281,12 @@ const mapDispatch = dispatch => ({
   fetchSearchFriend: (friendValue, authToken) =>
     dispatch(fetchSearchFriend(friendValue, authToken))
 });
+
 const mapStateToProps = state => ({
   authToken: state.authToken,
   user: state.user,
-  posts: state.posts
+  posts: state.posts,
+  matchingFriends: state.matchingFriends
 });
 export default withRouter(
   connect(

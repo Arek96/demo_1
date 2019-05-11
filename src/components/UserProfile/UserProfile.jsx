@@ -14,9 +14,11 @@ import img from "../../img/withoutPhoto.PNG";
 import { connect } from "react-redux";
 import {
   fetchFriendToApi,
-  getFriendsFromAPI
+  getFriendsFromAPI,
+  fetchUserPosts
 } from "../../actions/friendActions";
 import FriendsList from "./FriendsList/FriendsList";
+import { withRouter } from "react-router-dom";
 
 class UserProfile extends Component {
   constructor(props) {
@@ -26,6 +28,19 @@ class UserProfile extends Component {
       modalDeletePageisOpen: false,
       modalFriendsList: false
     };
+    if (this.props.location.pathname === "/userProfile") {
+      this.state = { posts: this.props.posts, user: this.props.user };
+    } else {
+      this.props.fetchUserPosts(
+        this.props.userProfileInfo.Id,
+        this.props.authToken
+      );
+
+      this.state = {
+        posts: this.props.otherUserPosts,
+        user: this.props.userProfileInfo
+      };
+    }
   }
   componentDidMount = () => {
     this.props.getFriendsFromAPI(this.props.authToken);
@@ -40,17 +55,53 @@ class UserProfile extends Component {
       modalDeletePageisOpen: !prevState.modalDeletePageisOpen
     }));
   };
-
+  handleAddFriendButton = () => {
+    this.props.fetchFriendToApi(
+      this.props.authToken,
+      this.props.userProfileInfo.Id
+    );
+  };
   handleOpenFriendsList = () => {
     this.setState(prevState => ({
       modalFriendsList: !prevState.modalFriendsList
     }));
   };
-
+  componentDidUpdate = prevProps => {
+    if (this.props.otherUserPosts !== prevProps.otherUserPosts) {
+      this.setState({
+        posts: this.props.otherUserPosts,
+        user: this.props.userProfileInfo
+      });
+    }
+    if (this.props.userProfileInfo !== prevProps.userProfileInfo) {
+      if (this.props.location.pathname !== "/userProfile") {
+        this.props.fetchUserPosts(
+          this.props.userProfileInfo.Id,
+          this.props.authToken
+        );
+        this.setState({
+          posts: this.props.otherUserPosts,
+          user: this.props.userProfileInfo
+        });
+      }
+    }
+    console.log(
+      (prevProps.location.pathname !==
+        "/userProfile" + this.props.location.pathname) ===
+        "/userProfile"
+    );
+    if (
+      prevProps.location.pathname !== "/userProfile" &&
+      this.props.location.pathname === "/userProfile"
+    ) {
+      console.log(this.props.user);
+      this.setState({ posts: this.props.posts, user: this.props.user });
+    }
+  };
   render() {
-    const { classes, allFriends, user, posts } = this.props;
+    const { classes, allFriends } = this.props;
     const checkUser = () => {
-      if (this.props.user) {
+      if (this.state.user) {
         return (
           <Typography
             variant="headline"
@@ -58,8 +109,8 @@ class UserProfile extends Component {
             style={{ paddingTop: "10px" }}
             className={classNames(classes.typography, classes.loginControl)}
           >
-            {user.GivenName && user.Name
-              ? `${user.GivenName}  ${user.Name}`
+            {this.state.user.GivenName && this.state.user.Name
+              ? `${this.state.user.GivenName}  ${this.state.user.Name}`
               : `Please edit your profile`}
           </Typography>
         );
@@ -70,44 +121,51 @@ class UserProfile extends Component {
         <Grid container direction="column" className={classes.wrap}>
           <Grid item>
             <Card className={style.ProfileContainer}>
-              {user.Photo ? (
-                <Avatar
-                  alt={`${user.GivenName}${user.Name}`}
-                  src={user.Photo}
-                  className={classes.avatar}
-                />
-              ) : (
-                <Avatar
-                  alt={`${user.GivenName}${user.Name}`}
-                  src={img}
-                  className={classes.avatar}
-                />
-              )}
+              {this.state.user ? (
+                this.state.user.Photo ? (
+                  <Avatar
+                    alt={`${this.state.user.GivenName}${this.state.user.Name}`}
+                    src={this.state.user.Photo}
+                    className={classes.avatar}
+                  />
+                ) : (
+                  <Avatar
+                    alt={`${this.state.user.GivenName}${this.state.user.Name}`}
+                    src={img}
+                    className={classes.avatar}
+                  />
+                )
+              ) : null}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
                   {checkUser()}
-                  <Button
-                    variant="contained"
-                    className={classes.edit}
-                    onClick={this.handleEditDialog}
-                  >
-                    Edit profile
-                  </Button>
-                  <Button
-                    variant="contained"
-                    className={classes.delete}
-                    onClick={this.handleDeleteDialog}
-                  >
-                    Delete profile
-                  </Button>
+                  {this.props.location.pathname === "/userProfile" ? (
+                    <>
+                      <Button
+                        variant="contained"
+                        className={classes.edit}
+                        onClick={this.handleEditDialog}
+                      >
+                        Edit profile
+                      </Button>
+                      <Button
+                        variant="contained"
+                        className={classes.delete}
+                        onClick={this.handleDeleteDialog}
+                      >
+                        Delete profile
+                      </Button>
+                    </>
+                  ) : null}
                 </div>
+
                 <Typography
                   variant="headline"
                   style={{ fontSize: "0.7rem" }}
                   className={classes.typography}
                 >
-                  {posts && posts.length > 0
-                    ? `Posts: ${posts.length}`
+                  {this.state.posts && this.state.posts.length > 0
+                    ? `Posts: ${this.state.posts.length}`
                     : "Posts: 0"}
                 </Typography>
                 <button
@@ -124,38 +182,56 @@ class UserProfile extends Component {
                       : "Friends: 0"}
                   </Typography>
                 </button>
+                {this.props.location.pathname !== "/userProfile" ? (
+                  <Button
+                    variant="contained"
+                    className={classes.delete}
+                    onClick={this.handleAddFriendButton}
+                  >
+                    Add friend
+                  </Button>
+                ) : null}
               </CardContent>
             </Card>
           </Grid>
-          <FriendsList
-            open={this.state.modalFriendsList}
-            handleOpenFriendsList={this.handleOpenFriendsList}
-          />
-          <EditProfile
-            open={this.state.modalEditPageisOpen}
-            handleEditDialog={this.handleEditDialog}
-          />
-          <RemoveProfile
-            open={this.state.modalDeletePageisOpen}
-            handleDeleteDialog={this.handleDeleteDialog}
-          />
-          <PostPhoto />
+
+          <>
+            <FriendsList handleOpenFriendsList={this.state.modalFriendsList} />
+            <EditProfile
+              open={this.state.modalEditPageisOpen}
+              handleEditDialog={this.handleEditDialog}
+            />
+            <RemoveProfile
+              open={this.state.modalDeletePageisOpen}
+              handleDeleteDialog={this.handleDeleteDialog}
+            />
+          </>
+
+          <PostPhoto userProfileId={this.props.userProfileId} />
         </Grid>
       </>
     );
   }
 }
+
+const mapState = state => ({
+  user: state.user,
+  authToken: state.authToken,
+  posts: state.allPosts,
+  allFriends: state.allFriends,
+  otherUserPosts: state.otherUserPosts,
+  userProfileInfo: state.userProfileInfo
+});
 const mapDispatch = dispatch => ({
+  fetchUserPosts: (userId, authToken) =>
+    dispatch(fetchUserPosts(userId, authToken)),
   fetchFriendToApi: (authToken, friendID) =>
     dispatch(fetchFriendToApi(authToken, friendID)),
   getFriendsFromAPI: authToken => dispatch(getFriendsFromAPI(authToken))
 });
-const mapState = state => ({
-  authToken: state.authToken,
-  posts: state.allPosts,
-  allFriends: state.allFriends
-});
-export default connect(
-  mapState,
-  mapDispatch
-)(withStyles(styles)(UserProfile));
+export default withRouter(
+  connect(
+    mapState,
+    mapDispatch
+  )(withStyles(styles)(UserProfile))
+);

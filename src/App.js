@@ -31,13 +31,25 @@ class App extends Component {
     const authRoutes = !this.props.authToken ? (
       <Route path="/" component={NotLogged} />
     ) : (
-        <React.Fragment>
-          <Route path="/home" component={Home} />
-          <Route path="/newPost" component={NewPost} />
-          <Route path="/myPosts" component={PostLists} />
-          <Route path="/userProfile" component={UserProfile} />
-        </React.Fragment>
-      );
+      <React.Fragment>
+        <Route path="/home" component={Home} />
+        <Route path="/newPost" component={NewPost} />
+        <Route path="/myPosts" component={PostLists} />
+        <Route path="/userProfile" component={UserProfile} />
+
+        {this.props.userProfileInfo ? (
+          <Route
+            path={`/user/${this.props.userProfileInfo.Id}`}
+            render={props => (
+              <UserProfile
+                {...props}
+                userProfileInfo={this.props.userProfileInfo}
+              />
+            )}
+          />
+        ) : null}
+      </React.Fragment>
+    );
 
     return (
       <Router>
@@ -83,6 +95,7 @@ const mapProps = state => ({
   authToken: state.authToken,
   user: state.user,
   posts: state.posts,
+  userProfileInfo: state.userProfileInfo
 });
 export default connect(
   mapProps,

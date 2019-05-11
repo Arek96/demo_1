@@ -4,7 +4,15 @@ export const GET_FRIENDS = "GET_FRIENDS";
 export const DELETE_FRIEND = "DELETE_FRIEND";
 export const GET_POSTS_FRIENDS = "GET_POSTS_FRIENDS";
 export const SEARCH_IN_FRIENDS = "SEARCH_IN_FRIENDS";
+export const SET_USER_PROFILE_INFO = "SET_USER_PROFILE_INFO";
+export const GET_OTHER_USER_POSTS = "GET_OTHER_USER_POSTS";
 
+export const setUserProfileInfo = info => ({
+  type: SET_USER_PROFILE_INFO,
+  payload: {
+    userProfileInfo: info
+  }
+});
 const sortFriends = (a, b) => {
   if (a.Name < b.Name) return -1;
   if (a.Name > b.Name) return 1;
@@ -32,7 +40,6 @@ export const fetchSearchFriend = (friendValue, authToken) => {
       });
   };
 };
-
 export const getFriends = data => ({
   type: GET_FRIENDS,
   payload: {
@@ -89,6 +96,36 @@ export const fetchFriendToApi = (authToken, friendID) => {
     })
       .then(r => r.json())
       .then(resp => dispatch(addFriend(resp)));
+  };
+};
+export const getOtherUserPosts = posts => ({
+  type: GET_OTHER_USER_POSTS,
+  payload: {
+    otherUserPosts: posts
+  }
+});
+export const fetchUserPosts = (userId, authToken) => {
+  return dispatch => {
+    console.log(userId);
+    return fetch(
+      `https://delfinkitrainingapi.azurewebsites.net/api/post/friend/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "X-ZUMO-AUTH": authToken,
+          "Content-Type": "application/json"
+        }
+      }
+    )
+      .then(r => {
+        console.log(r);
+        if (r.status === 200) {
+          return r.json();
+        } else {
+          return [];
+        }
+      })
+      .then(resp => dispatch(getOtherUserPosts(resp)));
   };
 };
 
