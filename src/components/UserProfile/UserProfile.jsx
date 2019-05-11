@@ -196,7 +196,10 @@ class UserProfile extends Component {
           </Grid>
 
           <>
-            <FriendsList handleOpenFriendsList={this.state.modalFriendsList} />
+            <FriendsList
+              handleOpenFriendsList={this.handleOpenFriendsList}
+              open={this.state.modalFriendsList}
+            />
             <EditProfile
               open={this.state.modalEditPageisOpen}
               handleEditDialog={this.handleEditDialog}

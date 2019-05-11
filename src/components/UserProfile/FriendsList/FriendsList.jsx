@@ -19,11 +19,12 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import {
   getFriendsFromAPI,
   deleteFriendFromAPI,
+  setUserProfileInfo
 } from "../../../actions/friendActions";
 import { connect } from "react-redux";
 // import style from "../FriendsList/FriendsList.module.scss";
-import { Link } from 'react-router-dom'
-import img from '../../../img/withoutPhoto.PNG'
+import { Link } from "react-router-dom";
+import img from "../../../img/withoutPhoto.PNG";
 const styles = theme => ({
   List: {
     width: "100%",
@@ -74,8 +75,8 @@ const styles = theme => ({
   },
   NoFriendsInfo: {
     margin: "0 auto",
-    textAlign: 'center',
-    fontSize: '1.5rem'
+    textAlign: "center",
+    fontSize: "1.5rem"
   }
 });
 class FriendsList extends Component {
@@ -94,8 +95,8 @@ class FriendsList extends Component {
         if (array2.indexOf(array1[i]) === -1) return false;
       }
       return true;
-    };
-  }
+    }
+  };
 
   componentDidUpdate = prevProps => {
     if (this.props.open !== prevProps.open) {
@@ -104,8 +105,8 @@ class FriendsList extends Component {
       });
       if (!this.state.open) {
         this.setState({
-          query: ''
-        })
+          query: ""
+        });
       }
     }
     if (!this.areArraysEqual(this.state.friends, this.props.allFriends)) {
@@ -147,7 +148,7 @@ class FriendsList extends Component {
                       .filter(friend => {
                         return friend.GivenName.toLowerCase().includes(query)
                           ? friend
-                          : null || friend.Name.toLowerCase().includes(query)
+                          : null || friend.Name.toLowerCase().includes(query);
                       })
                       .map(friend => (
                         <ListItem
@@ -156,15 +157,25 @@ class FriendsList extends Component {
                         >
                           <ListItemAvatar>
                             {friend.Photo ? (
-                              <Avatar alt={`${friend.Name} ${friend.GivenName}`} src={friend.Photo} />
+                              <Avatar
+                                alt={`${friend.Name} ${friend.GivenName}`}
+                                src={friend.Photo}
+                              />
                             ) : (
-                                <Avatar alt={`Avatar`} src={img}
-                                />
-                              )}
+                              <Avatar alt={`Avatar`} src={img} />
+                            )}
                           </ListItemAvatar>
-                          <Link><ListItemText
-                            primary={`${friend.Name} ${friend.GivenName}`}
-                          /></Link>
+                          {console.log(friend)}
+                          <Link
+                            to={`/user/${friend.Id}`}
+                            onClick={() => {
+                              this.props.setUserProfileInfo(friend);
+                            }}
+                          >
+                            <ListItemText
+                              primary={`${friend.Name} ${friend.GivenName}`}
+                            />
+                          </Link>
                           <ListItemSecondaryAction>
                             <Button
                               className={classes.removeFriendButton}
@@ -188,8 +199,13 @@ class FriendsList extends Component {
                       ))}
                   </>
                 ) : (
-                    <Typography variant="inherit" className={classes.NoFriendsInfo}>Sorry. You don't have any friends.</Typography>
-                  )}
+                  <Typography
+                    variant="inherit"
+                    className={classes.NoFriendsInfo}
+                  >
+                    Sorry. You don't have any friends.
+                  </Typography>
+                )}
               </List>
             </CardContent>
           </Card>
@@ -203,7 +219,7 @@ const mapDispatch = dispatch => {
     getFriendsFromAPI: authToken => dispatch(getFriendsFromAPI(authToken)),
     deleteFriendFromAPI: (friend, authToken) =>
       dispatch(deleteFriendFromAPI(friend, authToken)),
-
+    setUserProfileInfo: friend => dispatch(setUserProfileInfo(friend))
   };
 };
 const mapState = state => ({
