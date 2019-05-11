@@ -35,7 +35,6 @@ export const fetchSearchFriend = (friendValue, authToken) => {
     )
       .then(r => r.json())
       .then(resp => {
-        console.log(resp);
         dispatch(searchFriend(resp));
       });
   };
@@ -106,7 +105,6 @@ export const getOtherUserPosts = posts => ({
 });
 export const fetchUserPosts = (userId, authToken) => {
   return dispatch => {
-    console.log(userId);
     return fetch(
       `https://delfinkitrainingapi.azurewebsites.net/api/post/friend/${userId}`,
       {
@@ -118,7 +116,6 @@ export const fetchUserPosts = (userId, authToken) => {
       }
     )
       .then(r => {
-        console.log(r);
         if (r.status === 200) {
           return r.json();
         } else {

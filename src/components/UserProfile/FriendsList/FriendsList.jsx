@@ -162,10 +162,9 @@ class FriendsList extends Component {
                                 src={friend.Photo}
                               />
                             ) : (
-                              <Avatar alt={`Avatar`} src={img} />
-                            )}
+                                <Avatar alt={`Avatar`} src={img} />
+                              )}
                           </ListItemAvatar>
-                          {console.log(friend)}
                           <Link
                             to={`/user/${friend.Id}`}
                             onClick={() => {
@@ -199,13 +198,13 @@ class FriendsList extends Component {
                       ))}
                   </>
                 ) : (
-                  <Typography
-                    variant="inherit"
-                    className={classes.NoFriendsInfo}
-                  >
-                    Sorry. You don't have any friends.
+                    <Typography
+                      variant="inherit"
+                      className={classes.NoFriendsInfo}
+                    >
+                      Sorry. You don't have any friends.
                   </Typography>
-                )}
+                  )}
               </List>
             </CardContent>
           </Card>

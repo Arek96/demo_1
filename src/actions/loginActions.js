@@ -28,7 +28,6 @@ export const fetchAuthToken = data => {
     )
       .then(response => response.json())
       .then(resp => {
-        console.log(resp);
         sessionStorage.setItem("authToken", resp.authenticationToken);
         dispatch(logIn(resp));
       })

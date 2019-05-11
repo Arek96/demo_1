@@ -66,6 +66,11 @@ class UserProfile extends Component {
     }));
   };
   componentDidUpdate = prevProps => {
+    if(prevProps.user !== this.props.user){
+      this.setState({
+        user: this.props.user
+      })
+    }
     if (this.props.otherUserPosts !== prevProps.otherUserPosts) {
       this.setState({
         posts: this.props.otherUserPosts,
