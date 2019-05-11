@@ -53,7 +53,7 @@ class Post extends Component {
 
     return `${date.getDate()} ${
       month[date.getMonth()]
-    }, ${date.getFullYear()} `;
+      }, ${date.getFullYear()} `;
   };
   handleExpandClick = () => {
     this.setState({
@@ -84,17 +84,17 @@ class Post extends Component {
       user
         ? user.Photo
           ? this.renderAvatar(
-              user.GivenName,
-              user.Name,
-              { margin: 10 },
-              user.Photo
-            )
+            user.GivenName,
+            user.Name,
+            { margin: 10 },
+            user.Photo
+          )
           : this.renderAvatar(
-              user.GivenName,
-              user.Name,
-              { height: 35, margin: 10 },
-              img
-            )
+            user.GivenName,
+            user.Name,
+            { height: 35, margin: 10 },
+            img
+          )
         : null;
     return (
       <Card className={style.PostCard}>
@@ -139,8 +139,8 @@ class Post extends Component {
               {this.state.expanded
                 ? post.Text
                 : post.Text.length < 100
-                ? post.Text
-                : `${post.Text.substr(0, 100)}...`}
+                  ? post.Text
+                  : `${post.Text.substr(0, 100)}...`}
             </Typography>
           </CardContent>
         </Collapse>
@@ -149,7 +149,7 @@ class Post extends Component {
           {post.Friend ? null : (
             <i
               style={{ fontSize: "50px", paddingLeft: "20px" }}
-              class="fas fa-user-circle"
+              className="fas fa-user-circle"
             />
           )}
           <IconButton

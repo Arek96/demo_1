@@ -113,7 +113,6 @@ export const deleteFriendFromAPI = (friend, authToken) => {
       .then(resp => dispatch(deleteFriend(friend)));
   };
 };
-
 export const getFriendsPosts = data => ({
   type: GET_POSTS_FRIENDS,
   payload: {

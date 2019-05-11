@@ -21,9 +21,9 @@ import {
   deleteFriendFromAPI,
 } from "../../../actions/friendActions";
 import { connect } from "react-redux";
-import style from "../FriendsList/FriendsList.module.scss";
+// import style from "../FriendsList/FriendsList.module.scss";
 import { Link } from 'react-router-dom'
-
+import img from '../../../img/withoutPhoto.PNG'
 const styles = theme => ({
   List: {
     width: "100%",
@@ -104,7 +104,7 @@ class FriendsList extends Component {
       });
       if (!this.state.open) {
         this.setState({
-          value: ''
+          query: ''
         })
       }
     }
@@ -155,9 +155,14 @@ class FriendsList extends Component {
                           className={classes.ListItemUser}
                         >
                           <ListItemAvatar>
-                            <Avatar alt={`Avatar`} src={friend.Photo} />
+                            {friend.Photo ? (
+                              <Avatar alt={`${friend.Name} ${friend.GivenName}`} src={friend.Photo} />
+                            ) : (
+                                <Avatar alt={`Avatar`} src={img}
+                                />
+                              )}
                           </ListItemAvatar>
-                          <Link to={`/user/${friend.Id}`}><ListItemText
+                          <Link><ListItemText
                             primary={`${friend.Name} ${friend.GivenName}`}
                           /></Link>
                           <ListItemSecondaryAction>
