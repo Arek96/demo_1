@@ -2,15 +2,15 @@ export const ADD_POST = "ADD_POST";
 export const GET_POSTS = "GET_POSTS";
 export const EDIT_POST = "EDIT_POST";
 export const DELETE_POST = "DELETE_POST";
+export const SEARCH_POST = "SEARCH_POST";
 
-const sortPosts = (a, b) => {
+export const sortPosts = (a, b) => {
   const aDate = new Date(a.PublishDate);
   const bDate = new Date(b.PublishDate);
   if (aDate > bDate) return -1;
   if (aDate < bDate) return 1;
   return 0;
 };
-
 export const addPost = (formData, resp) => ({
   type: ADD_POST,
   payload: {
@@ -24,7 +24,6 @@ export const addPost = (formData, resp) => ({
     }
   }
 });
-
 export const getPosts = data => ({
   type: GET_POSTS,
   payload: {
@@ -44,6 +43,13 @@ export const deletePost = post => ({
     postToDel: post
   }
 });
+export const searchPost = value => ({
+  type: SEARCH_POST,
+  payload: {
+    value
+  }
+});
+
 export const fetchEditedPostToAPI = (postId, formData, authToken) => {
   return dispatch => {
     fetch(`https://delfinkitrainingapi.azurewebsites.net/api/post/${postId}`, {

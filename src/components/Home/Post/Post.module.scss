@@ -18,11 +18,24 @@ $devices_sizes: (
 .PostCard {
   margin-bottom: 20px;
 }
+.CardHeader {
+  align-items: center;
+}
+
 .PostImage {
   height: 500px;
   width: 100%;
   background-size: "cover";
 }
+.PostProperties{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .TextPost{
+    margin-bottom: 7px;
+  }
+}
+
 .PostActions {
   width: 100%;
   display: flex;

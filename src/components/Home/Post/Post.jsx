@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -7,14 +8,27 @@ import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import PostMenu from "./PostMenu/PostMenu";
-import styles from "./Post.module.scss";
+import style from "./Post.module.scss";
 import img from "../../../img/withoutPhoto.PNG";
-
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUserProfileInfo } from "../../../actions/friendActions";
+const styles = theme => ({
+  userAvatar: {
+    margin: "10px 70px 10px 20px",
+    width: 50,
+    height: 50
+  },
+  avatar: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
 class Post extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +37,6 @@ class Post extends Component {
       anchorEl: null
     };
   }
-
   publishDate = () => {
     let date = new Date(this.props.post.PublishDate);
     let month = [];
@@ -42,7 +55,7 @@ class Post extends Component {
 
     return `${date.getDate()} ${
       month[date.getMonth()]
-      }, ${date.getFullYear()} `;
+    }, ${date.getFullYear()} `;
   };
   handleExpandClick = () => {
     this.setState({
@@ -56,74 +69,112 @@ class Post extends Component {
   handleCloseMenu = () => {
     this.setState({ anchorEl: null });
   };
+  renderAvatar = (user, GivenName, Name, style, Photo) => (
+    <>
+      <Avatar
+        style={style}
+        alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+        src={Photo}
+        className={this.props.classes.userAvatar}
+      />
+      <Link
+        style={{
+          textDecoration: "none",
+          color: "black",
+          cursor: "pointer"
+        }}
+        to={
+          user && this.props.myUserData && user.Id === this.props.myUserData.Id
+            ? `/userProfile`
+            : `/user/${user.Id}`
+        }
+        onClick={() => {
+          if (user.Id !== this.props.myUserData.Id) {
+            this.props.setUserProfileInfo(user);
+          }
+        }}
+      >
+        <Typography variant="inherit">{`${GivenName} ${Name} `}</Typography>
+      </Link>
+    </>
+  );
   render() {
+    const { user, post, classes } = this.props;
     const checkPhoto = () =>
-      this.props.user.Photo ? (
-        <Avatar
-          style={{ margin: 10 }}
-          alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-          src={this.props.user.Photo}
-        />
-      ) : (
-          <Avatar
-            style={{ height: 35, margin: 10 }}
-            alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-            src={img}
-          >
-            }`}
-        </Avatar>
-        )
-
+      user
+        ? user.Photo
+          ? this.renderAvatar(
+              user,
+              user.GivenName,
+              user.Name,
+              { margin: 10 },
+              user.Photo
+            )
+          : this.renderAvatar(
+              user,
+              user.GivenName,
+              user.Name,
+              { height: 35, margin: 10 },
+              img
+            )
+        : null;
     return (
-      <Card className={styles.PostCard}>
+      <Card className={style.PostCard}>
         <CardHeader
-          avatar={
-            checkPhoto()
-          }
+          classes={{ avatar: classes.avatar }}
+          avatar={checkPhoto()}
+          content={null}
           action={
-            <IconButton>
-              <MoreVertIcon
-                aria-owns={this.state.anchorEl ? "postMenu" : undefined}
-                aria-haspopup="true"
-                onClick={this.handleClickMenu}
-              />
-            </IconButton>
+            !post.Friend ? (
+              <IconButton onClick={this.handleClickMenu}>
+                <MoreVertIcon
+                  aria-owns={this.state.anchorEl ? "postMenu" : undefined}
+                  aria-haspopup="true"
+                />
+              </IconButton>
+            ) : null
           }
-          title={this.props.post.Title}
-          subheader={this.publishDate()}
         />
         <PostMenu
           anchorEl={this.state.anchorEl}
           handleCloseMenu={this.handleCloseMenu}
-          post={this.props.post}
+          post={post}
         />
         <CardMedia
-          className={styles.PostImage}
+          className={style.PostImage}
           image={this.props.post.ThumbnailPhoto}
         />
         <Collapse
           in={this.state.expanded}
           timeout="auto"
-          collapsedHeight="50px"
+          collapsedHeight="90px"
         >
-          <CardContent>
-            <Typography component="p">
+          <CardContent className={style.PostProperties}>
+            <Typography className={style.TextPost} variant="title">
+              {post.Title}
+            </Typography>
+            <Typography className={style.TextPost} variant="caption">
+              {this.publishDate()}
+            </Typography>
+            <Typography className={style.TextPost} component="p">
               {this.state.expanded
-                ? this.props.post.Text
-                : this.props.post.Text.length < 100
-                  ? this.props.post.Text
-                  : `${this.props.post.Text.substr(0, 100)}...`}
+                ? post.Text
+                : post.Text.length < 100
+                ? post.Text
+                : `${post.Text.substr(0, 100)}...`}
             </Typography>
           </CardContent>
         </Collapse>
 
-        <CardActions disableActionSpacing className={styles.PostActions}>
-          <IconButton aria-label="Add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-
+        <CardActions disableActionSpacing className={style.PostActions}>
+          {post.Friend ? null : (
+            <i
+              style={{ fontSize: "50px", paddingLeft: "20px" }}
+              className="fas fa-user-circle"
+            />
+          )}
           <IconButton
-            className={this.state.expanded ? styles.ExpandButton : null}
+            className={this.state.expanded ? style.ExpandButton : null}
             onClick={this.handleExpandClick}
             aria-expanded={this.state.expanded}
             aria-label="Show more"
@@ -135,4 +186,9 @@ class Post extends Component {
     );
   }
 }
-export default Post;
+export default connect(
+  state => ({ myUserData: state.user }),
+  dispatch => ({
+    setUserProfileInfo: friend => dispatch(setUserProfileInfo(friend))
+  })
+)(withStyles(styles)(Post));

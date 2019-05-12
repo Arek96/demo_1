@@ -15,7 +15,9 @@
   flex-direction: row;
   align-items: center;
 }
-
+.SearchMenu {
+  margin-top: 20px;
+}
 @media (max-width: 1024px) and (orientation: portrait) {
   .Logo {
     font-size: 2.8rem;

@@ -22,7 +22,7 @@ class PostModal extends React.Component {
         className={style.Modal}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        open={this.props.open}
+        open={Boolean(this.props.open)}
         onClose={this.props.changeModal}
         scroll="body"
       >

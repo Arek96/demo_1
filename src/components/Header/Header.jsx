@@ -1,10 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
-import { Typography } from "@material-ui/core";
+import { Typography, Collapse, ClickAwayListener } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
@@ -14,6 +13,12 @@ import style from "./Header.module.scss";
 import SlideMenu from "./SlideMenu/SlideMenu";
 import { Link } from "react-router-dom";
 import img from "../../img/withoutPhoto.PNG";
+
+import { withRouter } from "react-router-dom";
+import { searchPost } from "../../actions/postActions";
+import { fetchSearchFriend } from "../../actions/friendActions";
+import { connect } from "react-redux";
+import SearchMenu from "./SearchMenu/SearchMenu";
 
 const styles = theme => ({
   root: {
@@ -88,16 +93,17 @@ const styles = theme => ({
     }
   }
 });
-
 class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       anchorEl: null,
-      mobileMoreAnchorEl: null
+      mobileMoreAnchorEl: null,
+      searchValue: "",
+      openSearchMenu: false,
+      expanded: false
     };
   }
-
   handleMenuClose = () => {
     this.setState({ anchorEl: null });
     this.handleMobileMenuClose();
@@ -116,7 +122,70 @@ class Header extends React.Component {
       open: !prevState.open
     }));
   };
+  handleCloseSearchMenu = event => {
+    this.setState({ openSearchMenu: false });
+  };
 
+  handleInputSearch = event => {
+    let value = event.target.value;
+
+    if (value.indexOf("@") !== 0) {
+      this.props.searchPost(value.toLowerCase());
+    }
+    this.setState(() => ({
+      searchValue: value
+    }));
+    if (value.indexOf("@") === 0 && value.length >= 2) {
+      setTimeout(this.setState({ wantSearchFriend: true }), 1000);
+    } else {
+      this.setState({ openSearchMenu: false });
+    }
+  };
+  handleExtentionPanel = event => {
+    event.persist();
+    this.setState({
+      expanded: !this.state.expanded,
+      extentionPanelEvent: event,
+      searchValue: !this.state.expanded ? "" : this.state.searchValue
+    });
+  };
+  handleClickAway = event => {
+    if (
+      this.state.extentionPanelEvent &&
+      event.target !== this.state.extentionPanelEvent.target
+    ) {
+      this.setState({
+        expanded: false
+      });
+    }
+  };
+  componentDidUpdate = prevProps => {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.setState({
+        searchValue: ""
+      });
+    }
+
+    if (this.state.wantSearchFriend) {
+      this.setState({
+        wantSearchFriend: false
+      });
+      this.props.fetchSearchFriend(
+        this.state.searchValue.slice(1),
+        this.props.authToken
+      );
+      if (this.props.matchingFriends) {
+        this.setState({
+          openSearchMenu: true
+        });
+      }
+    }
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.setState({
+        searchValue: ""
+      });
+    }
+  };
   render() {
     const { anchorEl } = this.state;
     const { classes } = this.props;
@@ -158,8 +227,9 @@ class Header extends React.Component {
         </Link>
       </IconButton>
     ) : (
-        <Link to="login">Log In</Link>
-      );
+      <Link to="login">Log In</Link>
+    );
+
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -175,29 +245,89 @@ class Header extends React.Component {
             <Link to="/Home" style={{ textDecoration: "none" }}>
               <h1 className={style.Logo}>Delfinagram</h1>
             </Link>
-
             <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
+            {this.props.user ? (
+              <>
+                <div className={classes.sectionDesktop}>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <SearchIcon />
+                    </div>
+                    <InputBase
+                      placeholder="Search post/users..."
+                      classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput
+                      }}
+                      onChange={this.handleInputSearch}
+                      value={this.state.searchValue}
+                      aria-owns={
+                        this.state.openSearchMenu ? "SearchMenu" : undefined
+                      }
+                      aria-haspopup="true"
+                      inputRef={event => {
+                        this.inputRef = event;
+                      }}
+                    />
+                    <SearchMenu
+                      className={style.SearchMenu}
+                      open={
+                        !this.state.expanded ? this.state.openSearchMenu : false
+                      }
+                      handleCloseSearchMenu={this.handleCloseSearchMenu}
+                      inputRef={this.inputRef}
+                    />
+                  </div>
+                  {userMessage}
                 </div>
-                <InputBase
-                  placeholder="Search post..."
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput
-                  }}
-                />
-              </div>
-
-              {userMessage}
-            </div>
-            <div className={classes.sectionMobile}>
-              <SearchIcon />
-            </div>
+                <div className={classes.sectionMobile}>
+                  <IconButton
+                    onClick={this.handleExtentionPanel}
+                    color="default"
+                  >
+                    <SearchIcon />
+                  </IconButton>
+                </div>
+              </>
+            ) : null}
           </Toolbar>
+          <ClickAwayListener
+            mouseEvent="onClick"
+            onClickAway={this.handleClickAway}
+          >
+            <Collapse in={this.state.expanded}>
+              <InputBase
+                style={{
+                  color: "black",
+                  backgroundColor: "white",
+                  height: "45px",
+                  paddingTop: "5px",
+                  paddingBottom: "5px"
+                }}
+                placeholder="Search post/users..."
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+                onChange={this.handleInputSearch}
+                value={this.state.searchValue}
+                aria-owns={this.state.openSearchMenu ? "SearchMenu" : undefined}
+                aria-haspopup="true"
+                inputRef={event => {
+                  this.mobileInputRef = event;
+                }}
+              />
+              <SearchMenu
+                className={style.SearchMenu}
+                open={this.state.expanded ? this.state.openSearchMenu : false}
+                handleCloseSearchMenu={this.handleCloseSearchMenu}
+                inputRef={this.mobileInputRef}
+                mobile={this.state.expanded}
+              />
+            </Collapse>
+          </ClickAwayListener>
         </AppBar>
+
         <SlideMenu
           open={this.state.open}
           handleClickMenu={this.handleClickMenu}
@@ -208,7 +338,21 @@ class Header extends React.Component {
   }
 }
 
-Header.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-export default withStyles(styles)(Header);
+const mapDispatch = dispatch => ({
+  searchPost: value => dispatch(searchPost(value)),
+  fetchSearchFriend: (friendValue, authToken) =>
+    dispatch(fetchSearchFriend(friendValue, authToken))
+});
+
+const mapStateToProps = state => ({
+  authToken: state.authToken,
+  user: state.user,
+  posts: state.posts,
+  matchingFriends: state.matchingFriends
+});
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatch
+  )(withStyles(styles)(Header))
+);

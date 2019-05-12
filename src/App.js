@@ -7,11 +7,9 @@ import style from "./App.module.scss";
 import LoginPage from "./components/LoginPage/LoginPage";
 import Grid from "@material-ui/core/Grid/Grid";
 import UserProfile from "./components/UserProfile/UserProfileContainer";
-
 import NotLogged from "./components/NotLogged/NotLogged";
 import { connect } from "react-redux";
 import { fetchUser } from "./actions/userActions";
-import RemoveProfile from "./components/UserProfile/RemoveProfile/RemoveProfile";
 import Home from "./components/Home/Home";
 
 class App extends Component {
@@ -38,16 +36,29 @@ class App extends Component {
         <Route path="/newPost" component={NewPost} />
         <Route path="/myPosts" component={PostLists} />
         <Route path="/userProfile" component={UserProfile} />
+
+        {this.props.userProfileInfo ? (
+          <Route
+            path={`/user/${this.props.userProfileInfo.Id}`}
+            render={props => (
+              <UserProfile
+                {...props}
+                userProfileInfo={this.props.userProfileInfo}
+              />
+            )}
+          />
+        ) : null}
       </React.Fragment>
     );
 
     return (
       <Router>
         <div className={style.App}>
-          <Header user={this.props.user} />
+          <Header />
           <main className={style.Main}>
             <Grid
               container
+              item
               justify="center"
               alignContent="center"
               xs={12}
@@ -83,9 +94,10 @@ const mapDispatch = dispatch => {
 };
 const mapProps = state => ({
   authToken: state.authToken,
-  user: state.user
+  user: state.user,
+  posts: state.posts,
+  userProfileInfo: state.userProfileInfo
 });
-
 export default connect(
   mapProps,
   mapDispatch

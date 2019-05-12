@@ -75,7 +75,7 @@ class EditProfile extends Component {
     const { classes, handleEditDialog } = this.props;
     const { GivenName, Name, biogram, open } = this.state;
     return (
-      <Grid container xs={10} justify="center" alignContent="center">
+      <Grid container item xs={10} justify="center" alignContent="center">
         <Dialog open={open} scroll="body">
           <Card>
             <form className={style.FormEdit} onSubmit={this.handleSubmit}>

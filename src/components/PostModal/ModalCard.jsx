@@ -41,12 +41,10 @@ class ModalCard extends Component {
 
     return `${date.getDate()} ${
       month[date.getMonth()]
-    }, ${date.getFullYear()} `;
+      }, ${date.getFullYear()} `;
   };
 
   render() {
-    console.log(this.props.post);
-    const { classes } = this.props;
     const checkPhoto = () => (
       <Avatar
         style={{ margin: 10 }}
@@ -64,7 +62,7 @@ class ModalCard extends Component {
         />
         <div className={style.ContainerToIMG}>
           <div className={style.DivIMG}>
-            <img alt="photo" src={this.props.post.ThumbnailPhoto} />
+            <img alt="data" src={this.props.post.ThumbnailPhoto} />
           </div>
         </div>
         <CardContent>
