@@ -58,6 +58,7 @@ class App extends Component {
           <main className={style.Main}>
             <Grid
               container
+              item
               justify="center"
               alignContent="center"
               xs={12}
@@ -88,7 +89,7 @@ class App extends Component {
 }
 const mapDispatch = dispatch => {
   return {
-    fetchUser: authToken => dispatch(fetchUser(authToken)),
+    fetchUser: authToken => dispatch(fetchUser(authToken))
   };
 };
 const mapProps = state => ({

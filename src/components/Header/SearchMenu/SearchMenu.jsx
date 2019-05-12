@@ -42,7 +42,6 @@ class SearchMenu extends React.Component {
     ) : null;
   };
   render() {
-    console.log(this.props.mobile);
     const { open } = this.props;
     return (
       <div>

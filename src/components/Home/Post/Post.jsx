@@ -126,11 +126,10 @@ class Post extends Component {
           content={null}
           action={
             !post.Friend ? (
-              <IconButton>
+              <IconButton onClick={this.handleClickMenu}>
                 <MoreVertIcon
                   aria-owns={this.state.anchorEl ? "postMenu" : undefined}
                   aria-haspopup="true"
-                  onClick={this.handleClickMenu}
                 />
               </IconButton>
             ) : null

@@ -22,6 +22,7 @@ class LoginPage extends Component {
   render() {
     return (
       <Grid
+        item
         container
         className={style.LoginPageGrid}
         justify="center"

@@ -117,7 +117,7 @@ class FriendsList extends Component {
   };
 
   handleInputFriendSearch = event => {
-    let value = event.target.value
+    let value = event.target.value;
     this.setState({
       query: value
     });
@@ -126,7 +126,7 @@ class FriendsList extends Component {
     const { open, query, friends } = this.state;
     const { classes, handleOpenFriendsList, authToken } = this.props;
     return (
-      <Grid container xs={10} justify="center" alignContent="center">
+      <Grid container item xs={10} justify="center" alignContent="center">
         <Dialog open={open} scroll="body" onClose={handleOpenFriendsList}>
           <Card>
             <CardContent>
@@ -146,9 +146,14 @@ class FriendsList extends Component {
                     </div>
                     {friends
                       .filter(friend => {
-                        return friend.GivenName.toLowerCase().includes(query.toLowerCase()) || friend.Name.toLowerCase().includes(query.toLowerCase())
+                        return friend.GivenName.toLowerCase().includes(
+                          query.toLowerCase()
+                        ) ||
+                          friend.Name.toLowerCase().includes(
+                            query.toLowerCase()
+                          )
                           ? friend
-                          : null
+                          : null;
                       })
                       .map(friend => (
                         <ListItem
@@ -162,8 +167,8 @@ class FriendsList extends Component {
                                 src={friend.Photo}
                               />
                             ) : (
-                                <Avatar alt={`Avatar`} src={img} />
-                              )}
+                              <Avatar alt={`Avatar`} src={img} />
+                            )}
                           </ListItemAvatar>
                           <Link
                             to={`/user/${friend.Id}`}
@@ -198,13 +203,13 @@ class FriendsList extends Component {
                       ))}
                   </>
                 ) : (
-                    <Typography
-                      variant="inherit"
-                      className={classes.NoFriendsInfo}
-                    >
-                      Sorry. You don't have any friends.
+                  <Typography
+                    variant="inherit"
+                    className={classes.NoFriendsInfo}
+                  >
+                    Sorry. You don't have any friends.
                   </Typography>
-                  )}
+                )}
               </List>
             </CardContent>
           </Card>
