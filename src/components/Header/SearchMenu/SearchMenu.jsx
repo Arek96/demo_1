@@ -34,6 +34,7 @@ class SearchMenu extends React.Component {
     ) : null;
   };
   render() {
+    console.log(this.props.mobile);
     const { open } = this.props;
     return (
       <div>
@@ -43,14 +44,11 @@ class SearchMenu extends React.Component {
           transition
           disablePortal
           placement="bottom"
-          style={{ paddingTop: "25px", width: 288 }}
+          style={{
+            paddingTop: this.props.mobile ? "5px" : "25px",
+            width: this.props.mobile ? "100%" : 288
+          }}
           modifiers={{
-            keepTogether: {
-              enabled: false
-            },
-            offset: {
-              enabled: true
-            },
             preventOverflow: {
               enabled: true,
               padding: "20px"
@@ -64,7 +62,7 @@ class SearchMenu extends React.Component {
                   <ClickAwayListener
                     onClickAway={this.props.handleCloseSearchMenu}
                   >
-                    <MenuList>
+                    <MenuList style={{ overflow: "auto", maxHeight: "50vh" }}>
                       {this.props.matchingFriends.map(element => (
                         <MenuItem key={element.Id}>
                           <Link

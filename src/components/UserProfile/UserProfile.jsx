@@ -15,7 +15,8 @@ import { connect } from "react-redux";
 import {
   fetchFriendToApi,
   getFriendsFromAPI,
-  fetchUserPosts
+  fetchUserPosts,
+  deleteFriendFromAPI
 } from "../../actions/friendActions";
 import FriendsList from "./FriendsList/FriendsList";
 import { withRouter } from "react-router-dom";
@@ -67,6 +68,18 @@ class UserProfile extends Component {
     }));
   };
   componentDidUpdate = prevProps => {
+    if (prevProps.allFriends !== this.props.allFriends) {
+      if (this.props.location.pathname !== "/userProfile") {
+        this.props.fetchUserPosts(
+          this.props.userProfileInfo.Id,
+          this.props.authToken
+        );
+        this.setState({
+          posts: this.props.otherUserPosts,
+          user: this.props.userProfileInfo
+        });
+      }
+    }
     if (this.props.otherUserPosts !== prevProps.otherUserPosts) {
       this.setState({
         posts: this.props.otherUserPosts,
@@ -85,11 +98,7 @@ class UserProfile extends Component {
         });
       }
     }
-    console.log(
-      (prevProps.location.pathname !==
-        "/userProfile" + this.props.location.pathname) ===
-        "/userProfile"
-    );
+
     if (
       prevProps.location.pathname !== "/userProfile" &&
       this.props.location.pathname === "/userProfile"
@@ -183,13 +192,33 @@ class UserProfile extends Component {
                   </Typography>
                 </button>
                 {this.props.location.pathname !== "/userProfile" ? (
-                  <Button
-                    variant="contained"
-                    className={classes.delete}
-                    onClick={this.handleAddFriendButton}
-                  >
-                    Add friend
-                  </Button>
+                  this.props.allFriends.filter(
+                    element => element.Id === this.props.userProfileInfo.Id
+                  ).length === 1 ? (
+                    <Button
+                      className={classes.removeFriendButton}
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      onClick={() => {
+                        this.props.deleteFriendFromAPI(
+                          this.props.userProfileInfo,
+                          this.props.authToken
+                        );
+                      }}
+                    >
+                      Remove friend
+                    </Button>
+                  ) : (
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      className={classes.delete}
+                      onClick={this.handleAddFriendButton}
+                    >
+                      Add friend
+                    </Button>
+                  )
                 ) : null}
               </CardContent>
             </Card>
@@ -226,6 +255,8 @@ const mapState = state => ({
   userProfileInfo: state.userProfileInfo
 });
 const mapDispatch = dispatch => ({
+  deleteFriendFromAPI: (friend, authToken) =>
+    dispatch(deleteFriendFromAPI(friend, authToken)),
   fetchUserPosts: (userId, authToken) =>
     dispatch(fetchUserPosts(userId, authToken)),
   fetchFriendToApi: (authToken, friendID) =>

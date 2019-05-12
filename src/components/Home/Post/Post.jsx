@@ -14,7 +14,9 @@ import Collapse from "@material-ui/core/Collapse";
 import PostMenu from "./PostMenu/PostMenu";
 import style from "./Post.module.scss";
 import img from "../../../img/withoutPhoto.PNG";
-
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUserProfileInfo } from "../../../actions/friendActions";
 const styles = theme => ({
   userAvatar: {
     margin: "10px 70px 10px 20px",
@@ -67,7 +69,7 @@ class Post extends Component {
   handleCloseMenu = () => {
     this.setState({ anchorEl: null });
   };
-  renderAvatar = (GivenName, Name, style, Photo) => (
+  renderAvatar = (user, GivenName, Name, style, Photo) => (
     <>
       <Avatar
         style={style}
@@ -75,7 +77,25 @@ class Post extends Component {
         src={Photo}
         className={this.props.classes.userAvatar}
       />
-      <Typography variant="inherit">{`${GivenName} ${Name} `}</Typography>
+      <Link
+        style={{
+          textDecoration: "none",
+          color: "black",
+          cursor: "pointer"
+        }}
+        to={
+          user && this.props.myUserData && user.Id === this.props.myUserData.Id
+            ? `/userProfile`
+            : `/user/${user.Id}`
+        }
+        onClick={() => {
+          if (user.Id !== this.props.myUserData.Id) {
+            this.props.setUserProfileInfo(user);
+          }
+        }}
+      >
+        <Typography variant="inherit">{`${GivenName} ${Name} `}</Typography>
+      </Link>
     </>
   );
   render() {
@@ -84,17 +104,19 @@ class Post extends Component {
       user
         ? user.Photo
           ? this.renderAvatar(
-            user.GivenName,
-            user.Name,
-            { margin: 10 },
-            user.Photo
-          )
+              user,
+              user.GivenName,
+              user.Name,
+              { margin: 10 },
+              user.Photo
+            )
           : this.renderAvatar(
-            user.GivenName,
-            user.Name,
-            { height: 35, margin: 10 },
-            img
-          )
+              user,
+              user.GivenName,
+              user.Name,
+              { height: 35, margin: 10 },
+              img
+            )
         : null;
     return (
       <Card className={style.PostCard}>
@@ -139,8 +161,8 @@ class Post extends Component {
               {this.state.expanded
                 ? post.Text
                 : post.Text.length < 100
-                  ? post.Text
-                  : `${post.Text.substr(0, 100)}...`}
+                ? post.Text
+                : `${post.Text.substr(0, 100)}...`}
             </Typography>
           </CardContent>
         </Collapse>
@@ -165,4 +187,9 @@ class Post extends Component {
     );
   }
 }
-export default withStyles(styles)(Post);
+export default connect(
+  state => ({ myUserData: state.user }),
+  dispatch => ({
+    setUserProfileInfo: friend => dispatch(setUserProfileInfo(friend))
+  })
+)(withStyles(styles)(Post));

@@ -3,7 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
-import { Typography } from "@material-ui/core";
+import { Typography, Collapse, ClickAwayListener } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
@@ -100,7 +100,8 @@ class Header extends React.Component {
       anchorEl: null,
       mobileMoreAnchorEl: null,
       searchValue: "",
-      openSearchMenu: false
+      openSearchMenu: false,
+      expanded: false
     };
   }
   handleMenuClose = () => {
@@ -138,6 +139,24 @@ class Header extends React.Component {
       setTimeout(this.setState({ wantSearchFriend: true }), 1000);
     } else {
       this.setState({ openSearchMenu: false });
+    }
+  };
+  handleExtentionPanel = event => {
+    event.persist();
+    this.setState({
+      expanded: !this.state.expanded,
+      extentionPanelEvent: event,
+      searchValue: !this.state.expanded ? "" : this.state.searchValue
+    });
+  };
+  handleClickAway = event => {
+    if (
+      this.state.extentionPanelEvent &&
+      event.target !== this.state.extentionPanelEvent.target
+    ) {
+      this.setState({
+        expanded: false
+      });
     }
   };
   componentDidUpdate = prevProps => {
@@ -252,7 +271,9 @@ class Header extends React.Component {
                     />
                     <SearchMenu
                       className={style.SearchMenu}
-                      open={this.state.openSearchMenu}
+                      open={
+                        this.state.expanded ? false : this.state.openSearchMenu
+                      }
                       handleCloseSearchMenu={this.handleCloseSearchMenu}
                       inputRef={this.inputRef}
                     />
@@ -260,12 +281,53 @@ class Header extends React.Component {
                   {userMessage}
                 </div>
                 <div className={classes.sectionMobile}>
-                  <SearchIcon />
+                  <IconButton
+                    onClick={this.handleExtentionPanel}
+                    color="default"
+                  >
+                    <SearchIcon />
+                  </IconButton>
                 </div>
               </>
             ) : null}
           </Toolbar>
+          <ClickAwayListener
+            mouseEvent="onClick"
+            onClickAway={this.handleClickAway}
+          >
+            <Collapse in={this.state.expanded}>
+              <InputBase
+                style={{
+                  color: "black",
+                  backgroundColor: "white",
+                  height: "45px",
+                  paddingTop: "5px",
+                  paddingBottom: "5px"
+                }}
+                placeholder="Search post/users..."
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+                onChange={this.handleInputSearch}
+                value={this.state.searchValue}
+                aria-owns={this.state.openSearchMenu ? "SearchMenu" : undefined}
+                aria-haspopup="true"
+                inputRef={event => {
+                  this.mobileInputRef = event;
+                }}
+              />
+              <SearchMenu
+                className={style.SearchMenu}
+                open={this.state.openSearchMenu}
+                handleCloseSearchMenu={this.handleCloseSearchMenu}
+                inputRef={this.mobileInputRef}
+                mobile={this.state.expanded}
+              />
+            </Collapse>
+          </ClickAwayListener>
         </AppBar>
+
         <SlideMenu
           open={this.state.open}
           handleClickMenu={this.handleClickMenu}
