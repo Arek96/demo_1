@@ -272,7 +272,7 @@ class Header extends React.Component {
                     <SearchMenu
                       className={style.SearchMenu}
                       open={
-                        this.state.expanded ? false : this.state.openSearchMenu
+                        !this.state.expanded ? this.state.openSearchMenu : false
                       }
                       handleCloseSearchMenu={this.handleCloseSearchMenu}
                       inputRef={this.inputRef}
@@ -319,7 +319,7 @@ class Header extends React.Component {
               />
               <SearchMenu
                 className={style.SearchMenu}
-                open={this.state.openSearchMenu}
+                open={this.state.expanded ? this.state.openSearchMenu : false}
                 handleCloseSearchMenu={this.handleCloseSearchMenu}
                 inputRef={this.mobileInputRef}
                 mobile={this.state.expanded}

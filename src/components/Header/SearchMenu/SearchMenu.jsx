@@ -9,11 +9,19 @@ import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import img from "../../../img/withoutPhoto.PNG";
-import { setUserProfileInfo } from "../../../actions/friendActions";
+import {
+  setUserProfileInfo,
+  fetchFriendToApi
+} from "../../../actions/friendActions";
 import { connect } from "react-redux";
 import styles from "./SearchMenu.module.scss";
+import AddIcon from "@material-ui/icons/Add";
+import Fab from "@material-ui/core/Fab";
 
 class SearchMenu extends React.Component {
+  handleAddFriend = id => {
+    this.props.fetchFriendToApi(this.props.authToken, id);
+  };
   avatar = user => {
     return user ? (
       user.Photo ? (
@@ -77,6 +85,18 @@ class SearchMenu extends React.Component {
                             <Typography variant="body1">{`${
                               element.GivenName
                             } ${element.Name}`}</Typography>
+                            {/* {this.props.allFriends.filter(
+                              elem => elem.Id === element.Id
+                            ).length === 1 ? (
+                              <Fab
+                                size="small"
+                                color="secondary"
+                                aria-label="Add"
+                                onClick={() => this.handleAddFriend(element.Id)}
+                              >
+                                <AddIcon />
+                              </Fab>
+                            ) : null} */}
                           </Link>
                         </MenuItem>
                       ))}
@@ -93,10 +113,13 @@ class SearchMenu extends React.Component {
 }
 const mapProps = state => ({
   matchingFriends: state.matchingFriends,
-  user: state.user
+  user: state.user,
+  authToken: state.authToken,
+  allFriends: state.allFriends
 });
 const mapDispatch = dispatch => ({
-  setUserProfileInfo: profileInfo => dispatch(setUserProfileInfo(profileInfo))
+  setUserProfileInfo: profileInfo => dispatch(setUserProfileInfo(profileInfo)),
+  fetchFriendToApi: (authToken, id) => dispatch(fetchFriendToApi(authToken, id))
 });
 export default connect(
   mapProps,
