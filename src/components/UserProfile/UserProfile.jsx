@@ -66,7 +66,7 @@ class UserProfile extends Component {
     }));
   };
   componentDidUpdate = prevProps => {
-    if(prevProps.user !== this.props.user){
+    if (prevProps.user !== this.props.user) {
       this.setState({
         user: this.props.user
       })
