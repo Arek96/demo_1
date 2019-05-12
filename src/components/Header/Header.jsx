@@ -187,7 +187,7 @@ class Header extends React.Component {
     }
   };
   render() {
-    const { anchorEl, query } = this.state;
+    const { anchorEl } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     let userMessage = this.props.user ? (

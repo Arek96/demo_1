@@ -35,7 +35,6 @@ export const fetchSearchFriend = (friendValue, authToken) => {
     )
       .then(r => r.json())
       .then(resp => {
-        console.log(resp);
         dispatch(searchFriend(resp));
       });
   };
@@ -44,13 +43,6 @@ export const getFriends = data => ({
   type: GET_FRIENDS,
   payload: {
     friends: data.sort(sortFriends)
-  }
-});
-
-export const searchInFriends = value => ({
-  type: SEARCH_IN_FRIENDS,
-  payload: {
-    value
   }
 });
 
@@ -65,6 +57,26 @@ export const getFriendsFromAPI = authToken => {
     })
       .then(r => r.json())
       .then(resp => dispatch(getFriends(resp)));
+  };
+};
+export const deleteFriend = friend => ({
+  type: DELETE_FRIEND,
+  payload: {
+    friendToDel: friend
+  }
+});
+export const deleteFriendFromAPI = (friend, authToken) => {
+  return dispatch => {
+    fetch(
+      `https://delfinkitrainingapi.azurewebsites.net/api/friend/${friend.Id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "X-ZUMO-AUTH": authToken
+        }
+      }
+    )
+      .then(resp => dispatch(deleteFriend(friend)));
   };
 };
 export const addFriend = resp => ({
@@ -106,7 +118,6 @@ export const getOtherUserPosts = posts => ({
 });
 export const fetchUserPosts = (userId, authToken) => {
   return dispatch => {
-    console.log(userId);
     return fetch(
       `https://delfinkitrainingapi.azurewebsites.net/api/post/friend/${userId}`,
       {
@@ -118,7 +129,6 @@ export const fetchUserPosts = (userId, authToken) => {
       }
     )
       .then(r => {
-        console.log(r);
         if (r.status === 200) {
           return r.json();
         } else {
@@ -129,27 +139,6 @@ export const fetchUserPosts = (userId, authToken) => {
   };
 };
 
-export const deleteFriend = friend => ({
-  type: DELETE_FRIEND,
-  payload: {
-    friendToDel: friend
-  }
-});
-export const deleteFriendFromAPI = (friend, authToken) => {
-  return dispatch => {
-    fetch(
-      `https://delfinkitrainingapi.azurewebsites.net/api/friend/${friend.Id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "X-ZUMO-AUTH": authToken
-        }
-      }
-    )
-      .then(r => console.log(r))
-      .then(resp => dispatch(deleteFriend(friend)));
-  };
-};
 export const getFriendsPosts = data => ({
   type: GET_POSTS_FRIENDS,
   payload: {

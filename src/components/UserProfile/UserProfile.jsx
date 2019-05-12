@@ -36,7 +36,6 @@ class UserProfile extends Component {
         this.props.userProfileInfo.Id,
         this.props.authToken
       );
-
       this.state = {
         posts: this.props.otherUserPosts,
         user: this.props.userProfileInfo
@@ -80,6 +79,11 @@ class UserProfile extends Component {
         });
       }
     }
+    if (prevProps.user !== this.props.user) {
+      this.setState({
+        user: this.props.user
+      })
+    }
     if (this.props.otherUserPosts !== prevProps.otherUserPosts) {
       this.setState({
         posts: this.props.otherUserPosts,
@@ -98,12 +102,10 @@ class UserProfile extends Component {
         });
       }
     }
-
     if (
       prevProps.location.pathname !== "/userProfile" &&
       this.props.location.pathname === "/userProfile"
     ) {
-      console.log(this.props.user);
       this.setState({ posts: this.props.posts, user: this.props.user });
     }
   };
@@ -138,12 +140,12 @@ class UserProfile extends Component {
                     className={classes.avatar}
                   />
                 ) : (
-                  <Avatar
-                    alt={`${this.state.user.GivenName}${this.state.user.Name}`}
-                    src={img}
-                    className={classes.avatar}
-                  />
-                )
+                    <Avatar
+                      alt={`${this.state.user.GivenName}${this.state.user.Name}`}
+                      src={img}
+                      className={classes.avatar}
+                    />
+                  )
               ) : null}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
@@ -186,9 +188,11 @@ class UserProfile extends Component {
                     style={{ fontSize: "0.7rem" }}
                     className={classes.typography}
                   >
-                    {allFriends && allFriends.length > 0
+                    {this.props.location.pathname === "/userProfile" ? allFriends && allFriends.length > 0
                       ? `Friends: ${allFriends.length}`
-                      : "Friends: 0"}
+                      : "Friends: 0" :
+                      null}
+
                   </Typography>
                 </button>
                 {this.props.location.pathname !== "/userProfile" ? (
