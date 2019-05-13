@@ -6,6 +6,7 @@ export const GET_POSTS_FRIENDS = "GET_POSTS_FRIENDS";
 export const SEARCH_IN_FRIENDS = "SEARCH_IN_FRIENDS";
 export const SET_USER_PROFILE_INFO = "SET_USER_PROFILE_INFO";
 export const GET_OTHER_USER_POSTS = "GET_OTHER_USER_POSTS";
+export const TOGGLE_SHOW_USER_POSTS = "TOGGLE_SHOW_USER_POSTS";
 
 export const setUserProfileInfo = info => ({
   type: SET_USER_PROFILE_INFO,
@@ -75,8 +76,7 @@ export const deleteFriendFromAPI = (friend, authToken) => {
           "X-ZUMO-AUTH": authToken
         }
       }
-    )
-      .then(resp => dispatch(deleteFriend(friend)));
+    ).then(resp => dispatch(deleteFriend(friend)));
   };
 };
 export const addFriend = resp => ({
@@ -157,5 +157,30 @@ export const getFriendsPostsFromAPI = authToken => {
     )
       .then(r => r.json())
       .then(resp => dispatch(getFriendsPosts(resp)));
+  };
+};
+export const toggleShowUserPosts = data => ({
+  type: TOGGLE_SHOW_USER_POSTS,
+  payload: {
+    modifiedFriendData: data
+  }
+});
+
+export const fetchToggleShowUserPosts = (showPost, friendId, authToken) => {
+  return dispatch => {
+    return fetch(`https://delfinkitrainingapi.azurewebsites.net/api/friend/`, {
+      method: "POST",
+      headers: {
+        "X-ZUMO-AUTH": authToken,
+
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        Show: showPost,
+        FriendId: friendId
+      })
+    })
+      .then(r => r.json())
+      .then(resp => dispatch(toggleShowUserPosts(resp)));
   };
 };

@@ -4,7 +4,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import classNames from "classnames";
 import CardContent from "@material-ui/core/CardContent";
-import { Grid, Typography, withStyles } from "@material-ui/core";
+import { Grid, Typography, withStyles, IconButton } from "@material-ui/core";
 import style from "../UserProfile/UserProfile.module.scss";
 import styles from "../UserProfile/UserProfile.styles";
 import PostPhoto from "./PostPhoto";
@@ -16,10 +16,14 @@ import {
   fetchFriendToApi,
   getFriendsFromAPI,
   fetchUserPosts,
-  deleteFriendFromAPI
+  deleteFriendFromAPI,
+  fetchToggleShowUserPosts,
+  setUserProfileInfo
 } from "../../actions/friendActions";
 import FriendsList from "./FriendsList/FriendsList";
 import { withRouter } from "react-router-dom";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import Visibility from "@material-ui/icons/Visibility";
 
 class UserProfile extends Component {
   constructor(props) {
@@ -66,6 +70,17 @@ class UserProfile extends Component {
       modalFriendsList: !prevState.modalFriendsList
     }));
   };
+  handleShowPosts = () => {
+    this.props.fetchToggleShowUserPosts(
+      !this.state.user.Show,
+      this.props.userProfileInfo.Id,
+      this.props.authToken
+    );
+    this.props.setUserProfileInfo({
+      ...this.props.userProfileInfo,
+      Show: !this.state.user.Show
+    });
+  };
   componentDidUpdate = prevProps => {
     if (prevProps.allFriends !== this.props.allFriends) {
       if (this.props.location.pathname !== "/userProfile") {
@@ -82,7 +97,7 @@ class UserProfile extends Component {
     if (prevProps.user !== this.props.user) {
       this.setState({
         user: this.props.user
-      })
+      });
     }
     if (this.props.otherUserPosts !== prevProps.otherUserPosts) {
       this.setState({
@@ -114,16 +129,27 @@ class UserProfile extends Component {
     const checkUser = () => {
       if (this.state.user) {
         return (
-          <Typography
-            variant="headline"
-            align="justify"
-            style={{ paddingTop: "10px" }}
-            className={classNames(classes.typography, classes.loginControl)}
-          >
-            {this.state.user.GivenName && this.state.user.Name
-              ? `${this.state.user.GivenName}  ${this.state.user.Name}`
-              : `Please edit your profile`}
-          </Typography>
+          <>
+            <Typography
+              variant="headline"
+              align="justify"
+              style={{ paddingTop: "10px" }}
+              className={classNames(classes.typography, classes.loginControl)}
+            >
+              {this.state.user.GivenName && this.state.user.Name
+                ? `${this.state.user.GivenName}  ${this.state.user.Name}`
+                : `Please edit your profile`}
+            </Typography>
+            {this.props.location.pathname !== "/userProfile" ? (
+              this.props.allFriends.filter(
+                element => element.Id === this.props.userProfileInfo.Id
+              ).length === 1 ? (
+                <IconButton onClick={this.handleShowPosts}>
+                  {!this.state.user.Show ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              ) : null
+            ) : null}
+          </>
         );
       } else return null;
     };
@@ -140,12 +166,12 @@ class UserProfile extends Component {
                     className={classes.avatar}
                   />
                 ) : (
-                    <Avatar
-                      alt={`${this.state.user.GivenName}${this.state.user.Name}`}
-                      src={img}
-                      className={classes.avatar}
-                    />
-                  )
+                  <Avatar
+                    alt={`${this.state.user.GivenName}${this.state.user.Name}`}
+                    src={img}
+                    className={classes.avatar}
+                  />
+                )
               ) : null}
               <CardContent className={style.BioContainer}>
                 <div className={style.ButtonContainer}>
@@ -188,11 +214,11 @@ class UserProfile extends Component {
                     style={{ fontSize: "0.7rem" }}
                     className={classes.typography}
                   >
-                    {this.props.location.pathname === "/userProfile" ? allFriends && allFriends.length > 0
-                      ? `Friends: ${allFriends.length}`
-                      : "Friends: 0" :
-                      null}
-
+                    {this.props.location.pathname === "/userProfile"
+                      ? allFriends && allFriends.length > 0
+                        ? `Friends: ${allFriends.length}`
+                        : "Friends: 0"
+                      : null}
                   </Typography>
                 </button>
                 {this.props.location.pathname !== "/userProfile" ? (
@@ -265,7 +291,10 @@ const mapDispatch = dispatch => ({
     dispatch(fetchUserPosts(userId, authToken)),
   fetchFriendToApi: (authToken, friendID) =>
     dispatch(fetchFriendToApi(authToken, friendID)),
-  getFriendsFromAPI: authToken => dispatch(getFriendsFromAPI(authToken))
+  getFriendsFromAPI: authToken => dispatch(getFriendsFromAPI(authToken)),
+  fetchToggleShowUserPosts: (showPosts, friendId, authToken) =>
+    dispatch(fetchToggleShowUserPosts(showPosts, friendId, authToken)),
+  setUserProfileInfo: info => dispatch(setUserProfileInfo(info))
 });
 export default withRouter(
   connect(

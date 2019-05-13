@@ -14,7 +14,8 @@ import {
   DELETE_FRIEND,
   GET_POSTS_FRIENDS,
   SET_USER_PROFILE_INFO,
-  GET_OTHER_USER_POSTS
+  GET_OTHER_USER_POSTS,
+  TOGGLE_SHOW_USER_POSTS
 } from "../actions/friendActions";
 const reducer = (
   state = { authToken: null, posts: [], allFriends: [] },
@@ -66,12 +67,12 @@ const reducer = (
         posts:
           action.payload.value && action.payload.value.length > 0
             ? state.posts.filter(post => {
-              return post.Title.toLowerCase().includes(
-                action.payload.value
-              ) || post.Text.toLowerCase().includes(action.payload.value)
-                ? post
-                : null;
-            })
+                return post.Title.toLowerCase().includes(
+                  action.payload.value
+                ) || post.Text.toLowerCase().includes(action.payload.value)
+                  ? post
+                  : null;
+              })
             : state.allPosts
       };
     case UPDATE_USER:
@@ -120,6 +121,15 @@ const reducer = (
       return {
         ...state,
         otherUserPosts: action.payload.otherUserPosts
+      };
+    case TOGGLE_SHOW_USER_POSTS:
+      return {
+        ...state,
+        allFriends: state.allFriends.map(element => {
+          return element.Id === action.payload.modifiedFriendData.Id
+            ? action.payload.modifiedFriendData
+            : element;
+        })
       };
     default:
       return state;

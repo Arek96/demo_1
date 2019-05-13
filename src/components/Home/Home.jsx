@@ -9,20 +9,19 @@ import Post from "./Post/Post";
 import { Grid, Typography } from "@material-ui/core";
 
 class Home extends Component {
-
   componentDidMount = () => {
     this.props.getPostsFromAPI(this.props.authToken);
     this.props.getFriendsPostsFromAPI(this.props.authToken);
-  }
+  };
   render() {
     const { user, posts, postsFriends } = this.props;
     const arrayOfPostsFriends = postsFriends
       ? postsFriends.map(element =>
-        element.Posts.map(post => {
-          post.Friend = element.Friend;
-          return post;
-        })
-      )
+          element.Posts.map(post => {
+            post.Friend = element.Friend;
+            return post;
+          })
+        )
       : null;
     const allPosts = postsFriends
       ? posts.concat(...arrayOfPostsFriends)
@@ -31,13 +30,14 @@ class Home extends Component {
       <Grid item style={{ width: "100%" }} sm={8} xxl={7}>
         {allPosts && allPosts.length > 0 ? (
           allPosts.sort(sortPosts).map(post => {
-            return (
+            return (post.Friend && !post.Friend.Show) ||
+              (user && post.UserId === user.Id) ? (
               <Post key={post.Id} post={post} user={post.Friend || user} />
-            );
+            ) : null;
           })
         ) : (
-            <Typography variant="h5">You don't have any posts yet. </Typography>
-          )}
+          <Typography variant="h5">You don't have any posts yet. </Typography>
+        )}
       </Grid>
     );
   }
