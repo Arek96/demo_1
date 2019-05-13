@@ -124,6 +124,7 @@ class FriendsList extends Component {
   };
   render() {
     const { open, query, friends } = this.state;
+    const intFrameWidth = window.innerWidth;
     const { classes, handleOpenFriendsList, authToken } = this.props;
     const filterFriends = friends.filter(friend => {
       return friend.GivenName.toLowerCase().includes(query.toLowerCase()) ||
@@ -132,8 +133,23 @@ class FriendsList extends Component {
         : null;
     });
     return (
-      <Grid container item xs={10} justify="center" alignContent="center">
-        <Dialog open={open} scroll="body" onClose={handleOpenFriendsList}>
+      <Grid
+        container
+        item
+        xs={12}
+        sm={10}
+        md={9}
+        lg={7}
+        xl={7}
+        justify="center"
+        alignContent="center"
+      >
+        <Dialog
+          open={open}
+          scroll="body"
+          onClose={handleOpenFriendsList}
+          // fullScreen={intFrameWidth < 414 ? true : false}
+        >
           <Card>
             <CardContent>
               <List dense className={classes.List}>
@@ -150,17 +166,6 @@ class FriendsList extends Component {
                         value={query}
                       />
                     </div>
-                    {/* {friends
-                      .filter(friend => {
-                        return friend.GivenName.toLowerCase().includes(
-                          query.toLowerCase()
-                        ) ||
-                          friend.Name.toLowerCase().includes(
-                            query.toLowerCase()
-                          )
-                          ? friend
-                          : null;
-                      }) */}
                     {filterFriends.length > 0 ? (
                       filterFriends.map(friend => (
                         <ListItem
