@@ -74,7 +74,7 @@ const styles = theme => ({
     }
   },
   NoFriendsInfo: {
-    margin: "0 auto",
+    margin: "3rem auto",
     textAlign: "center",
     fontSize: "1.5rem"
   }
@@ -125,6 +125,12 @@ class FriendsList extends Component {
   render() {
     const { open, query, friends } = this.state;
     const { classes, handleOpenFriendsList, authToken } = this.props;
+    const filterFriends = friends.filter(friend => {
+      return friend.GivenName.toLowerCase().includes(query.toLowerCase()) ||
+        friend.Name.toLowerCase().includes(query.toLowerCase())
+        ? friend
+        : null;
+    });
     return (
       <Grid container item xs={10} justify="center" alignContent="center">
         <Dialog open={open} scroll="body" onClose={handleOpenFriendsList}>
@@ -144,7 +150,7 @@ class FriendsList extends Component {
                         value={query}
                       />
                     </div>
-                    {friends
+                    {/* {friends
                       .filter(friend => {
                         return friend.GivenName.toLowerCase().includes(
                           query.toLowerCase()
@@ -154,8 +160,9 @@ class FriendsList extends Component {
                           )
                           ? friend
                           : null;
-                      })
-                      .map(friend => (
+                      }) */}
+                    {filterFriends.length > 0 ? (
+                      filterFriends.map(friend => (
                         <ListItem
                           key={friend.Id}
                           className={classes.ListItemUser}
@@ -200,7 +207,15 @@ class FriendsList extends Component {
                             </Button>
                           </ListItemSecondaryAction>
                         </ListItem>
-                      ))}
+                      ))
+                    ) : (
+                      <Typography
+                        variant="inherit"
+                        className={classes.NoFriendsInfo}
+                      >
+                        {`No search results for the query: ${query}`}
+                      </Typography>
+                    )}
                   </>
                 ) : (
                   <Typography
