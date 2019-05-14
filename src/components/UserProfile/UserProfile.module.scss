@@ -1,20 +1,5 @@
-$devices_sizes: (
-  ("xs", 0px, 600px),
-  ("sm", 600px, 960px),
-  ("md", 960px, 1280px),
-  ("lg", 1280px, 1920px),
-  ("xl", 1920px, 3840px)
-);
+@import "../../assets/styles/variables.scss";
 
-@mixin breakpoint-only($size-name) {
-  @each $size, $lower-breakpoint, $greater-breakpoint in $devices_sizes {
-    @if ($size == $size-name) {
-      @media screen and (min-width: $lower-breakpoint) and (max-width: $greater-breakpoint) {
-        @content;
-      }
-    }
-  }
-}
 .ProfileContainer {
   display: flex;
   flex-direction: row;
@@ -45,7 +30,7 @@ $devices_sizes: (
 }
 .postImage {
   padding: 20px 0;
-  
+
   button {
     width: 250px;
     height: 250px;
@@ -58,11 +43,11 @@ $devices_sizes: (
     }
   }
 }
-.TransparentButton{
+.TransparentButton {
   background-color: Transparent;
-    background-repeat:no-repeat;
-    border: none;
-    overflow: hidden; 
-    cursor: pointer;
-    outline:none;       
+  background-repeat: no-repeat;
+  border: none;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
 }

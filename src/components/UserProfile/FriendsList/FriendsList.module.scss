@@ -1,0 +1,12 @@
+@import "../../../assets/styles/variables.scss";
+
+@include breakpoint-only("sm") {
+  .CardFriendsCard {
+    width: 100%;
+  }
+}
+@include breakpoint-only("xs") {
+  .CardFriendsCard {
+    width: 100%;
+  }
+}

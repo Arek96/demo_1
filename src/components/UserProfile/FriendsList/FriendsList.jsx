@@ -22,7 +22,7 @@ import {
   setUserProfileInfo
 } from "../../../actions/friendActions";
 import { connect } from "react-redux";
-// import style from "../FriendsList/FriendsList.module.scss";
+import style from "../FriendsList/FriendsList.module.scss";
 import { Link } from "react-router-dom";
 import img from "../../../img/withoutPhoto.PNG";
 const styles = theme => ({
@@ -124,7 +124,6 @@ class FriendsList extends Component {
   };
   render() {
     const { open, query, friends } = this.state;
-    const intFrameWidth = window.innerWidth;
     const { classes, handleOpenFriendsList, authToken } = this.props;
     const filterFriends = friends.filter(friend => {
       return friend.GivenName.toLowerCase().includes(query.toLowerCase()) ||
@@ -144,13 +143,8 @@ class FriendsList extends Component {
         justify="center"
         alignContent="center"
       >
-        <Dialog
-          open={open}
-          scroll="body"
-          onClose={handleOpenFriendsList}
-          // fullScreen={intFrameWidth < 414 ? true : false}
-        >
-          <Card>
+        <Dialog open={open} scroll="body" onClose={handleOpenFriendsList}>
+          <Card className={style.CardFriendsCard}>
             <CardContent>
               <List dense className={classes.List}>
                 {friends && friends.length > 0 ? (
