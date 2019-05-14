@@ -26,6 +26,9 @@ import style from "../FriendsList/FriendsList.module.scss";
 import { Link } from "react-router-dom";
 import img from "../../../img/withoutPhoto.PNG";
 const styles = theme => ({
+  paperFullWidth: {
+    width: "100%"
+  },
   List: {
     width: "100%",
     maxWidth: 360,
@@ -143,8 +146,15 @@ class FriendsList extends Component {
         justify="center"
         alignContent="center"
       >
-        <Dialog open={open} scroll="body" onClose={handleOpenFriendsList}>
-          <Card className={style.CardFriendsCard}>
+        <Dialog
+          open={open}
+          scroll="body"
+          onClose={handleOpenFriendsList}
+          fullWidth
+          maxWidth="lg"
+          classes={{ paperFullWidth: classes.paperFullWidth }}
+        >
+          <Card raised>
             <CardContent>
               <List dense className={classes.List}>
                 {friends && friends.length > 0 ? (

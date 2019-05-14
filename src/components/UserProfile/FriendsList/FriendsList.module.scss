@@ -1,12 +1,18 @@
 @import "../../../assets/styles/variables.scss";
 
 @include breakpoint-only("sm") {
-  .CardFriendsCard {
+  .FriendsDialog {
     width: 100%;
+    .FriendsCard {
+      width: 100%;
+    }
   }
 }
 @include breakpoint-only("xs") {
-  .CardFriendsCard {
+  .FriendsDialog {
     width: 100%;
+    .FriendsCard {
+      width: 100%;
+    }
   }
 }
