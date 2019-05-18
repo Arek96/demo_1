@@ -1,18 +1,10 @@
 @import "../../../assets/styles/variables.scss";
 
-@include breakpoint-only("sm") {
-  .FriendsDialog {
-    width: 100%;
-    .FriendsCard {
-      width: 100%;
-    }
-  }
-}
-@include breakpoint-only("xs") {
-  .FriendsDialog {
-    width: 100%;
-    .FriendsCard {
-      width: 100%;
-    }
+.FriendLink{
+  text-decoration: none;
+  :hover{
+    cursor: pointer;
+    transition: 0.4s;
+    opacity: 0.7;
   }
 }

@@ -11,7 +11,6 @@ import {
   ListItem,
   ListItemSecondaryAction,
   ListItemAvatar,
-  Button,
   InputBase,
   Typography
 } from "@material-ui/core";
@@ -23,12 +22,10 @@ import {
 } from "../../../actions/friendActions";
 import { connect } from "react-redux";
 import style from "../FriendsList/FriendsList.module.scss";
+import DeleteForeverSharpIcon from '@material-ui/icons/DeleteForeverSharp';
 import { Link } from "react-router-dom";
 import img from "../../../img/withoutPhoto.PNG";
 const styles = theme => ({
-  paperFullWidth: {
-    width: "100%"
-  },
   List: {
     width: "100%",
     maxWidth: 360,
@@ -62,14 +59,15 @@ const styles = theme => ({
   },
   inputRoot: {
     color: "inherit",
-    width: "100%"
+    width: "100%",
+    margin: "0 auto",
   },
   inputInput: {
     margin: "0 auto",
+    textAlign: 'center',
     paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
+    paddingBottom: theme.spacing.unit * 4,
+    paddingLeft: theme.spacing.unit * 3,
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
@@ -150,11 +148,8 @@ class FriendsList extends Component {
           open={open}
           scroll="body"
           onClose={handleOpenFriendsList}
-          fullWidth
-          maxWidth="lg"
-          classes={{ paperFullWidth: classes.paperFullWidth }}
         >
-          <Card raised>
+          <Card>
             <CardContent>
               <List dense className={classes.List}>
                 {friends && friends.length > 0 ? (
@@ -183,25 +178,24 @@ class FriendsList extends Component {
                                 src={friend.Photo}
                               />
                             ) : (
-                              <Avatar alt={`Avatar`} src={img} />
-                            )}
+                                <Avatar alt={`Avatar`} src={img} />
+                              )}
                           </ListItemAvatar>
                           <Link
                             to={`/user/${friend.Id}`}
                             onClick={() => {
                               this.props.setUserProfileInfo(friend);
                             }}
+                            style={{ textDecoration: 'none' }}
+                            className={style.FriendLink}
                           >
                             <ListItemText
                               primary={`${friend.Name} ${friend.GivenName}`}
                             />
                           </Link>
                           <ListItemSecondaryAction>
-                            <Button
-                              className={classes.removeFriendButton}
-                              variant="contained"
-                              color="default"
-                              size="small"
+                            <DeleteForeverSharpIcon
+                              className={style.FriendLink}
                               onClick={() => {
                                 this.props.deleteFriendFromAPI(
                                   friend,
@@ -211,29 +205,27 @@ class FriendsList extends Component {
                                   query: ""
                                 });
                               }}
-                            >
-                              Remove friend
-                            </Button>
+                            />
                           </ListItemSecondaryAction>
                         </ListItem>
                       ))
                     ) : (
-                      <Typography
-                        variant="inherit"
-                        className={classes.NoFriendsInfo}
-                      >
-                        {`No search results for the query: ${query}`}
-                      </Typography>
-                    )}
+                        <Typography
+                          variant="inherit"
+                          className={classes.NoFriendsInfo}
+                        >
+                          {`No search results for the query: ${query}`}
+                        </Typography>
+                      )}
                   </>
                 ) : (
-                  <Typography
-                    variant="inherit"
-                    className={classes.NoFriendsInfo}
-                  >
-                    Sorry. You don't have any friends.
+                    <Typography
+                      variant="inherit"
+                      className={classes.NoFriendsInfo}
+                    >
+                      Sorry. You don't have any friends.
                   </Typography>
-                )}
+                  )}
               </List>
             </CardContent>
           </Card>
