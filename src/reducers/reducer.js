@@ -64,15 +64,16 @@ const reducer = (
     case SEARCH_POST:
       return {
         ...state,
+        // arrayOfPostsFriends: state.postsFriends ? state.postsFriends,
         posts:
           action.payload.value && action.payload.value.length > 0
             ? state.posts.filter(post => {
-                return post.Title.toLowerCase().includes(
-                  action.payload.value
-                ) || post.Text.toLowerCase().includes(action.payload.value)
-                  ? post
-                  : null;
-              })
+              return post.Title.toLowerCase().includes(
+                action.payload.value
+              ) || post.Text.toLowerCase().includes(action.payload.value)
+                ? post
+                : null;
+            })
             : state.allPosts
       };
     case UPDATE_USER:
