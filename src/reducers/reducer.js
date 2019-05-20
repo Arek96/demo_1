@@ -23,12 +23,15 @@ const ifTextContainFilter = (data, filter) => {
   }
   else return null
 }
-const filterPosts = (data, filter) => (
+const filterOwnPosts = (data, filter) => (
   data && data.length > 0 && filter && filter.length > 0 ? data.filter(post => {
     return ifTextContainFilter(post.Title, filter) || ifTextContainFilter(post.Text, filter)
   })
     : data
 )
+// const filterFriendPosts = (data, filter) =>{
+//   filter && filter.length > 0 ? 
+// }
 const reducer = (
   state = { authToken: null, posts: [], allFriends: [] },
   action
@@ -74,10 +77,12 @@ const reducer = (
         )
       };
     case SEARCH_POST:
+      console.log(state.allPostsFriends)
+      console.log(state.allPosts)
       return {
         ...state,
-        posts: filterPosts(state.allPosts, action.payload.value),
-        postFriends: filterPosts(state.allPostsFriends, action.payload.value)
+        posts: filterOwnPosts(state.allPosts, action.payload.value),
+        // postFriends: filterOwnPosts(state.allPostsFriends, action.payload.value)
         // action.payload.value && action.payload.value.length > 0
         //   ? state.posts.filter(post => {
         //     return post.Title.toLowerCase().includes(
