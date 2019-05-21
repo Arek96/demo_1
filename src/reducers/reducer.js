@@ -17,21 +17,35 @@ import {
   GET_OTHER_USER_POSTS,
   TOGGLE_SHOW_USER_POSTS
 } from "../actions/friendActions";
-const ifTextContainFilter = (data, filter) => {
-  if (data) {
-    return data.toLowerCase().includes(filter)
-  }
-  else return null
-}
+
+// postFriends: filterOwnPosts(state.allPostsFriends, action.payload.value)
+// action.payload.value && action.payload.value.length > 0
+//   ? state.posts.filter(post => {
+//     return post.Title.toLowerCase().includes(
+//       action.payload.value
+//     ) || post.Text.toLowerCase().includes(action.payload.value)
+//       ? post
+//       : null;
+//   })
+//   : state.allPosts
+const ifTextContainFilter = (data, filter) => (
+  data ?
+    data.toLowerCase().includes(filter)
+    : null
+)
 const filterOwnPosts = (data, filter) => (
   data && data.length > 0 && filter && filter.length > 0 ? data.filter(post => {
     return ifTextContainFilter(post.Title, filter) || ifTextContainFilter(post.Text, filter)
   })
     : data
 )
-// const filterFriendPosts = (data, filter) =>{
-//   filter && filter.length > 0 ? 
-// }
+const extractFriendPosts = (data) =>
+  data && data.length > 0 ? data.map(element => element.Posts.map(post => {
+    post.Friend = element.Friend;
+    return post;
+  }
+  )) : null
+
 const reducer = (
   state = { authToken: null, posts: [], allFriends: [] },
   action
@@ -77,11 +91,12 @@ const reducer = (
         )
       };
     case SEARCH_POST:
-      console.log(state.allPostsFriends)
+      console.log(state.postsFriends)
       console.log(state.allPosts)
       return {
         ...state,
         posts: filterOwnPosts(state.allPosts, action.payload.value),
+        postFriends: filterOwnPosts(state.allPostsFriends, action.payload.value)
         // postFriends: filterOwnPosts(state.allPostsFriends, action.payload.value)
         // action.payload.value && action.payload.value.length > 0
         //   ? state.posts.filter(post => {
@@ -128,9 +143,8 @@ const reducer = (
     case GET_POSTS_FRIENDS:
       return {
         ...state,
-        postsFriends: action.payload.postsFriends,
-        allPostsFriends: action.payload.postsFriends,
-
+        postsFriends: extractFriendPosts(action.payload.postsFriends),
+        allPostsFriends: extractFriendPosts(action.payload.postsFriends),
       };
     case SET_USER_PROFILE_INFO:
       return {

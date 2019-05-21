@@ -215,20 +215,20 @@ class Header extends React.Component {
                 src={this.props.user.Photo}
               />
             ) : (
-              <Avatar
-                style={{ height: 35, margin: 10 }}
-                alt={`${this.props.user.GivenName}${this.props.user.Name}`}
-                src={img}
-              >
-                }`}
+                <Avatar
+                  style={{ height: 35, margin: 10 }}
+                  alt={`${this.props.user.GivenName}${this.props.user.Name}`}
+                  src={img}
+                >
+                  }`}
               </Avatar>
-            )}
+              )}
           </div>
         </Link>
       </IconButton>
     ) : (
-      <Link to="login">Log In</Link>
-    );
+        <Link to="login">Log In</Link>
+      );
 
     return (
       <div className={classes.root}>

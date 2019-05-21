@@ -14,17 +14,19 @@ class Home extends Component {
     this.props.getFriendsPostsFromAPI(this.props.authToken);
   };
   render() {
+    console.log(this.props.posts)
+    console.log(this.props.postsFriends)
     const { user, posts, postsFriends } = this.props;
-    const arrayOfPostsFriends = postsFriends
-      ? postsFriends.map(element =>
-          element.Posts.map(post => {
-            post.Friend = element.Friend;
-            return post;
-          })
-        )
-      : null;
+    // const arrayOfPostsFriends = postsFriends
+    //   ? postsFriends.map(element =>
+    //       element.Posts.map(post => {
+    //         post.Friend = element.Friend;
+    //         return post;
+    //       })
+    //     )
+    //   : null;
     const allPosts = postsFriends
-      ? posts.concat(...arrayOfPostsFriends)
+      ? posts.concat(...postsFriends)
       : posts;
     return (
       <Grid item style={{ width: "100%" }} sm={8} xxl={7}>
@@ -32,12 +34,12 @@ class Home extends Component {
           allPosts.sort(sortPosts).map(post => {
             return (post.Friend && !post.Friend.Show) ||
               (user && post.UserId === user.Id) ? (
-              <Post key={post.Id} post={post} user={post.Friend || user} />
-            ) : null;
+                <Post key={post.Id} post={post} user={post.Friend || user} />
+              ) : null;
           })
         ) : (
-          <Typography variant="h5">You don't have any posts yet. </Typography>
-        )}
+            <Typography variant="h5">You don't have any posts yet. </Typography>
+          )}
       </Grid>
     );
   }
