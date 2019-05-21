@@ -14,17 +14,7 @@ class Home extends Component {
     this.props.getFriendsPostsFromAPI(this.props.authToken);
   };
   render() {
-    console.log(this.props.posts)
-    console.log(this.props.postsFriends)
     const { user, posts, postsFriends } = this.props;
-    // const arrayOfPostsFriends = postsFriends
-    //   ? postsFriends.map(element =>
-    //       element.Posts.map(post => {
-    //         post.Friend = element.Friend;
-    //         return post;
-    //       })
-    //     )
-    //   : null;
     const allPosts = postsFriends
       ? posts.concat(...postsFriends)
       : posts;

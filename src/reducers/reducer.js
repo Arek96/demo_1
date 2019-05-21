@@ -18,16 +18,6 @@ import {
   TOGGLE_SHOW_USER_POSTS
 } from "../actions/friendActions";
 
-// postFriends: filterOwnPosts(state.allPostsFriends, action.payload.value)
-// action.payload.value && action.payload.value.length > 0
-//   ? state.posts.filter(post => {
-//     return post.Title.toLowerCase().includes(
-//       action.payload.value
-//     ) || post.Text.toLowerCase().includes(action.payload.value)
-//       ? post
-//       : null;
-//   })
-//   : state.allPosts
 const ifTextContainFilter = (data, filter) => (
   data ?
     data.toLowerCase().includes(filter)
@@ -44,7 +34,9 @@ const extractFriendPosts = (data) =>
     post.Friend = element.Friend;
     return post;
   }
-  )) : null
+  )).reduce((previousValue, currentValue) => {
+    return previousValue.concat(currentValue)
+  }) : null
 
 const reducer = (
   state = { authToken: null, posts: [], allFriends: [] },
@@ -91,22 +83,10 @@ const reducer = (
         )
       };
     case SEARCH_POST:
-      console.log(state.postsFriends)
-      console.log(state.allPosts)
       return {
         ...state,
         posts: filterOwnPosts(state.allPosts, action.payload.value),
-        postFriends: filterOwnPosts(state.allPostsFriends, action.payload.value)
-        // postFriends: filterOwnPosts(state.allPostsFriends, action.payload.value)
-        // action.payload.value && action.payload.value.length > 0
-        //   ? state.posts.filter(post => {
-        //     return post.Title.toLowerCase().includes(
-        //       action.payload.value
-        //     ) || post.Text.toLowerCase().includes(action.payload.value)
-        //       ? post
-        //       : null;
-        //   })
-        //   : state.allPosts
+        postsFriends: filterOwnPosts(state.allPostsFriends, action.payload.value)
       };
     case UPDATE_USER:
       return {
