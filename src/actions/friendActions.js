@@ -98,7 +98,6 @@ export const fetchFriendToApi = (authToken, friendID) => {
       method: "POST",
       headers: {
         "X-ZUMO-AUTH": authToken,
-
         "Content-Type": "application/json"
       },
       body: JSON.stringify({

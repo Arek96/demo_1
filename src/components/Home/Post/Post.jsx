@@ -55,7 +55,7 @@ class Post extends Component {
 
     return `${date.getDate()} ${
       month[date.getMonth()]
-    }, ${date.getFullYear()} `;
+      }, ${date.getFullYear()} `;
   };
   handleExpandClick = () => {
     this.setState({
@@ -104,19 +104,19 @@ class Post extends Component {
       user
         ? user.Photo
           ? this.renderAvatar(
-              user,
-              user.GivenName,
-              user.Name,
-              { margin: 10 },
-              user.Photo
-            )
+            user,
+            user.GivenName,
+            user.Name,
+            { margin: 10 },
+            user.Photo
+          )
           : this.renderAvatar(
-              user,
-              user.GivenName,
-              user.Name,
-              { height: 35, margin: 10 },
-              img
-            )
+            user,
+            user.GivenName,
+            user.Name,
+            { height: 35, margin: 10 },
+            img
+          )
         : null;
     return (
       <Card className={style.PostCard}>
@@ -160,8 +160,8 @@ class Post extends Component {
               {this.state.expanded
                 ? post.Text
                 : post.Text.length < 100
-                ? post.Text
-                : `${post.Text.substr(0, 100)}...`}
+                  ? post.Text
+                  : `${post.Text.substr(0, 100)}...`}
             </Typography>
           </CardContent>
         </Collapse>

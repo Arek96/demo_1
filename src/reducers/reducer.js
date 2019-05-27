@@ -17,6 +17,27 @@ import {
   GET_OTHER_USER_POSTS,
   TOGGLE_SHOW_USER_POSTS
 } from "../actions/friendActions";
+
+const ifTextContainFilter = (data, filter) => (
+  data ?
+    data.toLowerCase().includes(filter)
+    : null
+)
+const filterOwnPosts = (data, filter) => (
+  data && data.length > 0 && filter && filter.length > 0 ? data.filter(post => {
+    return ifTextContainFilter(post.Title, filter) || ifTextContainFilter(post.Text, filter)
+  })
+    : data
+)
+const extractFriendPosts = (data) =>
+  data && data.length > 0 ? data.map(element => element.Posts.map(post => {
+    post.Friend = element.Friend;
+    return post;
+  }
+  )).reduce((previousValue, currentValue) => {
+    return previousValue.concat(currentValue)
+  }) : null
+
 const reducer = (
   state = { authToken: null, posts: [], allFriends: [] },
   action
@@ -64,16 +85,8 @@ const reducer = (
     case SEARCH_POST:
       return {
         ...state,
-        posts:
-          action.payload.value && action.payload.value.length > 0
-            ? state.posts.filter(post => {
-                return post.Title.toLowerCase().includes(
-                  action.payload.value
-                ) || post.Text.toLowerCase().includes(action.payload.value)
-                  ? post
-                  : null;
-              })
-            : state.allPosts
+        posts: filterOwnPosts(state.allPosts, action.payload.value),
+        postsFriends: filterOwnPosts(state.allPostsFriends, action.payload.value)
       };
     case UPDATE_USER:
       return {
@@ -110,7 +123,8 @@ const reducer = (
     case GET_POSTS_FRIENDS:
       return {
         ...state,
-        postsFriends: action.payload.postsFriends
+        postsFriends: extractFriendPosts(action.payload.postsFriends),
+        allPostsFriends: extractFriendPosts(action.payload.postsFriends),
       };
     case SET_USER_PROFILE_INFO:
       return {
