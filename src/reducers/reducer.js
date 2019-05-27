@@ -18,12 +18,12 @@ import {
   TOGGLE_SHOW_USER_POSTS
 } from "../actions/friendActions";
 
-const ifTextContainFilter = (data, filter) => (
+const ifTextContainFilter = (data, query) => (
   data ?
-    data.toLowerCase().includes(filter)
+    data.toLowerCase().includes(query)
     : null
 )
-const filterOwnPosts = (data, filter) => (
+const filterPosts = (data, filter) => (
   data && data.length > 0 && filter && filter.length > 0 ? data.filter(post => {
     return ifTextContainFilter(post.Title, filter) || ifTextContainFilter(post.Text, filter)
   })
@@ -85,8 +85,8 @@ const reducer = (
     case SEARCH_POST:
       return {
         ...state,
-        posts: filterOwnPosts(state.allPosts, action.payload.value),
-        postsFriends: filterOwnPosts(state.allPostsFriends, action.payload.value)
+        posts: filterPosts(state.allPosts, action.payload.value),
+        postsFriends: filterPosts(state.allPostsFriends, action.payload.value)
       };
     case UPDATE_USER:
       return {
