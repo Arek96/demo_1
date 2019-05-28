@@ -7,13 +7,14 @@ import {
   CardContent,
   CardHeader,
   ListItemAvatar,
-  Avatar
+  Avatar,
+  Typography
 } from "@material-ui/core";
 import { connect } from "react-redux";
 import { getMessagesFromRoom } from "../../../actions/chatActions";
 import img from "../../../img/withoutPhoto.PNG";
 import MessageInput from "./MessageInput/MessageInput";
-
+import styles from "./Messages.module.scss";
 class Messages extends Component {
   constructor(props) {
     super(props);
@@ -44,29 +45,71 @@ class Messages extends Component {
       this.props.getMessagesFromRoom(oldMessages);
     } catch (e) {}
   };
-
+  sortMessages = (a, b) => {
+    if (new Date(a.createdAt) < new Date(b.createdAt)) return -1;
+    if (new Date(a.createdAt) > new Date(b.createdAt)) return 1;
+    return 0;
+  };
   render() {
     const { messages, currentRoom } = this.props;
     return (
-      <>
+      <div className={styles.Wrapper}>
         {messages && currentRoom ? (
-          <List>
+          <List className={styles.List}>
             {messages
               .filter(element => element.roomId === currentRoom.id)
+              .sort(this.sortMessages)
               .map(message => (
-                <ListItem key={message.id}>
-                  {console.log(message)}
-                  <ListItemAvatar>
-                    <Avatar src={this.getAvatar(message)} />
-                  </ListItemAvatar>
-                  <ListItemText>{message.sender.name}</ListItemText>
-                  <ListItemText>{message.text}</ListItemText>
+                <ListItem
+                  key={message.id}
+                  className={styles.ListItem}
+                  style={
+                    message.sender.id === this.props.user.Id
+                      ? {
+                          alignSelf: "flex-end",
+                          alignItems: "flex-end",
+                          justifyContent: "flex-end"
+                        }
+                      : {}
+                  }
+                >
+                  {message.sender.id !== this.props.user.Id ? (
+                    <>
+                      <ListItemAvatar>
+                        <Avatar
+                          className={styles.Avatar}
+                          src={this.getAvatar(message)}
+                        />
+                      </ListItemAvatar>
+                      <Typography
+                        variant="subtitle1"
+                        className={styles.Message}
+                      >
+                        {message.text}
+                      </Typography>
+                    </>
+                  ) : (
+                    <>
+                      <Typography
+                        variant="subtitle1"
+                        className={styles.Message}
+                      >
+                        {message.text}
+                      </Typography>
+                      <ListItemAvatar>
+                        <Avatar
+                          className={styles.Avatar}
+                          src={this.getAvatar(message)}
+                        />
+                      </ListItemAvatar>
+                    </>
+                  )}
                 </ListItem>
               ))}
           </List>
         ) : null}
         <MessageInput />
-      </>
+      </div>
     );
   }
 }
