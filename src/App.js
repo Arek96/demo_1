@@ -11,6 +11,7 @@ import NotLogged from "./components/NotLogged/NotLogged";
 import { connect } from "react-redux";
 import { fetchUser } from "./actions/userActions";
 import Home from "./components/Home/Home";
+import Chat from "./components/Chat/Chat";
 
 class App extends Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class App extends Component {
         <Route path="/newPost" component={NewPost} />
         <Route path="/myPosts" component={PostLists} />
         <Route path="/userProfile" component={UserProfile} />
+        <Route path="/chat" component={Chat} />
 
         {this.props.userProfileInfo ? (
           <Route

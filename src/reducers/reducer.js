@@ -38,6 +38,13 @@ const extractFriendPosts = (data) =>
     return previousValue.concat(currentValue)
   }) : null
 
+import {
+  SET_CHATKIT_USER,
+  ADD_NEW_MESSAGES,
+  SET_ROOMS,
+  SET_CURRENT_ROOM,
+  GET_MESSAGES_FROM_ROOM
+} from "../actions/chatActions";
 const reducer = (
   state = { authToken: null, posts: [], allFriends: [] },
   action
@@ -144,6 +151,31 @@ const reducer = (
             ? action.payload.modifiedFriendData
             : element;
         })
+      };
+    case SET_CHATKIT_USER:
+      return {
+        ...state,
+        chatkitCurrentUser: action.payload.chatkitCurrentUser
+      };
+    case ADD_NEW_MESSAGES:
+      return {
+        ...state,
+        messages: action.payload.messages
+      };
+    case SET_ROOMS:
+      return {
+        ...state,
+        rooms: action.payload.rooms
+      };
+    case SET_CURRENT_ROOM:
+      return {
+        ...state,
+        currentRoom: action.payload.currentRoom
+      };
+    case GET_MESSAGES_FROM_ROOM:
+      return {
+        ...state,
+        messages: [...state.messages, action.payload.messages]
       };
     default:
       return state;
