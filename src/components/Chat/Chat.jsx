@@ -18,7 +18,6 @@ class Chat extends Component {
     this.subscribeAllRooms();
   }
   connectToChatKit = async () => {
-    console.log(this.props.user);
     try {
       const chatkitUser = await (await fetch("http://localhost:3001/users", {
         method: "POST",
@@ -49,7 +48,6 @@ class Chat extends Component {
     let tempArray = [];
     let rooms = [];
     if (chatkitCurrentUser) {
-      console.log(chatkitCurrentUser.rooms);
       chatkitCurrentUser.rooms.map(element => {
         chatkitCurrentUser
           .subscribeToRoom({
@@ -82,7 +80,7 @@ class Chat extends Component {
             <RoomsList />
           </Grid>
 
-          <Grid item md={9}>
+          <Grid item constainer direction="row" xs={9}>
             <Messages />
           </Grid>
         </Grid>

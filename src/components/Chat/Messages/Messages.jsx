@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import {
   List,
   ListItem,
-  ListItemText,
-  Card,
-  CardContent,
-  CardHeader,
   ListItemAvatar,
   Avatar,
   Typography
@@ -82,6 +78,7 @@ class Messages extends Component {
                         />
                       </ListItemAvatar>
                       <Typography
+                        style={{ color: "white" }}
                         variant="subtitle1"
                         className={styles.Message}
                       >
@@ -93,6 +90,7 @@ class Messages extends Component {
                       <Typography
                         variant="subtitle1"
                         className={styles.Message}
+                        style={{ color: "white" }}
                       >
                         {message.text}
                       </Typography>
