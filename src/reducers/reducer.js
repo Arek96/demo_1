@@ -24,8 +24,10 @@ import {
   SET_CURRENT_ROOM,
   GET_MESSAGES_FROM_ROOM
 } from "../actions/chatActions";
+
 const ifTextContainFilter = (data, query) =>
   data ? data.toLowerCase().includes(query) : null;
+
 const filterPosts = (data, filter) =>
   data && data.length > 0 && filter && filter.length > 0
     ? data.filter(post => {
