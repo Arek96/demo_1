@@ -28,11 +28,14 @@ class SlideMenu extends Component {
         <MenuItem>
           <Link to="/newPost">Add a post</Link>
         </MenuItem>
+        <MenuItem>
+          <Link to="/chat">Chat</Link>
+        </MenuItem>
         <LogOut />
       </div>
     ) : (
-        publicDrawerItems
-      );
+      publicDrawerItems
+    );
 
     return (
       <Drawer open={this.props.open} onClose={this.props.handleClickMenu}>

@@ -17,26 +17,37 @@ import {
   GET_OTHER_USER_POSTS,
   TOGGLE_SHOW_USER_POSTS
 } from "../actions/friendActions";
-
-const ifTextContainFilter = (data, query) => (
-  data ?
-    data.toLowerCase().includes(query)
-    : null
-)
-const filterPosts = (data, filter) => (
-  data && data.length > 0 && filter && filter.length > 0 ? data.filter(post => {
-    return ifTextContainFilter(post.Title, filter) || ifTextContainFilter(post.Text, filter)
-  })
-    : data
-)
-const extractFriendPosts = (data) =>
-  data && data.length > 0 ? data.map(element => element.Posts.map(post => {
-    post.Friend = element.Friend;
-    return post;
-  }
-  )).reduce((previousValue, currentValue) => {
-    return previousValue.concat(currentValue)
-  }) : null
+import {
+  SET_CHATKIT_USER,
+  ADD_NEW_MESSAGES,
+  SET_ROOMS,
+  SET_CURRENT_ROOM,
+  GET_MESSAGES_FROM_ROOM
+} from "../actions/chatActions";
+const ifTextContainFilter = (data, query) =>
+  data ? data.toLowerCase().includes(query) : null;
+const filterPosts = (data, filter) =>
+  data && data.length > 0 && filter && filter.length > 0
+    ? data.filter(post => {
+        return (
+          ifTextContainFilter(post.Title, filter) ||
+          ifTextContainFilter(post.Text, filter)
+        );
+      })
+    : data;
+const extractFriendPosts = data =>
+  data && data.length > 0
+    ? data
+        .map(element =>
+          element.Posts.map(post => {
+            post.Friend = element.Friend;
+            return post;
+          })
+        )
+        .reduce((previousValue, currentValue) => {
+          return previousValue.concat(currentValue);
+        })
+    : null;
 
 const reducer = (
   state = { authToken: null, posts: [], allFriends: [] },
@@ -124,7 +135,7 @@ const reducer = (
       return {
         ...state,
         postsFriends: extractFriendPosts(action.payload.postsFriends),
-        allPostsFriends: extractFriendPosts(action.payload.postsFriends),
+        allPostsFriends: extractFriendPosts(action.payload.postsFriends)
       };
     case SET_USER_PROFILE_INFO:
       return {
@@ -144,6 +155,31 @@ const reducer = (
             ? action.payload.modifiedFriendData
             : element;
         })
+      };
+    case SET_CHATKIT_USER:
+      return {
+        ...state,
+        chatkitCurrentUser: action.payload.chatkitCurrentUser
+      };
+    case ADD_NEW_MESSAGES:
+      return {
+        ...state,
+        messages: action.payload.messages
+      };
+    case SET_ROOMS:
+      return {
+        ...state,
+        rooms: action.payload.rooms
+      };
+    case SET_CURRENT_ROOM:
+      return {
+        ...state,
+        currentRoom: action.payload.currentRoom
+      };
+    case GET_MESSAGES_FROM_ROOM:
+      return {
+        ...state,
+        messages: [...state.messages, action.payload.messages]
       };
     default:
       return state;
